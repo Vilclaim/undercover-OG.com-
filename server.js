@@ -22,7 +22,7 @@ origin:["http://localhost:3000"]
 
 const Product = require("./models/product");
 const User = require("./models/user");
-const Order = require("./models/Order");
+const Order = require("./models/order");
 const Notification = require("./models/Notification");
 
 // ================= ROUTES =================
