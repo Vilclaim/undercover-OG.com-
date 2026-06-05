@@ -14,7 +14,8 @@ const http = require("http").createServer(app);
 
 const io = require("socket.io")(http,{
 cors:{
-origin:["http://localhost:3000"]
+origin:"*",
+methods:["GET","POST","PUT","DELETE"]
 }
 });
 
@@ -876,7 +877,12 @@ userNotification
 console.log("NOTIFICATION SAVED:");
 console.log(savedNotification);
 
-io.to(updatedOrder.userId).emit(
+io.to(String(updatedOrder.userId)).emit(
+"orderStatusUpdated",
+savedNotification
+);
+
+io.to("admin-room").emit(
 "orderStatusUpdated",
 savedNotification
 );

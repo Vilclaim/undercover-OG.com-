@@ -2969,7 +2969,7 @@ window.location.href = "/admin-login.html";
 }
 
 
-const socket = io("http://localhost:3000",{
+const socket = io({
 transports:["websocket","polling"]
 });
 
@@ -3069,7 +3069,9 @@ data.customer || "Customer",
 data.orderId
 );
 
+loadNotifications();
 loadOrders();
+loadDashboardStats();
 
 });
 
