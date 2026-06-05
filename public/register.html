@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Register</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#07100c;
+font-family:Arial;
+color:white;
+}
+
+.box{
+width:350px;
+background:#101818;
+padding:30px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,.08);
+}
+
+input{
+width:100%;
+padding:14px;
+margin-top:10px;
+background:#1b2727;
+border:none;
+border-radius:12px;
+color:white;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:15px;
+border:none;
+border-radius:12px;
+background:#00c896;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+a{
+color:#00c896;
+text-decoration:none;
+}
+
+</style>
+</head>
+<body>
+
+<div class="box">
+
+<h2>Create Account</h2>
+
+<input
+type="text"
+id="name"
+placeholder="Full Name">
+
+<input
+type="email"
+id="email"
+placeholder="Email">
+
+<input
+type="password"
+id="password"
+placeholder="Password">
+
+<button onclick="register()">
+Register
+</button>
+
+<p>
+Already have account?
+<a href="login.html">
+Login
+</a>
+</p>
+
+</div>
+
+<script>
+
+async function register(){
+
+const name =
+document.getElementById("name").value;
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+const response =
+await fetch("/api/register",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+name,
+email,
+password
+})
+
+});
+
+const data =
+await response.json();
+
+alert(data.message);
+
+window.location.href = "/login.html";
+
+}
+
+</script>
+
+</body>
+</html>

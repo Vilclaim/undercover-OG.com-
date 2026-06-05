@@ -1,0 +1,5828 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UNDERCOVER-OG Admin Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:
+radial-gradient(circle at top left,#0f2d22,#07120d 50%);
+color:white;
+display:flex;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+#dashboardSection,
+#productsSection,
+#ordersSection,
+#analyticsSection,
+#usersSection,
+#inventorySection,
+#settingsSection{
+animation:fadeIn .35s ease;
+}
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(10px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+.sidebar{
+width:260px;
+background:#0d1f18;
+padding:25px;
+border-right:1px solid rgba(255,255,255,.08);
+position:fixed;
+left:0;
+top:0;
+height:100vh;
+overflow-y:auto;
+backdrop-filter:blur(18px);
+box-shadow:0 0 40px rgba(0,0,0,.45);
+}
+
+.logo{
+font-size:28px;
+font-weight:800;
+color:#00c896;
+margin-bottom:40px;
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.menu button{
+background:rgba(255,255,255,.06);
+border:none;
+color:white;
+padding:14px;
+border-radius:14px;
+cursor:pointer;
+font-weight:600;
+text-align:left;
+transition:.2s;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.menu button i{
+font-size:16px;
+width:20px;
+}
+
+.menu button:hover{
+background:linear-gradient(
+90deg,
+rgba(0,200,150,.22),
+rgba(0,224,170,.12)
+);
+
+transform:translateX(6px);
+
+box-shadow:
+0 10px 25px rgba(0,200,150,.15);
+}
+
+.menu button.active{
+background:linear-gradient(
+90deg,
+#00c896,
+#00e0aa
+);
+
+color:#04110d;
+box-shadow:0 10px 25px rgba(0,200,150,.25);
+}
+
+
+.main{
+flex:1;
+padding:25px;
+margin-left:260px;
+overflow-y:auto;
+min-height:100vh;
+width:calc(100% - 260px);
+
+
+display:block;
+
+
+
+
+background:
+linear-gradient(
+180deg,
+rgba(0,0,0,.15),
+rgba(0,0,0,.35)
+);
+}
+
+#dashboardSection,
+#productsSection,
+#ordersSection,
+#analyticsSection,
+#usersSection,
+#inventorySection,
+#settingsSection{
+width:100%;
+max-width:none;
+margin:0;
+}
+
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+padding:20px 25px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.06);
+border-radius:22px;
+backdrop-filter:blur(14px);
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+width:100%;
+}
+
+.topbar h1{
+font-size:32px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:24px;
+margin-bottom:35px;
+width:100%;
+}
+
+
+
+@media(max-width:1200px){
+
+.cards{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:700px){
+
+.cards{
+grid-template-columns:1fr;
+}
+
+}
+
+
+
+.card h2{
+font-size:32px;
+color:#00c896;
+margin-top:10px;
+}
+
+.product-form{
+background:rgba(255,255,255,.06);
+padding:25px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.product-form h2{
+margin-bottom:20px;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.form-grid input,
+.form-grid textarea,
+.form-grid select{
+width:100%;
+padding:14px;
+border:none;
+outline:none;
+border-radius:12px;
+background:#10241c;
+color:white;
+}
+
+.form-grid textarea{
+grid-column:1/-1;
+height:120px;
+resize:none;
+}
+
+
+
+.submit-btn{
+margin-top:20px;
+padding:15px;
+border:none;
+background:#00c896;
+color:white;
+font-weight:700;
+border-radius:14px;
+cursor:pointer;
+width:100%;
+}
+
+.products-table{
+margin-top:20px;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.product-item{
+background:#10241c;
+padding:15px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+flex-wrap:wrap;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.product-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.product-left img{
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:12px;
+background:#000;
+}
+
+.product-info h3{
+font-size:18px;
+margin-bottom:4px;
+}
+
+.product-info p{
+opacity:.7;
+font-size:14px;
+}
+
+.delete-btn{
+background:#ff4d4d;
+border:none;
+padding:10px 16px;
+border-radius:10px;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+.edit-btn{
+background:#00c896;
+border:none;
+padding:10px 16px;
+border-radius:10px;
+color:white;
+font-weight:600;
+cursor:pointer;
+margin-right:10px;
+}
+
+.orders-table{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.orders-modern-table{
+width:100%;
+border-collapse:separate;
+border-spacing:0 14px;
+margin-top:20px;
+}
+
+.orders-modern-table th{
+
+text-align:left;
+
+padding:8px 6px;
+font-size:11px;
+
+font-size:13px;
+
+letter-spacing:1px;
+
+opacity:.65;
+
+color:#9ca3af;
+
+border:none;
+vertical-align:middle;
+
+}
+
+.orders-modern-table td{
+
+padding:8px 6px;
+font-size:12px;
+
+font-size:15px;
+
+background:rgba(255,255,255,.03);
+
+backdrop-filter:blur(10px);
+
+border-top:1px solid rgba(255,255,255,.04);
+
+border-bottom:1px solid rgba(255,255,255,.04);
+
+}
+
+.orders-modern-table tr:hover{
+background:rgba(255,255,255,.03);
+}
+
+.orders-modern-table tbody tr{
+
+transition:.3s ease;
+
+}
+
+.orders-modern-table tbody tr:hover{
+
+transform:translateY(-4px);
+
+box-shadow:
+0 15px 35px rgba(0,200,150,.12);
+
+}
+
+#usersSection .card{
+
+max-width:1400px;
+
+margin:auto;
+
+}
+
+#usersSection .cards{
+
+max-width:1400px;
+
+margin:auto;
+margin-bottom:30px;
+
+}
+
+#usersSection .topbar{
+
+max-width:1400px;
+
+margin:auto;
+margin-bottom:30px;
+
+}
+
+.order-card{
+background:#10241c;
+padding:20px;
+border-radius:18px;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.order-card h3{
+margin-bottom:10px;
+font-size:20px;
+}
+
+.order-card p{
+margin-bottom:6px;
+opacity:.85;
+}
+
+.order-items{
+margin-top:15px;
+padding-top:15px;
+border-top:1px solid rgba(255,255,255,.08);
+}
+
+.status{
+display:inline-block;
+margin-top:12px;
+padding:8px 14px;
+border-radius:999px;
+background:#00c896;
+font-size:13px;
+font-weight:700;
+}
+
+.status-badge{
+display:inline-block;
+margin-top:8px;
+padding:6px 12px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+background:#00c896;
+color:white;
+}
+
+.status-badge.active{
+background:#00c896;
+}
+
+.status-badge.sale{
+background:#f59e0b;
+}
+
+.status-badge.out-of-stock{
+background:#ff4d4d;
+}
+
+.status-badge.cancelled{
+background:rgba(239,68,68,.15);
+color:#ef4444;
+border:1px solid rgba(239,68,68,.25);
+}
+
+.status-badge.pending{
+background:#00c896;
+}
+
+.status-badge.processing{
+background:#0ea5e9;
+}
+
+.status-badge.delivered{
+background:#22c55e;
+}
+
+.status-badge.shipped{
+
+background:
+linear-gradient(
+135deg,
+#7c3aed,
+#a855f7
+);
+
+color:white;
+
+border:1px solid rgba(255,255,255,.1);
+
+box-shadow:
+0 10px 25px rgba(168,85,247,.25);
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.status-badge.shipped::before{
+
+content:"📦";
+
+margin-right:6px;
+
+}
+
+.status-badge.hidden{
+background:#6b7280;
+}
+
+.status-select{
+
+width:100px;
+padding:6px 8px;
+font-size:11px;
+
+border:none;
+
+border-radius:10px;
+
+background:
+linear-gradient(
+135deg,
+#00c896,
+#00e0aa
+);
+
+color:white;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+
+.status-select:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 15px 30px rgba(0,200,150,.25);
+
+}
+
+.chart-box{
+background:rgba(255,255,255,.06);
+padding:25px;
+border-radius:24px;
+border:1px solid rgba(255,255,255,.08);
+margin-top:20px;
+}
+
+.card{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.05);
+border-radius:24px;
+padding:25px;
+backdrop-filter:blur(14px);
+transition:.35s ease;
+position:relative;
+overflow:hidden;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+
+min-height:150px;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 20px 40px rgba(0,200,150,.15);
+border-color:rgba(0,200,150,.25);
+}
+
+.card::before{
+content:'';
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.08),
+transparent
+);
+transition:.6s;
+}
+
+.card:hover::before{
+left:100%;
+}
+
+.analytics-grid{
+display:grid;
+grid-template-columns:2.2fr 1fr;
+gap:24px;
+margin-top:30px;
+align-items:start;
+}
+
+@media(max-width:1100px){
+
+.analytics-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+.analytics-left,
+.analytics-right{
+display:flex;
+flex-direction:column;
+gap:24px;
+}
+
+.chart-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.chart-select{
+background:#10241c;
+color:white;
+border:none;
+padding:10px 14px;
+border-radius:10px;
+}
+
+.view-all{
+color:#00c896;
+text-decoration:none;
+font-weight:600;
+}
+
+.view-orders-btn{
+display:flex;
+align-items:center;
+gap:10px;
+padding:14px 18px;
+border-radius:14px;
+background:rgba(0,200,150,.08);
+border:1px solid rgba(0,200,150,.25);
+color:#00c896;
+text-decoration:none;
+font-weight:700;
+transition:.3s;
+}
+
+.view-orders-btn:hover{
+transform:translateY(-3px);
+background:rgba(0,200,150,.15);
+box-shadow:0 15px 30px rgba(0,200,150,.15);
+}
+
+.top-product-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 0;
+border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.top-product-left{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.top-product-rank{
+width:28px;
+height:28px;
+border-radius:50%;
+background:#10241c;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:13px;
+font-weight:700;
+color:#00c896;
+}
+
+.top-product-image{
+width:55px;
+height:55px;
+object-fit:cover;
+border-radius:12px;
+background:#000;
+}
+
+.top-product-name{
+font-size:15px;
+margin-bottom:4px;
+}
+
+.top-product-category{
+font-size:12px;
+opacity:.6;
+}
+
+.top-product-price{
+font-weight:700;
+color:#00c896;
+}
+
+.recent-orders-card{
+min-height:320px;
+}
+
+.card-icon{
+width:55px;
+height:55px;
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+margin-bottom:18px;
+}
+
+.card-icon.green{
+background:rgba(0,200,150,.15);
+color:#00c896;
+}
+
+.card-icon.blue{
+background:rgba(59,130,246,.15);
+color:#3b82f6;
+}
+
+.card-icon.purple{
+background:rgba(168,85,247,.15);
+color:#a855f7;
+}
+
+.card-icon.orange{
+background:rgba(249,115,22,.15);
+color:#f97316;
+}
+
+.growth{
+margin-top:14px;
+font-size:14px;
+color:#00c896;
+opacity:.9;
+}
+
+canvas{
+width:100% !important;
+max-height:320px;
+}
+
+#liveClock{
+font-size:14px;
+opacity:.7;
+font-weight:600;
+}
+
+.gallery-preview{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:15px;
+}
+
+.gallery-preview img{
+width:90px;
+height:90px;
+object-fit:cover;
+border-radius:12px;
+border:2px solid rgba(255,255,255,.08);
+background:#000;
+}
+
+.products-layout{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:24px;
+align-items:start;
+}
+
+.video-panel{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+padding:24px;
+border-radius:24px;
+backdrop-filter:blur(16px);
+}
+
+.video-upload-box{
+height:180px;
+border:2px dashed rgba(0,200,150,.35);
+border-radius:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-top:20px;
+color:#00c896;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.video-upload-box:hover{
+background:rgba(0,200,150,.08);
+}
+
+.recent-videos{
+margin-top:30px;
+}
+
+.video-item{
+padding:14px;
+background:#10241c;
+border-radius:14px;
+margin-top:12px;
+}
+
+.product-form,
+.video-panel{
+box-shadow:
+0 20px 50px rgba(0,0,0,.35);
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+background:
+linear-gradient(
+180deg,
+rgba(255,255,255,.03),
+rgba(255,255,255,.01)
+);
+
+border:1px solid rgba(255,255,255,.06);
+
+transition:.3s;
+}
+
+
+#description{
+
+width:100%;
+
+height:160px;
+
+padding:18px;
+
+margin-top:25px;
+
+border:none;
+outline:none;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+180deg,
+rgba(255,255,255,.03),
+rgba(255,255,255,.01)
+);
+
+border:1px solid rgba(255,255,255,.06);
+
+color:white;
+
+resize:none;
+
+font-size:15px;
+
+transition:.3s;
+
+}
+
+#description:focus{
+
+border-color:#00c896;
+
+box-shadow:
+0 0 0 4px rgba(0,200,150,.15);
+
+transform:translateY(-2px);
+
+}
+
+.form-grid select{
+height:60px;
+align-self:start;
+}
+
+.form-grid input{
+height:60px;
+}
+
+.upload-box{
+height:180px;
+}
+
+.form-grid input:focus,
+.form-grid select:focus,
+.form-grid textarea:focus{
+
+border-color:#00c896;
+
+box-shadow:
+0 0 0 4px rgba(0,200,150,.15);
+
+transform:translateY(-2px);
+
+}
+
+.submit-btn{
+
+background:
+linear-gradient(
+90deg,
+#00c896,
+#00e0aa
+);
+
+box-shadow:
+0 15px 30px rgba(0,200,150,.25);
+
+transition:.3s;
+}
+
+.submit-btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 20px 40px rgba(0,200,150,.35);
+
+}
+
+.video-panel{
+
+position:sticky;
+top:30px;
+
+}
+
+.video-item{
+
+display:flex;
+align-items:center;
+gap:14px;
+
+padding:12px;
+
+background:#10241c;
+
+border-radius:16px;
+
+margin-top:14px;
+
+transition:.3s;
+
+cursor:pointer;
+
+border:1px solid rgba(255,255,255,.05);
+
+}
+
+.video-item:hover{
+
+transform:translateX(5px);
+
+background:#163328;
+
+box-shadow:
+0 15px 30px rgba(0,200,150,.12);
+
+}
+
+.video-thumb{
+
+width:75px;
+height:55px;
+
+border-radius:12px;
+
+object-fit:cover;
+
+background:#000;
+
+}
+
+.video-info h4{
+
+font-size:14px;
+margin-bottom:4px;
+
+}
+
+.video-info p{
+
+font-size:12px;
+opacity:.6;
+
+}
+
+.video-play{
+
+margin-left:auto;
+
+width:38px;
+height:38px;
+
+border-radius:50%;
+
+background:rgba(0,200,150,.15);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+color:#00c896;
+
+font-size:14px;
+
+}
+
+.video-item:hover{
+
+background:#163328;
+transform:translateX(5px);
+
+}
+
+.custom-upload{
+display:block;
+width:100%;
+}
+
+.upload-box{
+
+height:180px;
+
+border:2px dashed rgba(0,200,150,.35);
+
+border-radius:22px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+text-align:center;
+
+cursor:pointer;
+
+transition:.3s;
+
+background:
+linear-gradient(
+180deg,
+rgba(255,255,255,.02),
+rgba(255,255,255,.01)
+);
+
+}
+
+.upload-box:hover{
+
+background:rgba(0,200,150,.08);
+
+transform:translateY(-3px);
+
+box-shadow:
+0 20px 40px rgba(0,200,150,.15);
+
+}
+
+.upload-icon{
+
+width:70px;
+height:70px;
+
+border-radius:50%;
+
+background:rgba(0,200,150,.12);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:28px;
+
+color:#00c896;
+
+margin-bottom:16px;
+
+}
+
+.upload-box h3{
+font-size:18px;
+margin-bottom:6px;
+}
+
+.upload-box p{
+opacity:.65;
+font-size:14px;
+}
+
+.status-wrapper{
+display:flex;
+align-items:flex-start;
+}
+
+.status-wrapper select{
+height:60px;
+width:100%;
+}
+
+select option{
+background:#10241c;
+color:white;
+}
+
+select{
+
+appearance:none;
+-webkit-appearance:none;
+-moz-appearance:none;
+
+background:
+
+linear-gradient(
+180deg,
+rgba(255,255,255,.03),
+rgba(255,255,255,.01)
+)
+
+url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2300c896' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 7.5L10 12l4.5-4.5' stroke='%2300c896' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+background-repeat:no-repeat;
+
+background-position:
+right 18px center;
+
+background-size:20px;
+
+padding-right:55px;
+
+cursor:pointer;
+
+transition:.3s ease;
+
+font-weight:600;
+
+}
+
+select:hover{
+
+border-color:#00c896;
+
+box-shadow:
+0 0 0 4px rgba(0,200,150,.08);
+
+}
+
+select:focus{
+
+border-color:#00c896;
+
+box-shadow:
+0 0 0 4px rgba(0,200,150,.18);
+
+transform:translateY(-2px);
+
+}
+
+.product-images-section{
+margin-top:30px;
+}
+
+.images-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.images-header h3{
+font-size:22px;
+font-weight:700;
+color:white;
+}
+
+.images-header span{
+font-size:12px;
+color:#8b8b8b;
+}
+
+.upload-grid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:18px;
+margin-top:20px;
+}
+
+.upload-card{
+height:160px;
+min-width:0;
+border:2px dashed rgba(0,255,180,.3);
+border-radius:24px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+cursor:pointer;
+position:relative;
+overflow:hidden;
+background:rgba(255,255,255,.02);
+transition:.3s;
+}
+
+.upload-card:hover{
+transform:translateY(-4px);
+border-color:#00ffb7;
+box-shadow:0 0 20px rgba(0,255,183,.15);
+}
+
+.upload-icon{
+width:60px;
+height:60px;
+border-radius:50%;
+background:rgba(0,255,180,.08);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:34px;
+color:#00ffb7;
+margin-bottom:14px;
+}
+
+.upload-card p{
+color:white;
+font-weight:600;
+margin-bottom:6px;
+}
+
+.upload-card span{
+font-size:11px;
+color:#7d7d7d;
+}
+
+.upload-preview{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+display:none;
+border-radius:18px;
+z-index:2;
+}
+
+.product-images-section{
+grid-column:1/-1;
+width:100%;
+}
+
+.upload-card p{
+font-size:14px;
+text-align:center;
+}
+
+.upload-card span{
+font-size:10px;
+text-align:center;
+padding:0 8px;
+line-height:1.4;
+}
+
+.product-images-section{
+margin-top:30px;
+width:100%;
+}
+
+.images-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+gap:15px;
+}
+
+.images-header h3{
+font-size:18px;
+font-weight:700;
+}
+
+.images-header span{
+font-size:13px;
+opacity:.7;
+}
+
+.upload-grid{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:14px;
+width:100%;
+}
+
+.upload-card{
+position:relative;
+height:170px;
+border:2px dashed rgba(0,200,150,.4);
+border-radius:20px;
+background:rgba(255,255,255,.03);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+overflow:hidden;
+transition:.3s;
+min-width:0;
+}
+
+.upload-card:hover{
+transform:translateY(-4px);
+border-color:#00c896;
+background:rgba(0,200,150,.08);
+}
+
+.upload-icon{
+width:54px;
+height:54px;
+border-radius:50%;
+background:rgba(0,200,150,.12);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:38px;
+color:#00e0aa;
+margin-bottom:12px;
+}
+
+.upload-card p{
+font-weight:700;
+font-size:15px;
+margin-bottom:5px;
+text-align:center;
+}
+
+.upload-card span{
+font-size:11px;
+opacity:.65;
+text-align:center;
+padding:0 10px;
+line-height:1.4;
+}
+
+.upload-preview{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+display:none;
+}
+
+@media(max-width:1100px){
+
+.upload-grid{
+grid-template-columns:repeat(3,1fr);
+}
+
+}
+
+@media(max-width:700px){
+
+.upload-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+.order-details-panel{
+
+position:fixed;
+top:0;
+right:-450px;
+
+width:420px;
+height:100vh;
+
+background:#0d1f18;
+
+border-left:1px solid rgba(255,255,255,.08);
+
+z-index:99999;
+
+padding:25px;
+
+overflow-y:auto;
+
+transition:.35s ease;
+
+box-shadow:-10px 0 40px rgba(0,0,0,.45);
+
+}
+
+.order-details-panel.show{
+right:0;
+}
+
+.panel-header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:25px;
+
+}
+
+.panel-header h2{
+font-size:28px;
+}
+
+.panel-header button{
+
+width:42px;
+height:42px;
+
+border:none;
+border-radius:50%;
+
+background:#ff4d4d;
+color:white;
+
+cursor:pointer;
+
+font-size:18px;
+
+}
+
+#liveNotification{
+
+position:fixed;
+
+top:20px;
+
+right:20px;
+
+z-index:99999;
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+.live-box{
+
+min-width:300px;
+
+background:
+linear-gradient(
+135deg,
+#00c896,
+#00e0aa
+);
+
+padding:18px 22px;
+
+border-radius:18px;
+
+color:white;
+
+font-weight:700;
+
+box-shadow:
+0 15px 40px rgba(0,0,0,.35);
+
+animation:slideIn .4s ease;
+
+border:1px solid rgba(255,255,255,.1);
+
+backdrop-filter:blur(10px);
+
+}
+
+.live-box small{
+
+display:block;
+
+margin-top:8px;
+
+opacity:.8;
+
+font-size:12px;
+
+}
+
+@keyframes slideIn{
+
+from{
+
+opacity:0;
+transform:translateX(100px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateX(0);
+
+}
+
+}
+
+#notificationBtn{
+
+position:relative;
+
+width:55px;
+height:55px;
+
+border:none;
+border-radius:18px;
+
+background:rgba(255,255,255,.06);
+
+color:white;
+
+font-size:22px;
+
+cursor:pointer;
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.3s;
+
+}
+
+#notificationBtn:hover{
+
+background:rgba(0,200,150,.15);
+
+transform:translateY(-3px);
+
+}
+
+#notificationCount{
+
+position:absolute;
+
+top:-5px;
+right:-5px;
+
+min-width:22px;
+height:22px;
+
+padding:0 6px;
+
+border-radius:999px;
+
+background:#ff4d4d;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:11px;
+font-weight:700;
+
+}
+
+#notificationPanel{
+
+  
+position:fixed;
+
+top:90px;
+right:25px;
+
+width:430px;
+max-height:500px;
+
+overflow-y:auto;
+
+background:#0d1f18;
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:24px;
+
+padding:20px;
+
+z-index:99999;
+
+display:none;
+
+box-shadow:0 20px 50px rgba(0,0,0,.45);
+
+}
+
+#notificationPanel.show{
+display:block;
+}
+
+.notification-item{
+
+padding:16px;
+
+border-radius:18px;
+
+background:rgba(255,255,255,.05);
+
+margin-bottom:12px;
+
+border:1px solid rgba(255,255,255,.06);
+
+cursor:pointer;
+transition:.3s;
+
+}
+
+.notification-item:hover{
+
+transform:translateY(-3px);
+
+background:rgba(0,200,150,.12);
+
+}
+
+.notification-item.unread{
+
+border-left:4px solid #00c896;
+
+background:rgba(0,200,150,.08);
+
+}
+
+.notification-item.read{
+
+opacity:.6;
+
+border-left:4px solid #555;
+
+background:rgba(255,255,255,.03);
+
+}
+
+#usersSection .orders-modern-table{
+
+border-spacing:0 18px;
+
+}
+
+#usersSection .orders-modern-table td:first-child{
+
+border-radius:18px 0 0 18px;
+
+}
+
+#usersSection .orders-modern-table td:last-child{
+
+border-radius:0 18px 18px 0;
+
+}
+
+#usersSection .orders-modern-table tbody tr{
+
+background:transparent;
+
+}
+
+#usersSection .orders-modern-table tbody tr:hover{
+
+transform:scale(1.01);
+
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+</head>
+
+<body>
+
+  <div id="liveNotification"></div>
+
+<div class="sidebar">
+
+<div class="logo">
+
+<div style="
+font-size:30px;
+font-weight:780;
+line-height:1;
+">
+UNDERCOVER-OG
+</div>
+
+<div style="
+font-size:16px;
+opacity:.7;
+margin-top:6px;
+font-weight:500;
+">
+Admin Panel
+</div>
+
+</div>
+
+
+
+<div class="menu">
+
+<button
+class="active"
+onclick="showSection('dashboardSection',event)">
+
+<i class="fa-solid fa-chart-line"></i>
+Dashboard
+
+</button>
+
+<button
+onclick="showSection('productsSection',event)">
+
+<i class="fa-solid fa-box"></i>
+Products
+
+</button>
+
+<button
+onclick="showSection('ordersSection',event)">
+
+<i class="fa-solid fa-cart-shopping"></i>
+Orders
+
+</button>
+
+<button
+onclick="showSection('analyticsSection',event)">
+
+<i class="fa-solid fa-chart-pie"></i>
+Analytics
+
+</button>
+
+<button
+onclick="showSection('usersSection',event)">
+
+<i class="fas fa-users"></i>
+Users
+
+</button>
+
+<button
+onclick="showSection('inventorySection',event)">
+
+<i class="fa-solid fa-warehouse"></i>
+Inventory
+
+</button>
+
+
+
+<button
+onclick="showSection('settingsSection',event)">
+
+<i class="fa-solid fa-gear"></i>
+Settings
+
+</button>
+
+<button onclick="logoutAdmin()">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+</button>
+
+</div>
+
+
+</div>
+
+
+
+<div id="notificationPanel">
+
+<h2 style="
+margin-bottom:20px;
+font-size:24px;
+">
+Notifications
+</h2>
+
+<div id="notificationList"></div>
+
+</div>
+
+<div
+id="orderDetailsPanel"
+class="order-details-panel"
+>
+
+<div class="panel-header">
+
+<h2>
+Order Details
+</h2>
+
+<button onclick="closeOrderPanel()">
+✕
+</button>
+
+</div>
+
+<div id="orderDetailsContent"></div>
+
+</div>
+
+<div class="main">
+
+<div id="dashboardSection">
+
+<div class="topbar">
+
+<h1>
+Admin Dashboard
+</h1>
+
+<div style="
+display:flex;
+align-items:center;
+gap:16px;
+">
+
+<button id="notificationBtn">
+
+🔔
+
+<span id="notificationCount">
+0
+</span>
+
+</button>
+
+<div id="liveClock"></div>
+
+</div>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<div class="card-icon purple">
+<i class="fa-solid fa-box"></i>
+</div>
+<p>Total Products</p>
+
+<h2 id="totalProducts">0</h2>
+
+<p class="growth">
+▲ Inventory Active
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon blue">
+<i class="fa-solid fa-cart-shopping"></i>
+</div>
+
+<p>Total Orders</p>
+<h2 id="totalOrders">0</h2>
+
+<p class="growth">
+▲ Active Orders
+</p>
+</div>
+
+<div class="card">
+
+<div class="card-icon green">
+<i class="fa-solid fa-dollar-sign"></i>
+</div>
+
+<p>Total Revenue</p>
+<h2 id="totalRevenue">AED 0</h2>
+<p class="growth">
+▲ Revenue Growth
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="productsSection" style="display:none;">
+
+<div class="products-layout">
+
+<!-- LEFT SIDE -->
+<div class="product-form">
+
+<h2>Add Product</h2>
+
+<form id="productForm">
+
+<div class="form-grid">
+
+<input type="text" id="name" placeholder="Product Name" required>
+
+<input type="number" id="price" placeholder="Price" required>
+
+<input type="number" id="oldPrice" placeholder="Old Price">
+
+<input type="number" id="stock" placeholder="Stock">
+
+<input
+type="text"
+id="colors"
+placeholder="Available Colors (Black,White,Blue)"
+>
+
+<select id="category" required>
+
+<option value="" disabled selected>
+Select Category
+</option>
+
+<option value="Bags">
+Bags
+</option>
+
+<option value="Beauty">
+Beauty
+</option>
+
+<option value="Accessories">
+Accessories
+</option>
+
+</select>
+
+<input type="text" id="badge" placeholder="Badge">
+
+<div class="status-wrapper">
+
+<select id="status" required>
+
+<option value="" disabled selected>
+Select Status
+</option>
+
+<option value="ACTIVE">
+ACTIVE
+</option>
+
+<option value="SALE">
+SALE
+</option>
+
+<option value="OUT OF STOCK">
+OUT OF STOCK
+</option>
+
+<option value="HIDDEN">
+HIDDEN
+</option>
+
+<option value="CANCELLED">
+CANCELLED
+</option>
+
+</select>
+
+</div>
+
+
+<div class="product-images-section">
+
+<div class="images-header">
+<h3>Product Images</h3>
+<span>PNG, JPG up to 10MB each</span>
+</div>
+
+<div class="upload-grid">
+
+<label class="upload-card">
+<input type="file" id="img1" accept="image/*" hidden>
+<img class="upload-preview" id="preview1">
+<div class="upload-icon">+</div>
+<p>Add Image</p>
+<span>PNG, JPG up to 10MB</span>
+</label>
+
+<label class="upload-card">
+<input type="file" id="img2" accept="image/*" hidden>
+<img class="upload-preview" id="preview2">
+<div class="upload-icon">+</div>
+<p>Add Image</p>
+<span>PNG, JPG up to 10MB</span>
+</label>
+
+<label class="upload-card">
+<input type="file" id="img3" accept="image/*" hidden>
+<img class="upload-preview" id="preview3">
+<div class="upload-icon">+</div>
+<p>Add Image</p>
+<span>PNG, JPG up to 10MB</span>
+</label>
+
+<label class="upload-card">
+<input type="file" id="img4" accept="image/*" hidden>
+<img class="upload-preview" id="preview4">
+<div class="upload-icon">+</div>
+<p>Add Image</p>
+<span>PNG, JPG up to 10MB</span>
+</label>
+
+<label class="upload-card">
+<input type="file" id="img5" accept="image/*" hidden>
+<img class="upload-preview" id="preview5">
+<div class="upload-icon">+</div>
+<p>Add Image</p>
+<span>PNG, JPG up to 10MB</span>
+</label>
+
+</div>
+</div>
+
+
+
+</div>
+
+<textarea id="description" placeholder="Product Description"></textarea>
+
+<button id="submitBtn" class="submit-btn" type="submit">
+Add Product
+</button>
+
+<button
+id="cancelEditBtn"
+type="button"
+class="submit-btn"
+style="display:none;background:#ff4d4d;margin-top:10px;"
+onclick="cancelEdit()">
+Cancel Update
+</button>
+
+</form>
+
+<div class="products-list">
+
+<h2 style="margin-top:40px;">
+Existing Products
+</h2>
+<input
+type="text"
+id="searchInput"
+placeholder="Search products..."
+style="
+width:100%;
+padding:14px;
+margin-top:15px;
+margin-bottom:20px;
+border:none;
+outline:none;
+border-radius:12px;
+background:#10241c;
+color:white;
+"
+/>
+
+
+<div id="productsTable"></div>
+
+</div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="video-panel">
+
+<h2>Video Upload</h2>
+
+<label class="custom-upload">
+
+<input
+type="file"
+id="videoFile"
+accept="video/*"
+hidden
+>
+
+<div class="video-upload-box">
+
+<div>
+<i class="fa-solid fa-video"
+style="
+font-size:40px;
+margin-bottom:15px;
+display:block;
+"></i>
+
+Click to upload video
+
+<p style="
+margin-top:10px;
+opacity:.6;
+font-size:14px;
+">
+MP4, MOV up to 100MB
+</p>
+
+</div>
+
+</div>
+
+</label>
+
+<div id="currentVideoPreview"
+style="
+margin-top:20px;
+display:none;
+">
+
+<video
+id="editVideoPreview"
+controls
+style="
+width:100%;
+border-radius:16px;
+background:#000;
+max-height:220px;
+">
+</video>
+
+<button
+type="button"
+onclick="removeCurrentVideo()"
+style="
+margin-top:12px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#ff4d4d;
+color:white;
+font-weight:700;
+cursor:pointer;
+">
+Remove Video
+</button>
+
+</div>
+
+<div class="recent-videos">
+
+
+<h3>Recent Videos</h3>
+
+<div id="videoList"></div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div id="ordersSection" style="display:none;">
+
+<div class="topbar">
+
+<div>
+
+<h1 style="font-size:42px;">
+Recent Orders
+</h1>
+
+<p style="opacity:.7;margin-top:8px;">
+Overview of your latest customer orders
+</p>
+
+</div>
+
+<a href="#" class="view-orders-btn">
+View All Orders
+<i class="fa-solid fa-arrow-right"></i>
+</a>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<div class="card-icon blue">
+<i class="fa-solid fa-cart-shopping"></i>
+</div>
+
+<p>Total Orders</p>
+
+<h2 id="ordersTotalCount">
+0
+</h2>
+
+<p class="growth">
+▲ Active Orders
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon orange">
+<i class="fa-solid fa-clock"></i>
+</div>
+
+<p>Pending Orders</p>
+
+<h2 id="pendingOrdersCount">
+0
+</h2>
+
+<p class="growth">
+⚠ Waiting Process
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon green">
+<i class="fa-solid fa-circle-check"></i>
+</div>
+
+<p>Delivered Orders</p>
+
+<h2 id="deliveredOrdersCount">
+0
+</h2>
+
+<p class="growth">
+▲ Successfully Delivered
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon purple">
+<i class="fa-solid fa-money-bill-wave"></i>
+</div>
+
+<p>Orders Revenue</p>
+
+<h2 id="ordersRevenue">
+AED 0
+</h2>
+
+<p class="growth">
+▲ Sales Revenue
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="chart-header" style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+">
+
+<h2 style="font-size:32px;">
+Orders Table
+</h2>
+
+<div style="
+display:flex;
+gap:12px;
+align-items:center;
+">
+
+<input
+type="text"
+id="searchOrders"
+placeholder="Search orders..."
+style="
+background:#10241c;
+border:none;
+padding:12px 16px;
+border-radius:12px;
+color:white;
+outline:none;
+"
+/>
+
+<select
+id="statusFilter"
+style="
+padding:12px;
+border-radius:12px;
+background:#10241c;
+color:white;
+border:none;
+font-weight:600;
+outline:none;
+"
+>
+
+<option value="ALL">
+All Status
+</option>
+
+<option value="Pending">
+Pending
+</option>
+
+<option value="Processing">
+Processing
+</option>
+
+<option value="Shipped">
+📦 Shipped
+</option>
+
+<option value="Out For Delivery">
+🚚 Out For Delivery
+</option>
+
+<option value="Delivered">
+Delivered
+</option>
+
+<option value="Cancelled">
+Cancelled
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div style="overflow-x:auto;">
+
+<table class="orders-modern-table" style="width:100%;">
+
+<thead>
+
+<tr>
+
+<th>ORDER ID</th>
+<th>CUSTOMER</th>
+<th>PHONE</th>
+<th>TOTAL</th>
+<th>PAYMENT</th>
+<th>PAYMENT STATUS</th>
+<th>ITEMS</th>
+<th>STATUS</th>
+
+
+</tr>
+
+</thead>
+
+<tbody id="ordersTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="analyticsSection" style="display:none;">
+
+
+
+
+<div class="topbar">
+
+<div>
+<h1 style="font-size:42px;">
+Analytics
+</h1>
+
+<p style="opacity:.7;margin-top:8px;">
+Overview of your store performance
+</p>
+</div>
+
+<div style="display:flex;gap:15px;align-items:center;">
+
+<select
+style="
+background:#10241c;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:14px;
+font-weight:600;
+"
+>
+<option>Last 30 Days</option>
+<option>Last 7 Days</option>
+<option>This Year</option>
+</select>
+
+<div
+style="
+width:45px;
+height:45px;
+border-radius:50%;
+background:#00c896;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:700;
+"
+>
+A
+</div>
+
+</div>
+
+</div>
+
+<!-- TOP STATS -->
+
+<div class="cards">
+
+<div class="card">
+
+<div class="card-icon green">
+<i class="fa-solid fa-dollar-sign"></i>
+</div>
+
+<p>Total Revenue</p>
+
+<h2 id="analyticsRevenue">
+AED 0
+</h2>
+
+<p class="growth">
+▲ 23.5% vs last 30 days
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card-icon blue">
+<i class="fa-solid fa-cart-shopping"></i>
+</div>
+
+<p>Total Orders</p>
+<h2 id="analyticsOrders">0</h2>
+<p style="margin-top:10px;color:#00c896;">
+▲ Active Orders
+</p>
+</div>
+
+<div class="card">
+
+<div class="card-icon purple">
+<i class="fa-solid fa-box"></i>
+</div>
+
+<p>Total Products</p>
+<h2 id="totalProductsAnalytics">0</h2>
+<p style="margin-top:10px;color:#00c896;">
+▲ Inventory Active
+</p>
+</div>
+
+<div class="card">
+
+<div class="card-icon orange">
+<i class="fa-solid fa-triangle-exclamation"></i>
+</div>
+
+<p>Low Stock Products</p>
+<h2 id="lowStockCount">0</h2>
+<p style="margin-top:10px;color:#f59e0b;">
+⚠ Need Restock
+</p>
+</div>
+
+</div>
+
+<div class="analytics-grid">
+
+<div class="analytics-left">
+
+<div class="card">
+
+<div class="chart-header">
+
+<h2 style="font-size:24px;">
+Sales Revenue
+</h2>
+
+<select class="chart-select">
+<option>Revenue</option>
+</select>
+
+</div>
+
+<canvas id="salesChart"></canvas>
+
+</div>
+
+<div class="card recent-orders-card">
+
+<div class="chart-header">
+
+<h2>
+Recent Orders
+</h2>
+
+<a href="#" class="view-all">
+View All
+</a>
+
+</div>
+
+<div id="recentOrdersTable">
+
+<p style="opacity:.7;">
+Recent orders will appear here
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="analytics-right">
+
+<div class="card">
+
+<h2 style="margin-bottom:20px;">
+Revenue by Category
+</h2>
+
+<canvas id="categoryChart"></canvas>
+
+</div>
+
+<div class="card">
+
+<h2 style="margin-bottom:20px;">
+Top Selling Products
+</h2>
+
+<div id="topProducts">
+
+<p style="opacity:.7;">
+Top products will appear here
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="usersSection" style="display:none;">
+
+
+
+<div class="topbar">
+
+<div>
+
+<h1 style="font-size:42px;">
+Users Management
+</h1>
+
+<p style="opacity:.7;margin-top:8px;">
+Manage registered customer accounts
+</p>
+
+</div>
+
+<input
+type="text"
+placeholder="Search users..."
+style="
+background:#10241c;
+border:none;
+padding:14px 18px;
+border-radius:14px;
+color:white;
+width:320px;
+outline:none;
+"
+/>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<p>Total Users</p>
+<h2 id="totalUsers">
+0
+</h2>
+</div>
+
+<div class="card">
+<p>Admin Accounts</p>
+<h2>
+0
+</h2>
+</div>
+
+<div class="card">
+<p>Regular Users</p>
+<h2 id="regularUsers">
+0
+</h2>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2 style="margin-bottom:25px;">
+Registered Users
+</h2>
+
+<div style="overflow-x:auto;">
+
+<table class="orders-modern-table">
+
+<thead>
+
+<tr>
+
+<th>PROFILE</th>
+<th>NAME</th>
+<th>EMAIL</th>
+<th>PHONE</th>
+<th>ROLE</th>
+<th>JOINED</th>
+<th>ACTION</th>
+
+</tr>
+
+</thead>
+
+<tbody id="usersTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="inventorySection" style="display:none;">
+
+<div class="topbar">
+
+<div>
+
+<h1 style="font-size:42px;">
+Inventory Management
+</h1>
+
+<p style="opacity:.7;margin-top:8px;">
+Manage your product inventory stocks
+</p>
+
+</div>
+
+<input
+type="text"
+id="searchInventory"
+placeholder="Search products..."
+style="
+background:#10241c;
+border:none;
+padding:14px 18px;
+border-radius:14px;
+color:white;
+width:320px;
+outline:none;
+"
+/>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<p>Total Products</p>
+<h2 id="inventoryProductsCount">
+0
+</h2>
+</div>
+
+<div class="card">
+<p>Total Stocks</p>
+<h2 id="inventoryStocks">
+0
+</h2>
+</div>
+
+<div class="card">
+<p>Low Stocks</p>
+<h2 id="inventoryLowStocks">
+0
+</h2>
+</div>
+
+<div class="card">
+<p>Out of Stock</p>
+<h2 id="inventoryOutStocks">
+0
+</h2>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2 style="
+font-size:32px;
+margin-bottom:20px;
+">
+Inventory Products
+</h2>
+
+<div style="overflow-x:auto;">
+
+<table class="orders-modern-table">
+
+<thead>
+
+<tr>
+
+<th>PRODUCT</th>
+<th>CATEGORY</th>
+<th>PRICE</th>
+<th>STOCK</th>
+<th>SOLD</th>
+<th>COLORS</th>
+<th>STATUS</th>
+<th>ACTION</th>
+
+</tr>
+
+</thead>
+
+<tbody id="inventoryTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="settingsSection" style="display:none;">
+
+<div class="topbar">
+<div>
+<h1 style="font-size:42px;">
+Admin Settings
+</h1>
+<p style="opacity:.7;margin-top:8px;">
+Manage your administrator account
+</p>
+</div>
+</div>
+
+<div class="card" style="max-width:800px;margin:auto;">
+
+<div style="
+display:flex;
+align-items:center;
+gap:25px;
+margin-bottom:30px;
+">
+
+<img
+id="adminProfileImage"
+src="/uploads/default-profile.png"
+style="
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid #00c896;
+"
+>
+
+<div>
+
+<h2 id="adminName">
+Admin
+</h2>
+
+<p id="adminEmail" style="opacity:.7;">
+admin@email.com
+</p>
+
+<div class="status-badge active" style="margin-top:10px;">
+Administrator
+</div>
+
+</div>
+
+</div>
+
+<div style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+">
+
+<input
+id="settingsName"
+type="text"
+placeholder="Admin Name"
+style="
+padding:14px;
+border:none;
+border-radius:12px;
+background:#10241c;
+color:white;
+"
+>
+
+<input
+id="settingsPhone"
+type="text"
+placeholder="Phone Number"
+style="
+padding:14px;
+border:none;
+border-radius:12px;
+background:#10241c;
+color:white;
+"
+>
+
+</div>
+
+<button
+onclick="saveAdminProfile()"
+class="submit-btn"
+style="margin-top:20px;"
+>
+Save Changes
+</button>
+
+<button
+onclick="logoutAdmin()"
+style="
+margin-top:12px;
+width:100%;
+padding:15px;
+border:none;
+border-radius:14px;
+background:#ff4d4d;
+color:white;
+font-weight:700;
+cursor:pointer;
+"
+>
+Logout Admin
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+<script>
+
+  
+
+
+const token = localStorage.getItem("adminToken");
+
+const user = JSON.parse(
+localStorage.getItem("adminUser")
+);
+
+if(!token || !user || user.role !== "admin"){
+
+alert("Admin access only");
+
+window.location.href = "/admin-login.html";
+
+}
+
+
+const socket = io("http://localhost:3000",{
+transports:["websocket","polling"]
+});
+
+socket.on("connect",()=>{
+
+console.log("✅ Admin Socket Connected");
+
+socket.emit("joinAdmin");
+
+});
+
+socket.on("newOrder",(notification)=>{
+
+  
+
+console.log("NEW ORDER:", notification);
+
+loadNotifications();
+
+const notificationList =
+document.getElementById("notificationList");
+
+
+
+const html = `
+
+<div
+class="notification-item unread"
+onclick="openNotificationOrder('${notification.orderId}','${notification._id}')"
+>
+
+<div style="
+display:flex;
+align-items:center;
+gap:12px;
+">
+
+<img
+src="${notification.itemImage || '/uploads/default-product.png'}"
+onerror="this.src='/uploads/default-product.png'"
+style="
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:14px;
+background:#111;
+"
+/>
+
+<div>
+
+<h3>${notification.customer}</h3>
+
+<p>${notification.message}</p>
+
+<p>
+<strong>Order ID:</strong>
+#${notification.orderId.slice(-5)}
+</p>
+
+<p>🛒 ${notification.itemName}</p>
+
+<p>Qty: ${notification.qty}</p>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+notificationList.insertAdjacentHTML(
+"afterbegin",
+html
+);
+
+showLiveNotification(
+notification.customer,
+`New Order - AED ${notification.total}`,
+notification.orderId
+);
+
+loadOrders();
+
+loadDashboardStats();
+
+});
+
+socket.on("orderStatusUpdated",(data)=>{
+
+console.log("STATUS UPDATED:", data);
+
+showLiveNotification(
+data.customer || "Customer",
+`Order Status: ${data.status}`,
+data.orderId
+);
+
+loadOrders();
+
+});
+
+function showLiveNotification(customer,message,orderId){
+
+const live =
+document.getElementById("liveNotification");
+
+const box =
+document.createElement("div");
+
+box.className = "live-box";
+
+box.style.cursor = "pointer";
+
+box.innerHTML = `
+
+🛒 ${customer}
+
+<small>
+${message}
+</small>
+
+`;
+
+box.onclick = ()=>{
+
+if(orderId){
+
+viewOrderItems(orderId);
+
+}
+
+};
+
+live.appendChild(box);
+
+setTimeout(()=>{
+
+box.remove();
+
+},5000);
+
+}
+
+async function openNotificationOrder(orderId, notificationId){
+
+try{
+
+const token = localStorage.getItem("adminToken");
+
+await fetch(
+"/api/notifications/read/" + notificationId,
+{
+method:"PUT",
+headers:{
+Authorization:`Bearer ${token}`
+}
+}
+);
+
+await loadNotifications();
+
+document
+.getElementById("notificationPanel")
+.classList.remove("show");
+
+document.getElementById("dashboardSection").style.display="none";
+document.getElementById("ordersSection").style.display="block";
+
+document
+.querySelectorAll(".menu button")
+.forEach(btn=>btn.classList.remove("active"));
+
+document
+.querySelectorAll(".menu button")[2]
+.classList.add("active");
+
+await viewOrderItems(orderId);
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+
+document
+.getElementById("notificationBtn")
+.addEventListener("click",()=>{
+
+document
+.getElementById("notificationPanel")
+.classList.toggle("show");
+
+});
+
+const productForm =
+document.getElementById("productForm");
+
+
+const previews = [
+
+{
+input:"img1",
+preview:"preview1"
+},
+
+{
+input:"img2",
+preview:"preview2"
+},
+
+{
+input:"img3",
+preview:"preview3"
+},
+
+{
+input:"img4",
+preview:"preview4"
+},
+
+{
+input:"img5",
+preview:"preview5"
+}
+
+];
+
+
+
+
+
+
+productForm.addEventListener("submit", async (e) => {
+
+e.preventDefault();
+
+const formData = new FormData();
+
+formData.append("name", document.getElementById("name").value);
+formData.append("price", document.getElementById("price").value);
+formData.append("oldPrice", document.getElementById("oldPrice").value);
+formData.append("stock", document.getElementById("stock").value);
+formData.append(
+"colors",
+document.getElementById("colors").value
+);
+formData.append("category", document.getElementById("category").value);
+formData.append("badge", document.getElementById("badge").value);
+formData.append("status",
+document.getElementById("status").value);
+formData.append("description", document.getElementById("description").value);
+
+formData.append(
+"video",
+window.uploadedVideoUrl || ""
+);
+
+const imageInputs = [
+
+document.getElementById("img1"),
+document.getElementById("img2"),
+document.getElementById("img3"),
+document.getElementById("img4"),
+document.getElementById("img5")
+
+];
+
+imageInputs.forEach(input=>{
+
+if(input.files[0]){
+
+formData.append(
+"galleryFiles",
+input.files[0]
+);
+
+}
+
+});
+
+
+
+
+
+try{
+
+const isEditing =
+window.editingProductId;
+
+const response = await fetch(
+
+isEditing
+? "/api/products/" + window.editingProductId
+: "/api/products",
+
+{
+method: isEditing ? "PUT" : "POST",
+
+headers:{
+Authorization:`Bearer ${token}`
+},
+
+body: formData
+}
+
+);
+
+const data = await response.json();
+
+if(data.success){
+
+   
+alert(
+window.editingProductId
+? "✅ Product Updated Successfully"
+: "✅ Product Added Successfully"
+);
+
+window.uploadedVideoUrl = "";
+
+document.getElementById(
+"currentVideoPreview"
+).style.display = "none";
+
+document.getElementById(
+"editVideoPreview"
+).src = "";
+
+
+
+productForm.reset();
+for(let i=1;i<=5;i++){
+
+const preview =
+document.getElementById(`preview${i}`);
+
+preview.src = "";
+preview.style.display = "none";
+
+}
+
+document.querySelectorAll(".upload-card").forEach(card=>{
+
+card.querySelector(".upload-icon").style.display =
+"flex";
+
+card.querySelector("p").style.display =
+"block";
+
+card.querySelector("span").style.display =
+"block";
+
+});
+window.editingProductId = null;
+
+
+
+
+
+
+
+
+
+document.getElementById("submitBtn").textContent =
+"Add Product";
+
+document.getElementById("cancelEditBtn").style.display =
+"none";
+
+
+
+}else{
+
+alert("❌ Failed to add product");
+
+}
+
+
+}catch(err){
+
+console.log(err);
+alert("Server Error");
+
+}
+
+});
+
+
+
+
+
+
+
+
+
+
+let salesChart;
+
+async function loadSalesChart(){
+
+try{
+
+const response =
+await fetch("/api/orders",{
+headers:{
+Authorization:`Bearer ${token}`
+}
+});
+
+if(!response.ok){
+
+throw new Error("Failed to load orders");
+
+}
+
+const orders =
+await response.json();
+
+console.log(orders);
+
+
+
+
+
+const labels = [];
+const totals = [];
+
+orders.forEach(order => {
+
+const date =
+new Date(order.createdAt)
+.toLocaleDateString();
+
+const existingIndex =
+labels.indexOf(date);
+
+if(existingIndex > -1){
+
+totals[existingIndex] +=
+order.total;
+
+}else{
+
+labels.push(date);
+
+totals.push(order.total);
+
+}
+
+});
+
+const ctx =
+document.getElementById("salesChart");
+
+if(salesChart){
+salesChart.destroy();
+}
+
+salesChart = new Chart(ctx, {
+
+type:"line",
+
+data:{
+
+labels,
+
+datasets:[{
+
+label:"Sales Revenue",
+
+data: totals,
+
+borderWidth:3,
+
+tension:.3,
+
+fill:true,
+backgroundColor:"rgba(0,200,150,.15)"
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+legend:{
+labels:{
+color:"white"
+}
+}
+},
+
+scales:{
+
+x:{
+ticks:{
+color:"white"
+}
+},
+
+y:{
+ticks:{
+color:"white"
+}
+}
+
+}
+
+}
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function loadDashboardStats(){
+
+try{
+
+const productsRes = await fetch("/api/products");
+const products = await productsRes.json();
+
+document.getElementById("totalProducts").textContent = products.length;
+
+const ordersRes = await fetch("/api/orders",{
+headers:{
+Authorization:`Bearer ${token}`
+}
+});
+const orders = await ordersRes.json();
+
+document.getElementById("totalOrders").textContent = orders.length;
+
+let revenue = 0;
+
+orders.forEach(order => {
+  revenue += order.total || 0;
+});
+
+document.getElementById("totalRevenue").textContent =
+  "AED " + revenue;
+
+  document.getElementById("analyticsRevenue").textContent =
+"AED " + revenue;
+
+document.getElementById("analyticsOrders").textContent =
+orders.length;
+
+document.getElementById("totalProductsAnalytics").textContent =
+products.length;
+
+const lowStockProducts =
+products.filter(product => product.stock <= 5);
+
+document.getElementById("lowStockCount").textContent =
+lowStockProducts.length;
+
+const bagsCount =
+products.filter(p => p.category === "Bags").length;
+
+const beautyCount =
+products.filter(p => p.category === "Beauty").length;
+
+const accessoriesCount =
+products.filter(p => p.category === "Accessories").length;
+
+const categoryCtx =
+document.getElementById("categoryChart");
+
+if(window.categoryChartInstance){
+window.categoryChartInstance.destroy();
+}
+
+window.categoryChartInstance = new Chart(categoryCtx, {
+
+type:"doughnut",
+
+data:{
+
+labels:[
+"Bags",
+"Beauty",
+"Accessories"
+],
+
+datasets:[{
+
+data:[
+bagsCount,
+beautyCount,
+accessoriesCount
+],
+
+backgroundColor:[
+"#00c896",
+"#3b82f6",
+"#a855f7"
+],
+
+borderWidth:0
+
+}]
+
+},
+
+options:{
+
+plugins:{
+
+legend:{
+labels:{
+color:"white"
+}
+}
+
+}
+
+}
+
+});
+
+const topProducts =
+[...products]
+.sort((a,b)=>(b.price || 0) - (a.price || 0))
+.slice(0,4);
+const recentOrdersTable =
+document.getElementById("recentOrdersTable");
+
+recentOrdersTable.innerHTML = "";
+
+orders
+.slice(0,5)
+.forEach(order => {
+
+recentOrdersTable.innerHTML += `
+
+<div class="top-product-item">
+
+<div>
+
+<h4 class="top-product-name">
+#${order._id.slice(-5)}
+</h4>
+
+<p class="top-product-category">
+${order.customerName || "No Name"}
+</p>
+
+</div>
+
+<div>
+
+<div class="top-product-price">
+AED ${order.total}
+</div>
+
+<div class="status-badge ${order.status?.toLowerCase()}">
+${order.status}
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+const topProductsContainer =
+document.getElementById("topProducts");
+
+topProductsContainer.innerHTML = "";
+
+topProducts.forEach((product,index)=>{
+
+topProductsContainer.innerHTML += `
+
+<div class="top-product-item">
+
+<div class="top-product-left">
+
+<div class="top-product-rank">
+${index + 1}
+</div>
+
+<img
+src="${product.images?.[0] || product.image || 'no bg.png'}"
+class="top-product-image"
+>
+
+<div>
+
+<h4 class="top-product-name">
+${product.name}
+</h4>
+
+<p class="top-product-category">
+${product.category}
+</p>
+
+</div>
+
+</div>
+
+<div class="top-product-price">
+AED ${product.price}
+</div>
+
+</div>
+
+`;
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+
+
+async function loadProducts(){
+
+try{
+
+const response = await fetch("/api/products");
+
+if(!response.ok){
+
+throw new Error("Failed to load products");
+
+}
+
+const products = await response.json();
+
+const searchValue =
+
+document.getElementById("searchInput")
+?.value.toLowerCase() || "";
+
+const productsTable =
+document.getElementById("productsTable");
+
+productsTable.innerHTML = "";
+
+productsTable.innerHTML = '<div class="products-table"></div>';
+
+const table =
+productsTable.querySelector(".products-table");
+
+let selectedCategory =
+window.selectedCategory || "All";
+
+products
+.filter(product => {
+
+const matchSearch =
+
+(product.name || "")
+.toLowerCase()
+.includes(searchValue)
+
+||
+
+(product.category || "")
+.toLowerCase()
+.includes(searchValue);
+
+const matchCategory =
+
+selectedCategory === "All"
+
+||
+
+product.category.toLowerCase() ===
+selectedCategory.toLowerCase();
+
+return matchSearch && matchCategory;
+
+})
+.forEach(product => {
+
+table.innerHTML += `
+
+<div class="product-item">
+
+<div class="product-left">
+
+<img src="${product.images?.[0] || product.image || 'no bg.png'}" alt="">
+
+<div class="product-info">
+
+<h3>${product.name || "No Name"}</h3>
+
+<p>AED ${product.price}</p>
+
+<p>${product.category}</p>
+<div class="status-badge ${product.status?.toLowerCase().replace(/\s+/g,'-')}">
+${product.status || "ACTIVE"}
+</div>
+</div>
+
+</div>
+
+<div>
+
+<button
+class="edit-btn"
+onclick="editProduct('${product._id}')">
+Edit
+</button>
+
+<button
+class="delete-btn"
+onclick="deleteProduct('${product._id}')">
+Delete
+</button>
+
+</div>
+
+</div>
+
+
+
+`;
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+
+
+document.getElementById("searchInput")
+.addEventListener("input", loadProducts);
+
+document.getElementById("searchOrders")
+.addEventListener("input", loadOrders);
+
+document.getElementById("statusFilter")
+.addEventListener("change", loadOrders);
+
+
+async function editProduct(id){
+
+  
+
+    
+
+try{
+
+const response = await fetch("/api/products/" + id);
+
+const product = await response.json();
+
+previews.forEach((item,index)=>{
+
+const preview =
+document.getElementById(item.preview);
+
+if(product.images && product.images[index]){
+
+preview.src = product.images[index];
+
+preview.style.display = "block";
+
+const card =
+preview.closest(".upload-card");
+
+card.querySelector(".upload-icon").style.display =
+"none";
+
+card.querySelector("p").style.display =
+"none";
+
+card.querySelector("span").style.display =
+"none";
+
+}else{
+
+preview.style.display = "none";
+
+const card =
+preview.closest(".upload-card");
+
+card.querySelector(".upload-icon").style.display =
+"flex";
+
+card.querySelector("p").style.display =
+"block";
+
+card.querySelector("span").style.display =
+"block";
+
+}
+
+});
+
+
+
+document.getElementById("description").value =
+product.description;
+
+document.getElementById("name").value =
+product.name;
+
+document.getElementById("price").value =
+product.price;
+
+document.getElementById("oldPrice").value =
+product.oldPrice;
+
+document.getElementById("stock").value =
+product.stock;
+
+document.getElementById("category").value =
+product.category;
+
+document.getElementById("badge").value =
+product.badge;
+
+document.getElementById("status").value =
+product.status || "ACTIVE";
+
+
+if(product.video){
+
+window.uploadedVideoUrl =
+product.video;
+
+document.getElementById(
+"currentVideoPreview"
+).style.display = "block";
+
+document.getElementById(
+"editVideoPreview"
+).src = product.video;
+
+}else{
+
+document.getElementById(
+"currentVideoPreview"
+).style.display = "none";
+
+}
+
+window.editingProductId = id;
+
+document.getElementById("submitBtn").textContent = "Save Update";
+
+document.getElementById("cancelEditBtn").style.display = "block";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function deleteProduct(id){
+
+   
+try{
+
+await fetch("/api/products/" + id,{
+method:"DELETE",
+headers:{
+Authorization:`Bearer ${token}`
+}
+});
+
+loadProducts();
+
+loadDashboardStats();
+loadSalesChart();
+loadOrders();
+
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+function showSection(sectionId,event){
+
+document.getElementById("dashboardSection").style.display = "none";
+
+document.getElementById("productsSection").style.display = "none";
+
+document.getElementById("ordersSection").style.display = "none";
+
+document.getElementById("analyticsSection").style.display = "none";
+
+document.getElementById("usersSection").style.display = "none";
+
+document.getElementById("inventorySection").style.display = "none";
+
+document.getElementById("settingsSection").style.display = "none";
+
+document.getElementById(sectionId).style.display = "block";
+
+document
+.querySelectorAll(".menu button")
+.forEach(btn => btn.classList.remove("active"));
+
+event.currentTarget.classList.add("active");
+
+}
+
+
+async function loadInventory(){
+
+try{
+
+const response =
+await fetch("/api/products");
+
+const products =
+await response.json();
+
+const table =
+document.getElementById("inventoryTable");
+
+table.innerHTML = "";
+
+let totalStocks = 0;
+let lowStocks = 0;
+let outStocks = 0;
+
+document.getElementById(
+"inventoryProductsCount"
+).textContent = products.length;
+
+products
+.filter(product=>{
+
+const search =
+
+document
+.getElementById("searchInventory")
+.value
+.toLowerCase();
+
+return (
+
+product.name?.toLowerCase().includes(search)
+
+||
+
+product.category?.toLowerCase().includes(search)
+
+);
+
+})
+.forEach(product=>{
+
+totalStocks += product.stock || 0;
+
+if(product.stock <= 5 && product.stock > 0){
+lowStocks++;
+}
+
+if(product.stock <= 0){
+outStocks++;
+}
+
+let statusClass = "active";
+
+if(product.stock <= 5){
+statusClass = "sale";
+}
+
+if(product.stock <= 0){
+statusClass = "out-of-stock";
+}
+
+table.innerHTML += `
+
+<tr>
+
+<td>
+
+<div style="
+display:flex;
+align-items:center;
+gap:14px;
+">
+
+<img
+src="${
+product.images?.[0]
+||
+product.image
+||
+'no bg.png'
+}"
+
+style="
+width:70px;
+height:70px;
+border-radius:16px;
+object-fit:cover;
+background:#000;
+"
+/>
+
+<div>
+
+<h3 style="margin-bottom:6px;">
+${product.name}
+</h3>
+
+<p style="
+opacity:.6;
+font-size:13px;
+">
+${product.badge || "No Badge"}
+</p>
+
+</div>
+
+</div>
+
+</td>
+
+<td>
+${product.category}
+</td>
+
+<td>
+AED ${product.price}
+</td>
+
+<td>
+
+<strong style="
+color:#00c896;
+font-size:18px;
+">
+${product.stock}
+</strong>
+
+</td>
+
+<td>
+${product.sold || 0}
+</td>
+
+<td>
+${product.colors?.join(", ") || "No Colors"}
+</td>
+
+<td>
+
+<div class="status-badge ${statusClass}">
+${product.status || "ACTIVE"}
+</div>
+
+</td>
+
+<td>
+
+<button
+class="edit-btn"
+onclick="editProduct('${product._id}')">
+Edit
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById(
+"inventoryStocks"
+).textContent = totalStocks;
+
+document.getElementById(
+"inventoryLowStocks"
+).textContent = lowStocks;
+
+document.getElementById(
+"inventoryOutStocks"
+).textContent = outStocks;
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function loadOrders(){
+
+  
+
+try{
+
+const response =
+await fetch("/api/orders",{
+headers:{
+Authorization:`Bearer ${token}`
+}
+});
+
+if(!response.ok){
+
+throw new Error("Failed to load orders");
+
+}
+
+const orders =
+await response.json();
+
+
+
+
+document.getElementById("ordersTotalCount").textContent =
+orders.length;
+
+const pendingOrders =
+orders.filter(order =>
+(order.status || "").toLowerCase() === "pending"
+);
+
+document.getElementById("pendingOrdersCount").textContent =
+pendingOrders.length;
+
+const deliveredOrders =
+orders.filter(order =>
+(order.status || "").toLowerCase() === "delivered"
+);
+
+document.getElementById("deliveredOrdersCount").textContent =
+deliveredOrders.length;
+
+let ordersRevenue = 0;
+
+const searchValue =
+
+document
+.getElementById("searchOrders")
+?.value
+.toLowerCase() || "";
+
+const statusValue =
+
+document
+.getElementById("statusFilter")
+?.value || "ALL";
+
+const filteredOrders =
+
+orders.filter(order => {
+
+const shortId =
+order._id
+? order._id.slice(-5).toLowerCase()
+: "";
+
+const fullId =
+order._id
+? order._id.toLowerCase()
+: "";
+
+const customerName =
+(order.customerName || "")
+.toLowerCase();
+
+const customerPhone =
+(order.phone || "")
+.toLowerCase();
+
+const customerEmail =
+(order.email || "")
+.toLowerCase();
+
+const matchSearch =
+
+customerName.includes(searchValue)
+
+||
+
+customerPhone.includes(searchValue)
+
+||
+
+customerEmail.includes(searchValue)
+
+||
+
+shortId.includes(searchValue)
+
+||
+
+fullId.includes(searchValue);
+
+const matchStatus =
+
+statusValue === "ALL"
+
+||
+
+(order.status || "").toLowerCase() ===
+statusValue.toLowerCase();
+
+return matchSearch && matchStatus;
+
+});
+
+const ordersTable =
+document.getElementById("ordersTable");
+
+ordersTable.innerHTML = "";
+
+filteredOrders.forEach(order => {
+
+  ordersRevenue += order.total || 0;
+
+ordersTable.innerHTML += `
+
+<tr>
+
+<td>
+#${order._id.slice(-5)}
+</td>
+
+<td>
+
+<div style="
+display:flex;
+align-items:center;
+gap:12px;
+">
+
+<img
+src="${
+order.profileImage &&
+order.profileImage !== "undefined"
+? `${order.profileImage}`
+: 'https://via.placeholder.com/50'
+}"
+
+style="
+width:50px;
+height:50px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #00c896;
+background:#111;
+"
+/>
+
+<div>
+
+<div style="
+font-weight:700;
+font-size:14px;
+">
+${order.customerName || "No Name"}
+</div>
+
+<div style="
+font-size:12px;
+opacity:.7;
+margin-top:4px;
+">
+${order.email || "No Email"}
+</div>
+
+</div>
+
+</div>
+
+</td>
+
+<td>
+${order.phone || "No Phone"}
+</td>
+
+<td>
+AED ${order.total}
+</td>
+
+<td>
+${order.paymentMethod || "COD"}
+</td>
+
+<td>
+
+<select
+class="status-select"
+onchange="updatePaymentStatus('${order._id}', this.value)"
+>
+
+<option value="Unpaid"
+${order.paymentStatus === "Unpaid" ? "selected" : ""}>
+Unpaid
+</option>
+
+<option value="Pending"
+${order.paymentStatus === "Pending" ? "selected" : ""}>
+Pending
+</option>
+
+<option value="Paid"
+${order.paymentStatus === "Paid" ? "selected" : ""}>
+Paid
+</option>
+
+</select>
+
+</td>
+
+<td>
+
+<button
+onclick="viewOrderItems('${order._id}')"
+style="
+padding:10px 16px;
+border:none;
+border-radius:12px;
+background:#00c896;
+color:white;
+font-weight:700;
+cursor:pointer;
+">
+View Items
+</button>
+
+</td>
+
+<td>
+
+<select
+class="status-select"
+onchange="updateOrderStatus('${order._id}', this.value)"
+>
+
+<option value="Pending"
+${order.status === "Pending" ? "selected" : ""}>
+Pending
+</option>
+
+<option value="Processing"
+${order.status === "Processing" ? "selected" : ""}>
+Processing
+</option>
+
+<option value="Shipped"
+${order.status === "Shipped" ? "selected" : ""}>
+Shipped
+</option>
+
+<option value="Out For Delivery"
+${order.status === "Out For Delivery" ? "selected" : ""}>
+Out For Delivery
+</option>
+
+<option value="Delivered"
+${order.status === "Delivered" ? "selected" : ""}>
+Delivered
+</option>
+
+<option value="Cancelled"
+${order.status === "Cancelled" ? "selected" : ""}>
+Cancelled
+</option>
+
+</select>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("ordersRevenue").textContent =
+"AED " + ordersRevenue;
+
+
+
+
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function viewOrderItems(orderId){
+
+try{
+
+
+
+const token =
+localStorage.getItem("adminToken");
+
+const response =
+await fetch(`/api/orders/${orderId}`,{
+headers:{
+Authorization:`Bearer ${token}`
+}
+});
+
+if(!response.ok){
+throw new Error("Failed to load order");
+}
+
+const order =
+await response.json();
+
+if(!order){
+
+alert("Order not found");
+return;
+
+}
+
+const panel =
+document.getElementById("orderDetailsPanel");
+
+const content =
+document.getElementById("orderDetailsContent");
+
+panel.classList.add("show");
+
+let itemsHTML = "";
+
+(order.items || []).forEach(item=>{
+
+itemsHTML += `
+
+<div style="
+display:flex;
+gap:14px;
+margin-bottom:20px;
+padding-bottom:20px;
+border-bottom:1px solid rgba(255,255,255,.08);
+">
+
+<img
+src="${
+item.image ||
+item.images?.[0] ||
+'no bg.png'
+}"
+style="
+width:90px;
+height:90px;
+object-fit:cover;
+border-radius:16px;
+background:#111;
+"
+/>
+
+<div>
+
+<h3 style="margin-bottom:8px;">
+${item.name || "Product"}
+</h3>
+
+<p>Price: AED ${item.price}</p>
+
+<p>Qty: ${item.qty}</p>
+
+<p>Total: AED ${(item.price || 0) * (item.qty || 1)}</p>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+content.innerHTML = `
+
+<div style="margin-bottom:25px;">
+
+<div style="
+background:rgba(0,200,150,.12);
+padding:10px 14px;
+border-radius:12px;
+margin-bottom:12px;
+border:1px solid rgba(0,200,150,.3);
+">
+
+<strong style="color:#00c896;">
+📦 Order ID:
+#${order._id.slice(-5)}
+</strong>
+
+</div>
+
+<p>${order.email || "No Email"}</p>
+
+<p>${order.phone || "No Phone"}</p>
+
+<p style="margin-top:10px;">
+<strong>Address:</strong><br>
+${order.address || ""}
+</p>
+
+<p>
+<strong>Emirate:</strong>
+${order.emirate || "N/A"}
+</p>
+
+<p>
+<strong>Area:</strong>
+${order.area || "N/A"}
+</p>
+
+<p>
+<strong>Building:</strong>
+${order.building || "N/A"}
+</p>
+
+<p>
+<strong>Apartment:</strong>
+${order.apartment || "N/A"}
+</p>
+
+<p style="margin-top:10px;">
+<strong>Status:</strong>
+${order.status || "Pending"}
+</p>
+
+
+<p style="margin-top:10px;">
+<strong>Payment Method:</strong>
+${order.paymentMethod || "COD"}
+</p>
+
+<p style="margin-top:10px;">
+<strong>Payment Status:</strong>
+${order.paymentStatus || "Unpaid"}
+</p>
+
+
+${
+order.trackingNumber
+?
+
+`<p style="margin-top:10px;color:#00c896;">
+<strong>Tracking Number:</strong>
+${order.trackingNumber}
+</p>`
+
+:
+
+""
+}
+
+
+<div style="
+display:flex;
+gap:10px;
+margin-top:20px;
+">
+
+<button
+onclick="printInvoice('${order._id}')"
+style="
+flex:1;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#00c896;
+color:white;
+font-weight:700;
+cursor:pointer;
+">
+📄 Print Invoice
+</button>
+
+</div>
+
+</div>
+
+
+
+${itemsHTML}
+
+<div style="
+margin-top:20px;
+font-size:22px;
+font-weight:700;
+color:#00c896;
+">
+
+Total: AED ${order.total}
+
+</div>
+
+`;
+
+}catch(err){
+
+console.log(err);
+
+alert("Failed to load order details");
+
+}
+
+}
+
+async function printInvoice(orderId){
+
+try{
+
+const token =
+localStorage.getItem("adminToken");
+
+const response =
+await fetch(`/api/orders/${orderId}`,{
+headers:{
+Authorization:`Bearer ${token}`
+}
+});
+
+const order =
+await response.json();
+
+const invoiceWindow =
+window.open("", "_blank");
+
+invoiceWindow.document.write(`
+
+<html>
+
+<head>
+
+<title>Invoice #${order._id.slice(-5)}</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+padding:30px;
+color:#111;
+}
+
+.header{
+text-align:center;
+margin-bottom:30px;
+}
+
+.logo{
+font-size:30px;
+font-weight:bold;
+}
+
+.order-info{
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+table th,
+table td{
+border:1px solid #ddd;
+padding:10px;
+text-align:left;
+}
+
+table th{
+background:#f5f5f5;
+}
+
+.product-img{
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.total{
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+text-align:right;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+UNDERCOVER-OG 
+</div>
+
+
+<p style="
+margin-top:5px;
+color:#666;
+font-size:14px;
+">
+Thank you for shopping with us
+</p>
+
+</div>
+
+<div class="order-info">
+
+<p><strong>Order #:</strong> ${order._id.slice(-5)}</p>
+
+<p><strong>Customer:</strong> ${order.customerName}</p>
+
+<p><strong>Email:</strong> ${order.email}</p>
+
+<p><strong>Phone:</strong> ${order.phone}</p>
+
+
+<p><strong>Address:</strong> ${order.address || "No Address"}</p>
+
+<p><strong>Status:</strong> ${order.status}</p>
+
+<p>
+<strong>Payment Method:</strong>
+${order.paymentMethod || "COD"}
+</p>
+
+<p>
+<strong>Payment Status:</strong>
+${order.paymentStatus || "Unpaid"}
+</p>
+
+<p><strong>Tracking Number:</strong> ${order.trackingNumber || "N/A"}</p>
+
+<p>
+<strong>Invoice Number:</strong>
+INV-${order._id.slice(-5)}
+</p>
+
+<p>
+<strong>Print Date:</strong>
+${new Date().toLocaleString()}
+</p>
+
+</div>
+
+<hr style="margin-top:40px;">
+
+<div style="
+text-align:center;
+margin-top:20px;
+font-size:14px;
+color:#666;
+">
+
+Thank you for shopping with us ❤️
+
+<br><br>
+
+
+
+</div>
+
+<table>
+
+<tr>
+
+<th>Image</th>
+<th>Product</th>
+<th>Qty</th>
+<th>Price</th>
+<th>Total</th>
+
+</tr>
+
+${order.items.map(item=>`
+
+<tr>
+
+<td>
+
+<img
+src="${item.image}"
+class="product-img"
+>
+
+</td>
+
+<td>${item.name}</td>
+
+<td>${item.qty}</td>
+
+<td>AED ${item.price}</td>
+
+<td>AED ${item.price * item.qty}</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+<div class="total">
+
+Total: AED ${order.total}
+
+</div>
+
+<script>
+window.onload = function(){
+window.print();
+}
+<\/script>
+
+</body>
+
+</html>
+
+`);
+
+invoiceWindow.document.close();
+
+}catch(err){
+
+console.log(err);
+
+alert("Failed to print invoice");
+
+}
+
+}
+
+
+async function updatePaymentStatus(orderId,paymentStatus){
+
+try{
+
+const response = await fetch(
+"/api/orders/payment/" + orderId,
+{
+method:"PUT",
+headers:{
+"Content-Type":"application/json",
+Authorization:`Bearer ${token}`
+},
+body:JSON.stringify({ paymentStatus })
+}
+);
+
+const data = await response.json();
+
+if(data.success){
+
+loadOrders();
+
+alert("✅ Payment Status Updated");
+
+}
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+
+async function updateOrderStatus(id, status){
+
+  
+
+let trackingNumber = null;
+
+if(status === "Shipped"){
+
+trackingNumber = prompt(
+"Enter Tracking Number:",
+"TRK" + Date.now()
+);
+
+if(!trackingNumber){
+return;
+}
+
+}
+
+try{
+
+const token =
+localStorage.getItem("adminToken");
+
+const bodyData = {
+status
+};
+
+if(trackingNumber){
+bodyData.trackingNumber = trackingNumber;
+}
+
+const response = await fetch(
+"/api/orders/" + id,
+{
+method:"PUT",
+headers:{
+"Content-Type":"application/json",
+Authorization:`Bearer ${token}`
+},
+body:JSON.stringify(bodyData)
+}
+);
+
+const data = await response.json();
+
+if(response.ok){
+
+showLiveNotification(
+"Order Updated",
+status
+);
+
+await loadOrders();
+
+}else{
+alert(data.message || "Update failed");
+}
+
+}catch(err){
+console.log(err);
+alert("Server Error");
+}
+
+}
+
+async function loadUsers(){
+
+try{
+
+const response = await fetch("/api/users",{
+headers:{
+Authorization:`Bearer ${token}`
+}
+});
+
+if(!response.ok){
+
+throw new Error("Failed to load users");
+
+}
+
+const users = await response.json();
+
+const usersTable =
+document.getElementById("usersTable");
+
+usersTable.innerHTML = "";
+
+document.getElementById("totalUsers").textContent =
+users.length;
+
+const regularUsers =
+users.filter(user => user.role !== "admin");
+
+document.getElementById("regularUsers").textContent =
+regularUsers.length;
+
+users.forEach(user=>{
+
+usersTable.innerHTML += `
+
+<tr>
+
+<td>
+
+<img
+src="${
+user.profileImage ||
+'https://via.placeholder.com/50'
+}"
+style="
+width:55px;
+height:55px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #00c896;
+background:#111;
+"
+/>
+
+</td>
+
+<td>
+${user.name || "No Name"}
+</td>
+
+<td>
+${user.email || "No Email"}
+</td>
+
+<td>
+${user.phone || "No Phone"}
+</td>
+
+<td>
+
+<div class="status-badge active">
+${user.role || "User"}
+</div>
+
+</td>
+
+<td>
+${new Date(user.createdAt).toLocaleDateString()}
+</td>
+
+<td>
+
+<button
+class="delete-btn"
+onclick="deleteUser('${user._id}')">
+Delete
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function deleteUser(id){
+
+try{
+
+const confirmDelete =
+confirm("Delete this user?");
+
+if(!confirmDelete) return;
+
+await fetch("/api/users/" + id,{
+method:"DELETE",
+headers:{
+Authorization:`Bearer ${token}`
+}
+});
+
+loadUsers();
+
+loadNotifications();
+
+
+
+
+
+alert("✅ User deleted");
+
+}catch(err){
+
+console.log(err);
+
+alert("❌ Failed to delete user");
+
+}
+
+}
+
+function cancelEdit(){
+
+window.uploadedVideoUrl = "";
+
+productForm.reset();
+
+window.editingProductId = null;
+
+previews.forEach(item=>{
+
+document.getElementById(item.preview).style.display = "none";
+
+});
+
+document.getElementById("submitBtn").textContent =
+"Add Product";
+
+document.getElementById(
+"currentVideoPreview"
+).style.display = "none";
+
+document.getElementById(
+"editVideoPreview"
+).src = "";
+
+document.getElementById("cancelEditBtn").style.display =
+"none";
+
+}
+
+function removeCurrentVideo(){
+
+window.uploadedVideoUrl = "";
+
+document.getElementById(
+"editVideoPreview"
+).src = "";
+
+document.getElementById(
+"currentVideoPreview"
+).style.display = "none";
+
+alert("✅ Video Removed");
+
+}
+
+
+
+function updateClock(){
+
+const now = new Date();
+
+document.getElementById("liveClock").innerHTML =
+
+now.toLocaleDateString() + " • " +
+
+now.toLocaleTimeString();
+
+}
+
+async function loadRecentVideos(){
+
+try{
+
+const response = await fetch("/api/products");
+
+const products = await response.json();
+
+const videoList =
+document.getElementById("videoList");
+
+videoList.innerHTML = "";
+
+const videos = products.filter(product => product.video);
+
+if(videos.length === 0){
+
+videoList.innerHTML = `
+<p style="opacity:.6;">
+No videos uploaded yet
+</p>
+`;
+
+return;
+
+}
+
+videos.reverse().slice(0,5).forEach(product=>{
+
+videoList.innerHTML += `
+
+<div class="video-item">
+
+<video
+src="${product.video}"
+class="video-thumb"
+muted
+></video>
+
+<div class="video-info">
+
+<h4>${product.name}</h4>
+
+<p>Uploaded Video</p>
+
+</div>
+
+<div class="video-play">
+<i class="fa-solid fa-play"></i>
+</div>
+
+</div>
+
+`;
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+
+
+async function loadNotifications(){
+
+try{
+
+const token = localStorage.getItem("adminToken");
+
+if(!token){
+
+document.getElementById(
+"notificationCount"
+).textContent = "0";
+
+return;
+
+}
+
+const response = await fetch(
+"/api/notifications",
+{
+headers:{
+Authorization:`Bearer ${token}`
+}
+}
+);
+
+if(!response.ok){
+
+console.log(
+"Notification API Error:",
+response.status
+);
+
+document.getElementById(
+"notificationCount"
+).textContent = "0";
+
+return;
+
+}
+
+const notifications =
+await response.json();
+
+if(!Array.isArray(notifications)){
+
+console.log(
+"Notifications not array:",
+notifications
+);
+
+document.getElementById(
+"notificationCount"
+).textContent = "0";
+
+return;
+
+}
+
+const notificationList =
+document.getElementById(
+"notificationList"
+);
+
+notificationList.innerHTML = "";
+
+notifications.forEach(notification=>{
+
+notificationList.innerHTML += `
+
+<div
+class="notification-item ${notification.read ? 'read' : 'unread'}"
+onclick="openNotificationOrder('${notification.orderId}','${notification._id}')"
+>
+
+<div style="
+display:flex;
+align-items:center;
+gap:12px;
+">
+
+<img
+src="${notification.itemImage || '/uploads/default-product.png'}"
+onerror="this.src='/uploads/default-product.png'"
+style="
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:14px;
+background:#111;
+"
+/>
+
+<div>
+
+<h3>${notification.customer || "Customer"}</h3>
+
+<p>${notification.message || ""}</p>
+
+<p>🛒 ${notification.itemName || "Product"}</p>
+
+<p>Qty: ${notification.qty || 1}</p>
+
+<small>
+${new Date(notification.time).toLocaleString()}
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+
+
+const unreadCount =
+notifications.filter(n => !n.read).length;
+
+document.getElementById("notificationCount").textContent =
+unreadCount;
+
+}catch(err){
+
+console.log(
+"Notification Error:",
+err
+);
+
+document.getElementById(
+"notificationCount"
+).textContent = "0";
+
+}
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+loadDashboardStats();
+loadSalesChart();
+loadProducts();
+loadOrders();
+loadRecentVideos();
+loadInventory();
+loadUsers();
+loadNotifications();
+loadAdminSettings();
+
+
+
+
+document
+.getElementById("videoFile")
+.addEventListener("change", async function(){
+
+const file = this.files[0];
+
+if(!file) return;
+
+const formData = new FormData();
+
+formData.append("video", file);
+
+try{
+
+const response = await fetch(
+"/api/upload-video",
+{
+method:"POST",
+body: formData
+}
+);
+
+const data = await response.json();
+
+if(data.success){
+
+window.uploadedVideoUrl = data.video.url;
+
+alert("✅ Video Uploaded");
+
+const videoList =
+document.getElementById("videoList");
+
+videoList.innerHTML = `
+
+<div class="video-item">
+
+<video
+src="${data.video.url}"
+class="video-thumb"
+muted
+></video>
+
+<div class="video-info">
+
+<h4>${data.video.name}</h4>
+
+<p>
+${Math.round(data.video.size / 1024 / 1024)}MB
+</p>
+
+</div>
+
+<div class="video-play">
+<i class="fa-solid fa-play"></i>
+</div>
+
+</div>
+
+`;
+
+}else{
+
+alert("❌ Upload Failed");
+
+}
+
+}catch(err){
+
+console.log(err);
+
+alert("Server Error");
+
+}
+
+});
+
+
+
+
+previews.forEach(item=>{
+
+const input =
+document.getElementById(item.input);
+
+const preview =
+document.getElementById(item.preview);
+
+input.addEventListener("change",()=>{
+
+const file = input.files[0];
+
+if(file){
+
+preview.src =
+URL.createObjectURL(file);
+
+preview.style.display = "block";
+
+const card =
+preview.closest(".upload-card");
+
+card.querySelector(".upload-icon").style.display =
+"none";
+
+card.querySelector("p").style.display =
+"none";
+
+card.querySelector("span").style.display =
+"none";
+
+}
+
+});
+
+});
+
+
+
+
+
+
+
+
+
+function closeOrderPanel(){
+
+
+
+
+document
+.getElementById("orderDetailsPanel")
+.classList.remove("show");
+
+}
+
+document
+.getElementById("searchOrders")
+.addEventListener("input", loadOrders);
+
+
+
+
+document
+.getElementById("searchInventory")
+.addEventListener("input", loadInventory);
+
+
+
+function removeCurrentVideo(){
+
+const preview =
+document.getElementById(
+"currentVideoPreview"
+);
+
+const video =
+document.getElementById(
+"editVideoPreview"
+);
+
+if(preview){
+preview.style.display = "none";
+}
+
+if(video){
+video.src = "";
+}
+
+}
+
+
+async function loadNotifications(){
+
+try{
+
+const token =
+localStorage.getItem("adminToken");
+
+console.log("ADMIN TOKEN:", token);
+
+if(!token){
+
+console.log("No token found");
+
+return;
+
+}
+
+const response =
+await fetch("/api/notifications",{
+headers:{
+Authorization:`Bearer ${token}`
+}
+});
+
+if(!response.ok){
+
+console.log("Notification API Error");
+
+return;
+
+}
+
+const notifications =
+await response.json();
+
+const notificationList =
+document.getElementById("notificationList");
+
+notificationList.innerHTML = "";
+
+notifications.forEach(notification=>{
+
+notificationList.innerHTML += `
+
+<div
+class="notification-item ${notification.read ? 'read' : 'unread'}"
+onclick="openNotificationOrder('${notification.orderId}','${notification._id}')"
+style="
+cursor:pointer;
+display:flex;
+gap:12px;
+align-items:center;
+"
+>
+
+<img
+src="${notification.itemImage || '/uploads/default-product.png'}"
+onerror="this.src='/uploads/default-product.png'"
+style="
+width:70px;
+height:70px;
+object-fit:cover;
+border-radius:12px;
+background:#111;
+"
+/>
+
+<div>
+
+<h3>${notification.customer}</h3>
+
+<p>${notification.message}</p>
+
+<p style="
+color:#00c896;
+font-weight:700;
+margin:5px 0;
+">
+📦 Order ID:
+#${notification.orderId.slice(-5)}
+</p>
+
+<p style="
+color:#00c896;
+font-weight:700;
+margin-top:4px;
+">
+🛒 ${notification.itemName || "Product"}
+</p>
+
+<p>
+Qty: ${notification.qty}
+</p>
+
+<p>
+${new Date(notification.time).toLocaleString()}
+</p>
+
+<small>
+${new Date(notification.time).toLocaleString()}
+</small>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+
+
+const unreadCount =
+notifications.filter(n => !n.read).length;
+
+document.getElementById(
+"notificationCount"
+).textContent = unreadCount;
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+function logoutAdmin(){
+
+localStorage.removeItem("adminToken");
+localStorage.removeItem("adminUser");
+
+window.location.href =
+"/admin-login.html";
+
+}
+
+function loadAdminSettings(){
+
+const user =
+JSON.parse(
+localStorage.getItem("adminUser")
+);
+
+if(!user) return;
+
+document.getElementById("adminName").textContent =
+user.name || "Admin";
+
+document.getElementById("adminEmail").textContent =
+user.email || "";
+
+document.getElementById("settingsName").value =
+user.name || "";
+
+document.getElementById("settingsPhone").value =
+user.phone || "";
+
+if(user.profileImage){
+
+document.getElementById("adminProfileImage").src =
+user.profileImage;
+
+}
+
+}
+
+function logoutAdmin(){
+
+localStorage.removeItem("adminToken");
+localStorage.removeItem("adminUser");
+
+window.location.href =
+"/admin-login.html";
+
+}
+
+</script>
+
+</body>
+</html>

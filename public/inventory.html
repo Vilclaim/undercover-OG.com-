@@ -1,0 +1,523 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Inventory Management</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:
+radial-gradient(circle at top left,#0f2d22,#07120d 50%);
+color:white;
+display:flex;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+.sidebar{
+width:260px;
+background:#0d1f18;
+padding:25px;
+border-right:1px solid rgba(255,255,255,.08);
+position:fixed;
+left:0;
+top:0;
+height:100vh;
+}
+
+.logo{
+font-size:28px;
+font-weight:800;
+color:#00c896;
+margin-bottom:40px;
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.menu button{
+background:rgba(255,255,255,.06);
+border:none;
+color:white;
+padding:14px;
+border-radius:14px;
+cursor:pointer;
+font-weight:600;
+text-align:left;
+display:flex;
+align-items:center;
+gap:12px;
+transition:.3s;
+}
+
+.menu button:hover,
+.menu button.active{
+background:linear-gradient(
+90deg,
+#00c896,
+#00e0aa
+);
+color:#04110d;
+}
+
+.main{
+flex:1;
+margin-left:260px;
+padding:30px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+padding:22px;
+background:rgba(255,255,255,.04);
+border-radius:24px;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-bottom:30px;
+}
+
+.card{
+background:rgba(255,255,255,.04);
+padding:25px;
+border-radius:24px;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.card h2{
+font-size:32px;
+margin-top:10px;
+color:#00c896;
+}
+
+.inventory-table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+.inventory-table th{
+padding:16px;
+text-align:left;
+border-bottom:1px solid rgba(255,255,255,.08);
+opacity:.7;
+}
+
+.inventory-table td{
+padding:18px 16px;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.inventory-table tr:hover{
+background:rgba(255,255,255,.03);
+}
+
+.product-box{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.product-box img{
+width:70px;
+height:70px;
+border-radius:16px;
+object-fit:cover;
+background:#000;
+}
+
+.status-badge{
+padding:7px 14px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+display:inline-block;
+}
+
+.active{
+background:#00c896;
+color:#04110d;
+}
+
+.low{
+background:#f59e0b;
+color:white;
+}
+
+.out{
+background:#ff4d4d;
+color:white;
+}
+
+.search-box{
+padding:14px;
+border:none;
+border-radius:14px;
+background:#10241c;
+color:white;
+width:320px;
+outline:none;
+}
+
+.restock-btn{
+padding:10px 16px;
+border:none;
+border-radius:12px;
+background:#00c896;
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+TRENDSETTLE
+</div>
+
+<div class="menu">
+
+<button onclick="window.location.href='admin.html'">
+<i class="fa-solid fa-chart-line"></i>
+Dashboard
+</button>
+
+<button onclick="window.location.href='users.html'">
+<i class="fa-solid fa-users"></i>
+Users
+</button>
+
+<button class="active">
+<i class="fa-solid fa-warehouse"></i>
+Inventory
+</button>
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="topbar">
+
+<div>
+
+<h1 style="font-size:40px;">
+Inventory Management
+</h1>
+
+<p style="opacity:.7;margin-top:8px;">
+Manage your product inventory stocks
+</p>
+
+</div>
+
+<input
+type="text"
+id="searchInventory"
+class="search-box"
+placeholder="Search products..."
+>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<p>Total Products</p>
+<h2 id="totalProducts">0</h2>
+</div>
+
+<div class="card">
+<p>Total Stocks</p>
+<h2 id="totalStocks">0</h2>
+</div>
+
+<div class="card">
+<p>Low Stocks</p>
+<h2 id="lowStocks">0</h2>
+</div>
+
+<div class="card">
+<p>Out of Stock</p>
+<h2 id="outStocks">0</h2>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2 style="margin-bottom:20px;">
+Inventory Products
+</h2>
+
+<div style="overflow-x:auto;">
+
+<table class="inventory-table">
+
+<thead>
+
+<tr>
+
+<th>PRODUCT</th>
+<th>CATEGORY</th>
+<th>PRICE</th>
+<th>STOCK</th>
+<th>SOLD</th>
+<th>COLORS</th>
+<th>STATUS</th>
+<th>ACTION</th>
+
+</tr>
+
+</thead>
+
+<tbody id="inventoryTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+async function loadInventory(){
+
+try{
+
+const response =
+await fetch("/api/products");
+
+const products =
+await response.json();
+
+const table =
+document.getElementById("inventoryTable");
+
+const searchValue =
+document.getElementById("searchInventory")
+.value
+.toLowerCase();
+
+table.innerHTML = "";
+
+document.getElementById("totalProducts")
+.textContent = products.length;
+
+let totalStocks = 0;
+
+let lowStocks = 0;
+
+let outStocks = 0;
+
+products.forEach(product=>{
+
+totalStocks += product.stock || 0;
+
+if(product.stock <= 5 && product.stock > 0){
+lowStocks++;
+}
+
+if(product.stock <= 0){
+outStocks++;
+}
+
+});
+
+document.getElementById("totalStocks")
+.textContent = totalStocks;
+
+document.getElementById("lowStocks")
+.textContent = lowStocks;
+
+document.getElementById("outStocks")
+.textContent = outStocks;
+
+products
+
+.filter(product =>
+
+(product.name || "")
+.toLowerCase()
+.includes(searchValue)
+
+||
+
+(product.category || "")
+.toLowerCase()
+.includes(searchValue)
+
+)
+
+.forEach(product=>{
+
+let statusClass = "active";
+let statusText = "ACTIVE";
+
+if(product.stock <= 5 && product.stock > 0){
+
+statusClass = "low";
+statusText = "LOW STOCK";
+
+}
+
+if(product.stock <= 0){
+
+statusClass = "out";
+statusText = "OUT OF STOCK";
+
+}
+
+table.innerHTML += `
+
+<tr>
+
+<td>
+
+<div class="product-box">
+
+<img
+src="${
+product.images?.[0]
+||
+product.image
+||
+'https://via.placeholder.com/80'
+}"
+>
+
+<div>
+
+<h3 style="margin-bottom:6px;">
+${product.name}
+</h3>
+
+<p style="opacity:.6;font-size:13px;">
+${product.badge || "No Badge"}
+</p>
+
+</div>
+
+</div>
+
+</td>
+
+<td>
+${product.category || "No Category"}
+</td>
+
+<td>
+AED ${product.price}
+</td>
+
+<td>
+
+<strong style="
+color:#00c896;
+font-size:18px;
+">
+${product.stock || 0}
+</strong>
+
+</td>
+
+<td>
+${product.sold || 0}
+</td>
+
+<td>
+
+${product.colors?.join(", ") || "No Colors"}
+
+</td>
+
+<td>
+
+<span class="status-badge ${statusClass}">
+${statusText}
+</span>
+
+</td>
+
+<td>
+
+<button
+class="restock-btn"
+onclick="restockProduct('${product._id}')"
+>
+
+Restock
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+function restockProduct(id){
+
+alert("Restock feature coming soon 😎🔥");
+
+}
+
+document
+.getElementById("searchInventory")
+.addEventListener("input",loadInventory);
+
+loadInventory();
+
+</script>
+
+</body>
+</html>
+

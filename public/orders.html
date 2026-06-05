@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>My Orders</title>
+
+<style>
+
+body{
+background:#08110d;
+color:white;
+font-family:Poppins;
+padding:30px;
+}
+
+.order-card{
+background:rgba(255,255,255,.06);
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.status{
+color:#00c896;
+font-weight:700;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>
+📦 My Orders
+</h1>
+
+<div id="orders-container">
+Loading orders...
+</div>
+
+<script>
+
+async function loadOrders(){
+
+const user =
+JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+
+alert("Please login first");
+
+window.location.href = "index.html";
+
+return;
+
+}
+
+try{
+
+const response =
+await fetch("/api/orders");
+
+const orders =
+await response.json();
+
+const userOrders =
+orders.filter(order =>
+order.customerName === user.name
+);
+
+const container =
+document.getElementById("orders-container");
+
+if(userOrders.length === 0){
+
+container.innerHTML =
+"<p>No orders found.</p>";
+
+return;
+
+}
+
+container.innerHTML =
+userOrders.map(order => `
+
+<div class="order-card">
+
+<h3>
+Order Status:
+<span class="status">
+${order.status}
+</span>
+</h3>
+
+<p>
+Total:
+AED ${order.total}
+</p>
+
+<p>
+Items:
+${order.items.length}
+</p>
+
+<p>
+Date:
+${new Date(order.createdAt)
+.toLocaleString()}
+</p>
+
+</div>
+
+`).join("");
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+loadOrders();
+
+</script>
+
+
+
+</body>
+</html>
