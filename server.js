@@ -42,7 +42,7 @@ const WHATSAPP_NUMBER = "971504238543";
 
 mongoose.set("strictQuery", false);
 
-mongoose.connect("mongodb://127.0.0.1:27017/getnbuy")
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
 console.log("✅ MongoDB Connected");
 })
