@@ -2452,10 +2452,29 @@ type="email"
 id="login-email"
 placeholder="Email">
 
+<div style="position:relative;">
 <input
 type="password"
 id="login-password"
-placeholder="Password">
+placeholder="Password"
+style="padding-right:50px;">
+
+<button
+type="button"
+id="toggleLoginPassword"
+style="
+position:absolute;
+right:12px;
+top:50%;
+transform:translateY(-50%);
+background:none;
+border:none;
+color:white;
+cursor:pointer;
+font-size:18px;
+">
+👁️
+</button>
 
 <button id="login-submit">
 Login
@@ -2579,6 +2598,23 @@ id="profileImageInput"
 class="profile-full">
 
 </div>
+
+<button
+id="locateMeBtn"
+type="button"
+style="
+width:100%;
+padding:15px;
+margin-bottom:12px;
+border:none;
+border-radius:18px;
+background:#0bbf9a;
+color:white;
+font-weight:800;
+cursor:pointer;
+">
+📍 Locate Me
+</button>
 
 <button id="saveProfileBtn">
 Save Profile
@@ -4456,7 +4492,9 @@ prependCustomerNotification(
 notification
 );
 
+setTimeout(()=>{
 loadCustomerNotifications();
+},1000);
 
 }
 );
@@ -4794,6 +4832,81 @@ profileDropdown.classList.remove("show");
 
 }
 
+const locateMeBtn =
+document.getElementById("locateMeBtn");
+
+if(locateMeBtn){
+
+locateMeBtn.addEventListener(
+"click",
+getCurrentLocation
+);
+
+}
+
+async function getCurrentLocation(){
+
+if(!navigator.geolocation){
+
+alert("Location not supported");
+
+return;
+
+}
+
+navigator.geolocation.getCurrentPosition(
+
+async(position)=>{
+
+const lat =
+position.coords.latitude;
+
+const lon =
+position.coords.longitude;
+
+try{
+
+const response =
+await fetch(
+`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+);
+
+const data =
+await response.json();
+
+document.getElementById(
+"profileAddress"
+).value =
+data.display_name || "";
+
+alert(
+"Location detected successfully!"
+);
+
+}catch(err){
+
+console.log(err);
+
+alert(
+"Failed to get address"
+);
+
+}
+
+},
+
+()=>{
+
+alert(
+"Please allow location access"
+);
+
+}
+
+);
+
+}
+
 const saveProfileBtn =
 document.getElementById("saveProfileBtn");
 
@@ -5124,6 +5237,32 @@ if(openRegister){
 openRegister.addEventListener("click",()=>{
 
 window.location.href = "register.html";
+
+});
+
+}
+
+const toggleLoginPassword =
+document.getElementById("toggleLoginPassword");
+
+if(toggleLoginPassword){
+
+toggleLoginPassword.addEventListener("click",()=>{
+
+const passwordInput =
+document.getElementById("login-password");
+
+if(passwordInput.type === "password"){
+
+passwordInput.type = "text";
+toggleLoginPassword.textContent = "🙈";
+
+}else{
+
+passwordInput.type = "password";
+toggleLoginPassword.textContent = "👁️";
+
+}
 
 });
 
