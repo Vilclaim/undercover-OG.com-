@@ -2155,6 +2155,10 @@ transform:scale(1.2);
 
 <div class="customer-notification-box">
 
+  <button id="wishlistBtn" class="profile-btn">
+❤️ Wishlist
+</button>
+
 <button id="customerNotificationBtn" type="button">
 🔔
 <span id="customerNotificationCount">0</span>
@@ -2520,7 +2524,25 @@ Register
 
 </div> <!-- END LOGIN MODAL -->
 
+<div id="wishlistPanel" class="orders-panel">
+
+<div class="orders-header">
+<h2>❤️ My Wishlist</h2>
+
+<button onclick="closeWishlist()">
+✖
+</button>
+</div>
+
+<div id="wishlistList">
+No wishlist items yet
+</div>
+
+</div>
+
 <div id="ordersPanel" class="orders-panel">
+
+
 
 <div class="orders-header">
 
@@ -6083,6 +6105,93 @@ btn.textContent =
 "See More";
 
 }
+
+}
+
+
+const wishlistBtn =
+document.getElementById("wishlistBtn");
+
+wishlistBtn.addEventListener(
+"click",
+openWishlist
+);
+
+function openWishlist(){
+
+const panel =
+document.getElementById(
+"wishlistPanel"
+);
+
+const list =
+document.getElementById(
+"wishlistList"
+);
+
+let wishlist =
+JSON.parse(
+localStorage.getItem("wishlist")
+) || [];
+
+if(wishlist.length === 0){
+
+list.innerHTML = `
+<p style="
+text-align:center;
+opacity:.7;
+padding:20px;
+">
+No wishlist items yet ❤️
+</p>
+`;
+
+}else{
+
+list.innerHTML = "";
+
+wishlist.forEach(product=>{
+
+list.innerHTML += `
+<div class="order-card">
+
+<img
+src="${
+product.images?.[0] ||
+product.image
+}"
+style="
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:16px;
+">
+
+<h3>${product.name}</h3>
+
+<p style="
+color:#b7ff7a;
+font-weight:800;
+">
+AED ${product.price}
+</p>
+
+</div>
+`;
+
+});
+
+}
+
+panel.classList.add("show");
+
+}
+
+function closeWishlist(){
+
+document
+.getElementById("wishlistPanel")
+.classList.remove("show");
 
 }
 
