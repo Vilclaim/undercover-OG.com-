@@ -1173,17 +1173,38 @@ align-items:center;
 gap:14px;
 }
 
-.profile-btn{
-background:linear-gradient(135deg,#00c896,#008f6d);
-border:none;
-color:white;
-padding:12px 18px;
-border-radius:999px;
-font-weight:700;
-cursor:pointer;
+#wishlistBtn{
+height:50px;
+padding:0 18px;
+
 display:flex;
 align-items:center;
+justify-content:center;
 gap:8px;
+
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.12);
+
+border-radius:18px;
+
+color:white;
+font-size:15px;
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+}
+
+#wishlistBtn:hover{
+background:rgba(255,77,109,.15);
+border-color:rgba(255,77,109,.4);
+
+transform:translateY(-3px);
+}
+
+#wishlistBtn i{
+color:#ff4d6d;
 }
 
 .profile-dropdown{
