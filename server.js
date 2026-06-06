@@ -26,6 +26,33 @@ const User = require("./models/user");
 const Order = require("./models/order");
 const Notification = require("./models/Notification");
 
+const WishlistSchema = new mongoose.Schema({
+
+userId:{
+type:mongoose.Schema.Types.ObjectId,
+ref:"User",
+required:true
+},
+
+productId:{
+type:mongoose.Schema.Types.ObjectId,
+ref:"Product",
+required:true
+},
+
+createdAt:{
+type:Date,
+default:Date.now
+}
+
+});
+
+const Wishlist =
+mongoose.model(
+"Wishlist",
+WishlistSchema
+);
+
 // ================= ROUTES =================
 
 const userRoutes = require("./routes/users");
@@ -1539,6 +1566,82 @@ message:"Failed to fetch stats"
 
 });
 
+
+// ================= WISHLIST =================
+
+app.post(
+"/api/wishlist",
+verifyToken,
+async(req,res)=>{
+
+try{
+
+const { productId } = req.body;
+
+const exists =
+await Wishlist.findOne({
+
+userId:req.user.id,
+productId
+
+});
+
+if(exists){
+
+return res.json({
+success:false,
+message:"Already in wishlist"
+});
+
+}
+
+await Wishlist.create({
+
+userId:req.user.id,
+productId
+
+});
+
+res.json({
+success:true
+});
+
+}catch(err){
+
+console.log(err);
+
+res.status(500).json({
+success:false
+});
+
+}
+
+});
+
+app.get(
+"/api/wishlist",
+verifyToken,
+async(req,res)=>{
+
+try{
+
+const wishlist =
+await Wishlist.find({
+userId:req.user.id
+})
+.populate("productId");
+
+res.json(wishlist);
+
+}catch(err){
+
+console.log(err);
+
+res.status(500).json([]);
+
+}
+
+});
 
 // ================= REVIEWS =================
 

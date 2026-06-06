@@ -483,12 +483,29 @@ background:rgba(255,255,255,.05);
       font-weight:700;
     }
 
-    .btn-row{
+   .btn-row{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:1fr 1fr 1fr;
       gap:8px;
       margin-top:12px;
-    }
+}
+
+    .wishlist-btn{
+border:none;
+cursor:pointer;
+border-radius:14px;
+padding:11px;
+background:#ff4d6d;
+color:white;
+font-size:18px;
+font-weight:700;
+transition:.3s;
+}
+
+.wishlist-btn:hover{
+transform:translateY(-2px);
+background:#ff2d55;
+}
 
     .view-btn,
     .add-btn{
@@ -2188,7 +2205,6 @@ transform:scale(1.2);
         <div class="hero-badges">
           
           <span class="badge">🚚 UAE Delivery</span>
-          <span class="badge">💬 WhatsApp Checkout</span>
           <span class="badge">✨ Premium Picks</span>
         </div>
 
@@ -3332,9 +3348,18 @@ p.images?.[0] || p.image
 ⭐ ${p.averageRating || 0} (${p.reviewCount || 0} Reviews)
 </span>
         <div class="btn-row">
-          <button class="view-btn" data-id="${p._id}">View</button>
-          <button class="add-btn" data-id="${p._id}">Add to Cart</button>
-        </div>
+  <button class="view-btn" data-id="${p._id}">
+    View
+  </button>
+
+  <button class="add-btn" data-id="${p._id}">
+    Add to Cart
+  </button>
+
+  <button class="wishlist-btn" data-id="${p._id}">
+    ❤️
+  </button>
+</div>
       `;
       productsContainer.appendChild(div);
     });
@@ -3346,6 +3371,8 @@ p.images?.[0] || p.image
     document.querySelectorAll(".add-btn").forEach((btn) =>
       btn.addEventListener("click", (e) => {
         const product = PRODUCTS.find((p) => p._id === btn.dataset.id);
+
+
         if (!product) return;
 
        if (product.colors && product.colors.length > 0) {
@@ -3361,12 +3388,54 @@ e
 );
       })
     );
+
+document.querySelectorAll(".wishlist-btn").forEach((btn) =>
+  btn.addEventListener("click", () => {
+
+    const product =
+    PRODUCTS.find(
+      p => p._id === btn.dataset.id
+    );
+
+    if(!product) return;
+
+    let wishlist =
+    JSON.parse(
+      localStorage.getItem("wishlist")
+    ) || [];
+
+    const exists =
+    wishlist.find(
+      item => item._id === product._id
+    );
+
+    if(exists){
+      alert("Already in wishlist ❤️");
+      return;
+    }
+
+    wishlist.push(product);
+
+    localStorage.setItem(
+      "wishlist",
+      JSON.stringify(wishlist)
+    );
+
+    alert("Added to wishlist ❤️");
+  })
+);
+
   }
 
   function viewProduct(id) {
+
+    
+
     const p = PRODUCTS.find(
 (item) => item._id === id
 );
+
+
 
 if(!p) return;
 
