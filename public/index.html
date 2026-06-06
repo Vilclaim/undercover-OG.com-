@@ -2317,9 +2317,17 @@ See More
         </div>
     </div>
 
-    <button id="add-to-cart-view" class="buy-now-btn">
-        <i class="fa fa-shopping-cart"></i> Add to Cart
-    </button>
+    <div class="btn-row">
+
+<button id="add-to-cart-view" class="buy-now-btn">
+    <i class="fa fa-shopping-cart"></i> Add to Cart
+</button>
+
+<button id="add-to-wishlist-view" class="wishlist-btn">
+    ❤️ Wishlist
+</button>
+
+</div>
 
     <div class="product-reviews">
 
@@ -3202,6 +3210,8 @@ searchInput.value
   const viewPrice = document.getElementById("view-price");
   const closeView = document.getElementById("close-view");
   const addToCartView = document.getElementById("add-to-cart-view");
+  const addToWishlistView =
+document.getElementById("add-to-wishlist-view");
 
   addToCartView.addEventListener("click",()=>{
 
@@ -3438,6 +3448,35 @@ document.querySelectorAll(".wishlist-btn").forEach((btn) =>
 
 
 if(!p) return;
+
+addToWishlistView.onclick = () => {
+
+let wishlist =
+JSON.parse(
+localStorage.getItem("wishlist")
+) || [];
+
+const exists =
+wishlist.find(
+item => item._id === p._id
+);
+
+if(exists){
+alert("Already in wishlist ❤️");
+return;
+}
+
+wishlist.push(p);
+
+localStorage.setItem(
+"wishlist",
+JSON.stringify(wishlist)
+);
+
+alert("Added to wishlist ❤️");
+
+};
+
 
 document.getElementById(
 "writeReviewBtn"
