@@ -2228,7 +2228,37 @@ transform:scale(1.2);
 </button>
 
 <div id="customerNotificationPanel">
-...
+
+<div class="customer-notification-header">
+
+<h3>Notifications</h3>
+
+<div style="display:flex;gap:6px;">
+
+<button onclick="markAllNotificationsRead()">
+Read All
+</button>
+
+<button onclick="clearCustomerNotifications()">
+Clear
+</button>
+
+</div>
+
+</div>
+
+<div id="customerNotificationList">
+
+<p style="
+text-align:center;
+opacity:.6;
+padding:20px;
+">
+No notifications yet
+</p>
+
+</div>
+
 </div>
 
 </div>
@@ -4914,6 +4944,7 @@ if(savedUser && (savedUser.id || savedUser._id)){
 profileContainer.innerHTML = `
 
 
+
 <div class="profile-box">
 
 <button class="profile-btn">
@@ -4956,6 +4987,36 @@ ${savedUser.name}
 </div>
 
 `;
+
+const profileBtn =
+document.querySelector(".profile-btn");
+
+const profileDropdown =
+document.querySelector(".profile-dropdown");
+
+if(profileBtn && profileDropdown){
+
+profileBtn.addEventListener("click",(e)=>{
+
+e.stopPropagation();
+
+profileDropdown.classList.toggle("show");
+
+});
+
+document.addEventListener("click",()=>{
+
+profileDropdown.classList.remove("show");
+
+});
+
+profileDropdown.addEventListener("click",(e)=>{
+
+e.stopPropagation();
+
+});
+
+}
 
 }else{
 
