@@ -1176,7 +1176,8 @@ font-weight:900;
 .profile-box{
 position:relative;
 max-width:180px;
-overflow:hidden;
+overflow:visible;
+z-index:99999;
 }
 
 .header-right{
@@ -1231,12 +1232,11 @@ background:#101818;
 border:1px solid rgba(255,255,255,.08);
 border-radius:18px;
 padding:10px;
-opacity:0;
-visibility:hidden;
+display:none;
 flex-direction:column;
 gap:8px;
 min-width:180px;
-z-index:1000;
+z-index:999999;
 box-shadow:0 20px 40px rgba(0,0,0,.4);
 }
 
@@ -4994,6 +4994,9 @@ document.querySelector(".profile-btn");
 const profileDropdown =
 document.querySelector(".profile-dropdown");
 
+console.log("PROFILE BTN FOUND", profileBtn);
+console.log("PROFILE DROPDOWN FOUND", profileDropdown);
+
 if(profileBtn && profileDropdown){
 
 profileBtn.addEventListener("click",(e)=>{
@@ -5004,15 +5007,22 @@ profileDropdown.classList.toggle("show");
 
 });
 
-document.addEventListener("click",()=>{
-
-profileDropdown.classList.remove("show");
-
-});
-
 profileDropdown.addEventListener("click",(e)=>{
 
 e.stopPropagation();
+
+});
+
+window.addEventListener("click",(e)=>{
+
+if(
+!profileDropdown.contains(e.target) &&
+!profileBtn.contains(e.target)
+){
+
+profileDropdown.classList.remove("show");
+
+}
 
 });
 
@@ -5034,38 +5044,7 @@ Login
 
 }
 
-const profileBtn =
-document.querySelector(".profile-btn");
 
-const openLoginBtn =
-document.getElementById("open-login-modal");
-
-if(openLoginBtn){
-
-openLoginBtn.addEventListener("click",()=>{
-
-document
-.getElementById("login-modal")
-.classList.remove("hidden");
-
-checkModalState();
-
-});
-
-}
-
-const profileDropdown =
-document.querySelector(".profile-dropdown");
-
-if(profileBtn && profileDropdown){
-
-profileBtn.addEventListener("click",(e)=>{
-
-e.stopPropagation();
-
-profileDropdown.classList.toggle("show");
-
-});
 
 window.addEventListener("click",(e)=>{
 
@@ -5080,7 +5059,7 @@ profileDropdown.classList.remove("show");
 
 });
 
-}
+
 
 const locateMeBtn =
 document.getElementById("locateMeBtn");
