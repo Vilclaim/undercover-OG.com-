@@ -4776,9 +4776,72 @@ invoiceWindow.document.write(`
 <style>
 
 body{
-font-family:Arial,sans-serif;
-padding:30px;
+font-family:'Poppins',Arial,sans-serif;
+background:#f4f6f8;
+padding:40px;
 color:#111;
+}
+
+.invoice-container{
+max-width:1000px;
+margin:auto;
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 40px rgba(0,0,0,.1);
+}
+
+.header{
+text-align:center;
+padding-bottom:25px;
+border-bottom:3px solid #00c896;
+margin-bottom:30px;
+}
+
+.logo{
+font-size:36px;
+font-weight:800;
+color:#00c896;
+}
+
+.company-box{
+background:#f8fafc;
+border:2px solid #00c896;
+padding:20px;
+border-radius:14px;
+margin:20px 0;
+}
+
+.order-info{
+background:#fafafa;
+padding:20px;
+border-radius:12px;
+margin-top:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:25px;
+}
+
+table th{
+background:#00c896;
+color:white;
+padding:12px;
+}
+
+table td{
+padding:12px;
+border:1px solid #ddd;
+}
+
+.total{
+margin-top:25px;
+font-size:28px;
+font-weight:800;
+text-align:right;
+color:#00c896;
 }
 
 .header{
@@ -4837,11 +4900,27 @@ color:white;
 
 <body>
 
+  <div class="invoice-container">
+
 <div class="header">
 
+<img
+src="/logo-og.jpeg"
+style="
+width:120px;
+height:120px;
+object-fit:contain;
+margin-bottom:15px;
+"
+>
+
 <div class="logo">
-UNDERCOVER-OG 
+UNDERCOVER-OG
 </div>
+
+
+
+
 
 
 <p style="
@@ -4895,6 +4974,76 @@ ${new Date().toLocaleString()}
 
 <hr style="margin-top:40px;">
 
+<div class="company-box">
+
+<h2 style="color:#00c896;">
+Company Information
+</h2>
+
+<p>
+<strong>Company:</strong>
+TELFORD INTERNATIONAL TRADING - FZCO
+</p>
+
+<p>
+<strong>Trade License No:</strong>
+76993
+</p>
+
+<p>
+<strong>Issuing Authority:</strong>
+Dubai Integrated Economic Zones Authority (DIEZ)
+</p>
+
+<p>
+<strong>Location:</strong>
+Dubai Silicon Oasis, Dubai UAE
+</p>
+
+</div>
+
+<div style="
+background:#f8fafc;
+border:2px solid #00c896;
+border-radius:12px;
+padding:20px;
+margin:20px 0;
+">
+
+<h2 style="
+margin-top:0;
+color:#00c896;
+">
+Company Information
+</h2>
+
+<p>
+<strong>Company:</strong>
+TELFORD INTERNATIONAL TRADING - FZCO
+</p>
+
+<p>
+<strong>Trade License No:</strong>
+76993
+</p>
+
+<p>
+<strong>Issuing Authority:</strong>
+Dubai Integrated Economic Zones Authority (DIEZ)
+</p>
+
+<p>
+<strong>Location:</strong>
+Dubai Silicon Oasis, Dubai, UAE
+</p>
+
+<p>
+<strong>Activities:</strong>
+General Trading, Commercial Brokers
+</p>
+
+</div>
+
 <div style="
 text-align:center;
 margin-top:20px;
@@ -4902,9 +5051,23 @@ font-size:14px;
 color:#666;
 ">
 
-Thank you for shopping with us ❤️
+Thank you for shopping with UNDERCOVER-OG ❤️
 
 <br><br>
+
+TELFORD INTERNATIONAL TRADING - FZCO
+
+<br>
+
+Trade License No: 76993
+
+<br>
+
+Dubai Silicon Oasis, Dubai UAE
+
+<br><br>
+
+This invoice is electronically generated and valid without signature.
 
 
 
@@ -4960,6 +5123,8 @@ window.onload = function(){
 window.print();
 }
 <\/script>
+
+</div>
 
 </body>
 
