@@ -1276,7 +1276,7 @@ Dubai Silicon Oasis, Dubai UAE
 
 <br><br>
 
-This invoice is electronically generated and valid without signature.
+
 
 </div>
 

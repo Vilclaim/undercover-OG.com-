@@ -5797,6 +5797,136 @@ card.querySelector("span").style.display =
 
 function closeOrderPanel(){
 
+  async function generateInvoice(orderId){
+
+const token =
+localStorage.getItem("adminToken");
+
+const response =
+await fetch(`/api/orders/${orderId}`,{
+headers:{
+Authorization:`Bearer ${token}`
+}
+});
+
+const order =
+await response.json();
+
+const invoiceWindow =
+window.open("","_blank");
+
+invoiceWindow.document.write(`
+
+<html>
+<head>
+<title>Invoice</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+padding:30px;
+color:#111;
+}
+
+.header{
+text-align:center;
+margin-bottom:30px;
+}
+
+.logo{
+font-size:32px;
+font-weight:bold;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+}
+
+th{
+background:#f5f5f5;
+}
+
+.total{
+margin-top:20px;
+font-size:24px;
+font-weight:bold;
+text-align:right;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="logo">
+UNDERCOVER
+</div>
+
+<h2>Invoice</h2>
+
+</div>
+
+<p><strong>Customer:</strong>
+${order.customerName}</p>
+
+<p><strong>Phone:</strong>
+${order.phone}</p>
+
+<p><strong>Address:</strong>
+${order.address}</p>
+
+<table>
+
+<tr>
+<th>Product</th>
+<th>Qty</th>
+<th>Price</th>
+</tr>
+
+${order.items.map(item=>`
+
+<tr>
+
+<td>${item.name}</td>
+
+<td>${item.qty}</td>
+
+<td>AED ${item.price}</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+<div class="total">
+
+Total: AED ${order.total}
+
+</div>
+
+</body>
+</html>
+
+`);
+
+invoiceWindow.document.close();
+
+invoiceWindow.print();
+
+}
+
 
 
 
@@ -6009,15 +6139,7 @@ user.profileImage;
 
 }
 
-function logoutAdmin(){
 
-localStorage.removeItem("adminToken");
-localStorage.removeItem("adminUser");
-
-window.location.href =
-"/admin-login.html";
-
-}
 
 function generateInvoice(orderId){
 
