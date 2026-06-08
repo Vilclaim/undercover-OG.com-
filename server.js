@@ -1140,36 +1140,30 @@ font-size:16px !important;
 
 }
 
+@page{
+size:A4;
+margin:10mm;
+}
+
+body{
+zoom:90%;
+}
+
+table{
+font-size:11px;
+}
+
+th,td{
+padding:4px;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<div style="
-background:#0f172a;
-color:white;
-padding:15px;
-border-radius:12px;
-text-align:center;
-margin-bottom:10px;
-">
 
-<h1 style="
-margin:0;
-font-size:26px;
-">
-UNDERCOVER-OG
-</h1>
-
-<p style="
-margin-top:10px;
-font-size:15px;
-">
-Premium Online Store
-</p>
-
-</div>
 
 
 
