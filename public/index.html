@@ -1022,6 +1022,12 @@ visibility:visible;
       cursor:pointer;
     }
 
+    #checkout:disabled{
+opacity:.45;
+cursor:not-allowed;
+background:#555;
+}
+
     .payment-method-box{
 margin-top:20px;
 }
@@ -2339,7 +2345,7 @@ No notifications yet
 
   <section id="categories">
     <button class="category-btn active" data-category="all"><i class="fa fa-border-all"></i> All</button>
-    <button class="category-btn" data-category="accessories"><i class="fa fa-gem"></i> Accessories</button>
+    <button class="category-btn"><i class="fa fa-spray-can"></i>Perfume</button>
     <button class="category-btn" data-category="bags"><i class="fa fa-bag-shopping"></i> Bags</button>
     <button class="category-btn" data-category="beauty"><i class="fa fa-spray-can-sparkles"></i> Beauty</button>
   </section>
@@ -2486,7 +2492,6 @@ Payment Method
 type="radio"
 name="paymentMethod"
 value="COD"
-checked
 >
 <div class="payment-content">
 🚚 Cash On Delivery
@@ -3138,6 +3143,20 @@ let ordersWasOpen = false;
   const cartTotal = document.getElementById("cart-total");
   const cartCount = document.getElementById("cart-count");
   const checkoutBtn = document.getElementById("checkout");
+
+  checkoutBtn.disabled = true;
+
+document
+.querySelectorAll('input[name="paymentMethod"]')
+.forEach(radio => {
+
+radio.addEventListener("change", () => {
+
+checkoutBtn.disabled = false;
+
+});
+
+});
 
 checkoutBtn.addEventListener("click", async () => {
 
