@@ -1081,22 +1081,63 @@ res.send(`
 
 body{
 font-family:Arial;
-padding:40px;
+padding:20px;
+font-size:13px;
 }
 
 table{
 width:100%;
 border-collapse:collapse;
-margin-top:20px;
+margin-top:10px;
 }
 
 th,td{
 border:1px solid #ddd;
-padding:10px;
+padding:5px;
+font-size:12px;
 }
 
 th{
 background:#f5f5f5;
+}
+
+h1{
+font-size:24px;
+margin:0;
+}
+
+h2{
+font-size:18px;
+margin:10px 0;
+}
+
+p{
+margin:4px 0;
+}
+
+@media print{
+
+body{
+padding:10px;
+font-size:11px;
+}
+
+table{
+font-size:11px;
+}
+
+th,td{
+padding:4px;
+}
+
+h1{
+font-size:20px !important;
+}
+
+h2{
+font-size:16px !important;
+}
+
 }
 
 </style>
@@ -1108,15 +1149,15 @@ background:#f5f5f5;
 <div style="
 background:#0f172a;
 color:white;
-padding:25px;
+padding:15px;
 border-radius:12px;
 text-align:center;
-margin-bottom:25px;
+margin-bottom:10px;
 ">
 
 <h1 style="
 margin:0;
-font-size:38px;
+font-size:26px;
 ">
 UNDERCOVER-OG
 </h1>
@@ -1130,84 +1171,60 @@ Premium Online Store
 
 </div>
 
-<div style="
-background:#f8fafc;
-padding:20px;
-border-left:5px solid #00c896;
-border-radius:10px;
-margin-bottom:20px;
-">
 
-<h3>
-Company Information
-</h3>
-
-<p>
-TELFORD INTERNATIONAL TRADING - FZCO
-</p>
-
-<p>
-Trade License No: 76993
-</p>
-
-<p>
-Dubai Integrated Economic Zones Authority (DIEZ)
-</p>
-
-<p>
-Dubai Silicon Oasis, Dubai UAE
-</p>
-
-</div>
 
 <hr>
 
 <h2>Invoice</h2>
 
-<p>
-Order ID:
-${order._id}
-</p>
+<div style="
+background:#f8fafc;
+padding:15px;
+border-radius:10px;
+font-size:14px;
+line-height:1.7;
+margin-bottom:20px;
+">
 
-<p>
-Customer:
-${order.customerName}
-</p>
-
-<p>
-Invoice No:
+<b>Invoice No:</b>
 INV-${order._id.slice(-5)}
-</p>
 
-<p>
-Date:
+&nbsp;&nbsp;|&nbsp;&nbsp;
+
+<b>Date:</b>
 ${new Date().toLocaleDateString()}
-</p>
 
-<p>
-Status:
-${order.status}
-</p>
+<br>
 
-<p>
-Tracking Number:
-${order.trackingNumber || "N/A"}
-</p>
+<b>Customer:</b>
+${order.customerName}
 
-<p>
-Payment Status:
-${order.paymentStatus || "Unpaid"}
-</p>
+&nbsp;&nbsp;|&nbsp;&nbsp;
 
-<p>
-Phone:
+<b>Phone:</b>
 ${order.phone}
-</p>
 
-<p>
-Address:
-${order.address}
-</p>
+<br>
+
+<b>Status:</b>
+${order.status}
+
+&nbsp;&nbsp;|&nbsp;&nbsp;
+
+<b>Payment:</b>
+${order.paymentStatus || "Unpaid"}
+
+<br>
+
+<b>Tracking:</b>
+${order.trackingNumber || "N/A"}
+
+<br>
+
+<b>Address:</b>
+${order.address || "N/A"}
+
+</div>
 
 <table>
 
@@ -1245,14 +1262,14 @@ text-align:right;
 
 <h2 style="
 color:#00c896;
-font-size:32px;
+font-size:24px;
 ">
 TOTAL: AED ${order.total}
 </h2>
 
 </div>
 
-<hr style="margin-top:40px;">
+<hr style="margin-top:15px;">
 
 <div style="
 text-align:center;
