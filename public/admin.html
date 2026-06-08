@@ -2667,7 +2667,7 @@ outline:none;
 
 <div class="card">
 <p>Admin Accounts</p>
-<h2>
+<h2 id="adminUsers">
 0
 </h2>
 </div>
@@ -3548,8 +3548,8 @@ products.filter(p => p.category === "Bags").length;
 const beautyCount =
 products.filter(p => p.category === "Beauty").length;
 
-const accessoriesCount =
-products.filter(p => p.category === "Accessories").length;
+const perfumeCount =
+products.filter(p => p.category === "Perfume").length;
 
 const categoryCtx =
 document.getElementById("categoryChart");
@@ -3567,7 +3567,7 @@ data:{
 labels:[
 "Bags",
 "Beauty",
-"Accessories"
+"Perfume"
 ],
 
 datasets:[{
@@ -3575,7 +3575,7 @@ datasets:[{
 data:[
 bagsCount,
 beautyCount,
-accessoriesCount
+perfumeCount
 ],
 
 backgroundColor:[
@@ -3960,26 +3960,37 @@ console.log(err);
 
 async function deleteProduct(id){
 
-   
+if(!confirm("Delete this product?")){
+return;
+}
+
 try{
 
-await fetch("/api/products/" + id,{
+const response = await fetch(
+"/api/products/" + id,
+{
 method:"DELETE",
 headers:{
 Authorization:`Bearer ${token}`
 }
-});
+}
+);
+
+if(!response.ok){
+throw new Error("Failed to delete product");
+}
+
+alert("✅ Product Deleted");
 
 loadProducts();
-
 loadDashboardStats();
 loadSalesChart();
 loadOrders();
 
-
 }catch(err){
 
 console.log(err);
+alert("❌ Delete Failed");
 
 }
 
@@ -4071,7 +4082,7 @@ outStocks++;
 let statusClass = "active";
 
 if(product.stock <= 5){
-statusClass = "sale";
+statusClass = "low-stock";
 }
 
 if(product.stock <= 0){
@@ -4436,6 +4447,21 @@ cursor:pointer;
 View Items
 </button>
 
+<button
+onclick="generateInvoice('${order._id}')"
+style="
+padding:10px 16px;
+border:none;
+border-radius:12px;
+background:#f59e0b;
+color:white;
+font-weight:700;
+cursor:pointer;
+margin-left:8px;
+">
+📄 Invoice
+</button>
+
 </td>
 
 <td>
@@ -4798,6 +4824,11 @@ margin-top:20px;
 font-size:22px;
 font-weight:bold;
 text-align:right;
+}
+
+.status-badge.low-stock{
+background:#f59e0b;
+color:white;
 }
 
 </style>
@@ -5821,6 +5852,15 @@ localStorage.removeItem("adminUser");
 
 window.location.href =
 "/admin-login.html";
+
+}
+
+function generateInvoice(orderId){
+
+window.open(
+`/invoice/${orderId}`,
+"_blank"
+);
 
 }
 

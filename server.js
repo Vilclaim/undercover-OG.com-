@@ -1049,6 +1049,147 @@ success:false
 
 });
 
+
+// ================= INVOICE =================
+
+app.get(
+"/invoice/:id",
+verifyToken,
+verifyAdmin,
+async(req,res)=>{
+
+try{
+
+const order =
+await Order.findById(req.params.id);
+
+if(!order){
+
+return res.send("Order not found");
+
+}
+
+res.send(`
+
+<html>
+
+<head>
+
+<title>Invoice</title>
+
+<style>
+
+body{
+font-family:Arial;
+padding:40px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+}
+
+th{
+background:#f5f5f5;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>UNDERCOVER-OG</h1>
+
+<p>
+TELFORD INTERNATIONAL TRADING - FZCO
+</p>
+
+<p>
+Trade License No: 76993
+</p>
+
+<p>
+Dubai Silicon Oasis, UAE
+</p>
+
+<hr>
+
+<h2>Invoice</h2>
+
+<p>
+Order ID:
+${order._id}
+</p>
+
+<p>
+Customer:
+${order.customerName}
+</p>
+
+<p>
+Phone:
+${order.phone}
+</p>
+
+<p>
+Address:
+${order.address}
+</p>
+
+<table>
+
+<tr>
+
+<th>Product</th>
+<th>Qty</th>
+<th>Price</th>
+
+</tr>
+
+${order.items.map(item=>`
+
+<tr>
+
+<td>${item.name}</td>
+
+<td>${item.qty}</td>
+
+<td>AED ${item.price}</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+<h2>
+Total: AED ${order.total}
+</h2>
+
+</body>
+
+</html>
+
+`);
+
+}catch(err){
+
+console.log(err);
+
+res.send("Invoice Error");
+
+}
+
+}
+);
+
 // ================= USER ORDERS =================
 
 app.get(
