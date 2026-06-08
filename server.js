@@ -1105,7 +1105,42 @@ background:#f5f5f5;
 
 <body>
 
-<h1>UNDERCOVER-OG</h1>
+<div style="
+background:#0f172a;
+color:white;
+padding:25px;
+border-radius:12px;
+text-align:center;
+margin-bottom:25px;
+">
+
+<h1 style="
+margin:0;
+font-size:38px;
+">
+UNDERCOVER-OG
+</h1>
+
+<p style="
+margin-top:10px;
+font-size:15px;
+">
+Premium Online Store
+</p>
+
+</div>
+
+<div style="
+background:#f8fafc;
+padding:20px;
+border-left:5px solid #00c896;
+border-radius:10px;
+margin-bottom:20px;
+">
+
+<h3>
+Company Information
+</h3>
 
 <p>
 TELFORD INTERNATIONAL TRADING - FZCO
@@ -1116,8 +1151,14 @@ Trade License No: 76993
 </p>
 
 <p>
-Dubai Silicon Oasis, UAE
+Dubai Integrated Economic Zones Authority (DIEZ)
 </p>
+
+<p>
+Dubai Silicon Oasis, Dubai UAE
+</p>
+
+</div>
 
 <hr>
 
@@ -1131,6 +1172,31 @@ ${order._id}
 <p>
 Customer:
 ${order.customerName}
+</p>
+
+<p>
+Invoice No:
+INV-${order._id.slice(-5)}
+</p>
+
+<p>
+Date:
+${new Date().toLocaleDateString()}
+</p>
+
+<p>
+Status:
+${order.status}
+</p>
+
+<p>
+Tracking Number:
+${order.trackingNumber || "N/A"}
+</p>
+
+<p>
+Payment Status:
+${order.paymentStatus || "Unpaid"}
 </p>
 
 <p>
@@ -1169,9 +1235,50 @@ ${order.items.map(item=>`
 
 </table>
 
-<h2>
-Total: AED ${order.total}
+<div style="
+margin-top:25px;
+padding:20px;
+background:#f8fafc;
+border-radius:12px;
+text-align:right;
+">
+
+<h2 style="
+color:#00c896;
+font-size:32px;
+">
+TOTAL: AED ${order.total}
 </h2>
+
+</div>
+
+<hr style="margin-top:40px;">
+
+<div style="
+text-align:center;
+font-size:13px;
+color:#666;
+">
+
+Thank you for shopping with UNDERCOVER-OG ❤️
+
+<br><br>
+
+TELFORD INTERNATIONAL TRADING - FZCO
+
+<br>
+
+Trade License No: 76993
+
+<br>
+
+Dubai Silicon Oasis, Dubai UAE
+
+<br><br>
+
+This invoice is electronically generated and valid without signature.
+
+</div>
 
 </body>
 
