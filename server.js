@@ -315,6 +315,8 @@ name:body.name,
 
 category:body.category,
 
+gender:body.gender,
+
 price:Number(body.price),
 
 oldPrice:Number(body.oldPrice || 0),
@@ -421,6 +423,8 @@ req.params.id,
 name:body.name,
 
 category:body.category,
+
+gender:body.gender,
 
 price:Number(body.price),
 
