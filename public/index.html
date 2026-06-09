@@ -2774,7 +2774,9 @@ Register
 <div class="orders-header">
 <h2>❤️ My Wishlist</h2>
 
-<button onclick="closeWishlist()">
+<button
+type="button"
+onclick="closeWishlist();">
 ✖
 </button>
 </div>
@@ -6627,8 +6629,10 @@ list.innerHTML += `
 
 <img
 src="${
+safeImage(
 product.images?.[0] ||
 product.image
+)
 }"
 style="
 width:100%;
@@ -6700,9 +6704,15 @@ panel.classList.add("show");
 
 function openWishlistProduct(id){
 
+console.log("Wishlist Product ID:", id);
+
 closeWishlist();
 
+setTimeout(()=>{
+
 viewProduct(id);
+
+},300);
 
 }
 
