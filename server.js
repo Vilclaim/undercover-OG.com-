@@ -1081,10 +1081,11 @@ res.send(`
 
 body{
 font-family:Arial,sans-serif;
-padding:8px;
-font-size:11px;
+padding:2px;
+font-size:10px;
 margin:0;
-line-height:1.3;
+line-height:1.1;
+zoom:80%;
 }
 
 table{
@@ -1109,12 +1110,12 @@ margin:0;
 }
 
 h2{
-font-size:18px;
-margin:10px 0;
+font-size:14px;
+margin:3px 0;
 }
 
 p{
-margin:4px 0;
+margin:1px 0;
 }
 
 @media print{
@@ -1144,7 +1145,7 @@ font-size:16px !important;
 
 @page{
 size:A4;
-margin:5mm;
+margin:2mm;
 }
 
 body{
@@ -1189,11 +1190,11 @@ page-break-inside:avoid;
 
 <div style="
 background:#f8fafc;
-padding:8px;
-border-radius:10px;
-font-size:12px;
-line-height:1.4;
-margin-bottom:20px;
+padding:4px;
+border-radius:8px;
+font-size:10px;
+line-height:1.1;
+margin-bottom:8px;
 ">
 
 <b>Invoice No:</b>
