@@ -2427,8 +2427,59 @@ Unisex
 </div>
 
 </div>
-    <button class="category-btn" data-category="bags"><i class="fa fa-bag-shopping"></i> Bags</button>
-    <button class="category-btn" data-category="beauty"><i class="fa fa-spray-can-sparkles"></i> Beauty</button>
+    <!-- BAGS -->
+<div class="perfume-dropdown">
+
+<button
+class="category-btn"
+id="bagsDropdownBtn"
+type="button">
+
+<i class="fa fa-bag-shopping"></i>
+Bags ▼
+
+</button>
+
+<div
+id="bagsDropdownMenu"
+class="perfume-dropdown-menu">
+
+<button data-bag="all">All Bags</button>
+<button data-bag="Hand Bag">Hand Bag</button>
+<button data-bag="Shoulder Bag">Shoulder Bag</button>
+<button data-bag="Crossbody Bag">Crossbody Bag</button>
+<button data-bag="Backpack">Backpack</button>
+
+</div>
+
+</div>
+
+<!-- BEAUTY -->
+<div class="perfume-dropdown">
+
+<button
+class="category-btn"
+id="beautyDropdownBtn"
+type="button">
+
+<i class="fa fa-spray-can-sparkles"></i>
+Beauty ▼
+
+</button>
+
+<div
+id="beautyDropdownMenu"
+class="perfume-dropdown-menu">
+
+<button data-beauty="all">All Beauty</button>
+<button data-beauty="Skincare">Skincare</button>
+<button data-beauty="Makeup">Makeup</button>
+<button data-beauty="Hair Care">Hair Care</button>
+<button data-beauty="Body Care">Body Care</button>
+
+</div>
+
+</div>
   </section>
   
 
@@ -3417,20 +3468,132 @@ perfumeMenu.classList.remove("show");
 
 });
 
+/* BAGS DROPDOWN */
 
-
-
-  categoryBtns.forEach(btn=>{
-
-btn.addEventListener("click",()=>{
-
-categoryBtns.forEach(b=>
-b.classList.remove("active")
+const bagsBtn =
+document.getElementById(
+"bagsDropdownBtn"
 );
 
-btn.classList.add("active");
+const bagsMenu =
+document.getElementById(
+"bagsDropdownMenu"
+);
 
-currentCategory = btn.dataset.category;
+bagsBtn.addEventListener(
+"click",
+()=>{
+
+bagsMenu.classList.toggle(
+"show"
+);
+
+}
+);
+
+document
+.querySelectorAll(
+"#bagsDropdownMenu button"
+)
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+()=>{
+
+currentCategory =
+btn.dataset.bag;
+
+displayProducts(
+currentCategory,
+searchInput.value
+);
+
+bagsMenu.classList.remove(
+"show"
+);
+
+}
+);
+
+});
+
+
+/* BEAUTY DROPDOWN */
+
+const beautyBtn =
+document.getElementById(
+"beautyDropdownBtn"
+);
+
+const beautyMenu =
+document.getElementById(
+"beautyDropdownMenu"
+);
+
+beautyBtn.addEventListener(
+"click",
+()=>{
+
+beautyMenu.classList.toggle(
+"show"
+);
+
+}
+);
+
+document
+.querySelectorAll(
+"#beautyDropdownMenu button"
+)
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+()=>{
+
+currentCategory =
+btn.dataset.beauty;
+
+displayProducts(
+currentCategory,
+searchInput.value
+);
+
+beautyMenu.classList.remove(
+"show"
+);
+
+}
+);
+
+});
+
+
+
+
+  function setActiveButton(button){
+
+categoryBtns.forEach(btn=>{
+btn.classList.remove("active");
+});
+
+button.classList.add("active");
+
+}
+
+/* ALL BUTTON */
+
+document
+.querySelector('[data-category="all"]')
+.addEventListener("click",()=>{
+
+currentCategory = "all";
+currentGender = "all";
+
+setActiveButton(
+document.querySelector('[data-category="all"]')
+);
 
 displayProducts(
 currentCategory,
@@ -3439,19 +3602,71 @@ searchInput.value
 
 });
 
-});
+/* PERFUME */
 
-categoryBtns.forEach(btn=>{
+document
+.querySelectorAll("#perfumeDropdownMenu button")
+.forEach(btn=>{
 
 btn.addEventListener("click",()=>{
 
-if(
-btn.id !== "perfumeDropdownBtn"
-){
+currentCategory = "perfume";
+currentGender = btn.dataset.gender;
+
+setActiveButton(perfumeBtn);
+
+displayProducts(
+currentCategory,
+searchInput.value
+);
 
 perfumeMenu.classList.remove("show");
 
-}
+});
+
+});
+
+/* BAGS */
+
+document
+.querySelectorAll("#bagsDropdownMenu button")
+.forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+currentCategory = btn.dataset.bag;
+
+setActiveButton(bagsBtn);
+
+displayProducts(
+currentCategory,
+searchInput.value
+);
+
+bagsMenu.classList.remove("show");
+
+});
+
+});
+
+/* BEAUTY */
+
+document
+.querySelectorAll("#beautyDropdownMenu button")
+.forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+currentCategory = btn.dataset.beauty;
+
+setActiveButton(beautyBtn);
+
+displayProducts(
+currentCategory,
+searchInput.value
+);
+
+beautyMenu.classList.remove("show");
 
 });
 
