@@ -1080,9 +1080,11 @@ res.send(`
 <style>
 
 body{
-font-family:Arial;
-padding:20px;
-font-size:13px;
+font-family:Arial,sans-serif;
+padding:8px;
+font-size:11px;
+margin:0;
+line-height:1.3;
 }
 
 table{
@@ -1102,7 +1104,7 @@ background:#f5f5f5;
 }
 
 h1{
-font-size:24px;
+font-size:18px;
 margin:0;
 }
 
@@ -1142,7 +1144,7 @@ font-size:16px !important;
 
 @page{
 size:A4;
-margin:10mm;
+margin:5mm;
 }
 
 body{
@@ -1171,12 +1173,26 @@ padding:4px;
 
 <h2>Invoice</h2>
 
+<style>
+table{
+page-break-inside:avoid;
+}
+
+tr{
+page-break-inside:avoid;
+}
+
+div{
+page-break-inside:avoid;
+}
+</style>
+
 <div style="
 background:#f8fafc;
-padding:15px;
+padding:8px;
 border-radius:10px;
-font-size:14px;
-line-height:1.7;
+font-size:12px;
+line-height:1.4;
 margin-bottom:20px;
 ">
 
@@ -1247,8 +1263,8 @@ ${order.items.map(item=>`
 </table>
 
 <div style="
-margin-top:25px;
-padding:20px;
+margin-top:10px;
+padding:10px;
 background:#f8fafc;
 border-radius:12px;
 text-align:right;
@@ -1256,7 +1272,7 @@ text-align:right;
 
 <h2 style="
 color:#00c896;
-font-size:24px;
+font-size:18px;
 ">
 TOTAL: AED ${order.total}
 </h2>
