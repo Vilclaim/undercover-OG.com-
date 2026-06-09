@@ -6578,20 +6578,9 @@ wishlistBtn.addEventListener(
 openWishlist
 );
 
+
+
 function openWishlist(){
-
-  function closeWishlist(){
-
-const panel =
-document.getElementById(
-"wishlistPanel"
-);
-
-panel.classList.remove("show");
-
-checkModalState();
-
-}
 
 const panel =
 document.getElementById(
@@ -6677,6 +6666,21 @@ cursor:pointer;
 </button>
 
 <button
+onclick="addWishlistToCart('${product._id}')"
+style="
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#25d366;
+color:white;
+font-weight:800;
+cursor:pointer;
+">
+🛒 Cart
+</button>
+
+<button
 onclick="removeWishlist('${product._id}')"
 style="
 flex:1;
@@ -6701,6 +6705,22 @@ cursor:pointer;
 }
 
 panel.classList.add("show");
+
+}
+
+
+function closeWishlist(){
+
+const panel =
+document.getElementById(
+"wishlistPanel"
+);
+
+if(panel){
+panel.classList.remove("show");
+}
+
+checkModalState();
 
 }
 
@@ -6752,21 +6772,27 @@ openWishlist();
 
 }
 
-let wishlist =
-JSON.parse(
-localStorage.getItem("wishlist")
-) || [];
 
-wishlist = wishlist.filter(
-item => item._id !== id
+window.addWishlistToCart = function(id){
+
+const product =
+PRODUCTS.find(
+p => p._id === id
 );
 
-localStorage.setItem(
-"wishlist",
-JSON.stringify(wishlist)
+if(!product){
+return;
+}
+
+addToCart(
+product._id,
+null,
+product.images?.[0] || product.image
 );
 
-openWishlist();
+alert("Added to Cart 🛒");
+
+};
 
 
 
