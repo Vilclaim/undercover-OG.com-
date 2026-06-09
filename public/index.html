@@ -5421,18 +5421,7 @@ Login
 
 
 
-window.addEventListener("click",(e)=>{
 
-if(
-!profileDropdown.contains(e.target) &&
-!profileBtn.contains(e.target)
-){
-
-profileDropdown.classList.remove("show");
-
-}
-
-});
 
 
 
@@ -6591,6 +6580,19 @@ openWishlist
 
 function openWishlist(){
 
+  function closeWishlist(){
+
+const panel =
+document.getElementById(
+"wishlistPanel"
+);
+
+panel.classList.remove("show");
+
+checkModalState();
+
+}
+
 const panel =
 document.getElementById(
 "wishlistPanel"
@@ -6716,7 +6718,39 @@ viewProduct(id);
 
 }
 
-function removeWishlist(id){
+window.closeWishlist = function(){
+
+const panel =
+document.getElementById("wishlistPanel");
+
+if(panel){
+panel.classList.remove("show");
+}
+
+document.body.classList.remove("modal-open");
+
+};
+
+window.removeWishlist = function(id){
+
+let wishlist =
+JSON.parse(
+localStorage.getItem("wishlist")
+) || [];
+
+wishlist =
+wishlist.filter(
+item => item._id !== id
+);
+
+localStorage.setItem(
+"wishlist",
+JSON.stringify(wishlist)
+);
+
+openWishlist();
+
+}
 
 let wishlist =
 JSON.parse(
@@ -6734,7 +6768,7 @@ JSON.stringify(wishlist)
 
 openWishlist();
 
-}
+
 
 
 </script>
