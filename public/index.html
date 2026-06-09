@@ -414,6 +414,53 @@ z-index:-1;
       transition:.25s ease;
     }
 
+    .perfume-dropdown{
+position:relative;
+}
+
+.perfume-dropdown-menu{
+display:none;
+
+position:absolute;
+top:55px;
+left:0;
+
+background:#08110d;
+
+border:1px solid rgba(255,255,255,.1);
+
+border-radius:16px;
+
+padding:10px;
+
+min-width:180px;
+
+z-index:9999;
+}
+
+.perfume-dropdown-menu.show{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.perfume-dropdown-menu button{
+background:none;
+border:none;
+color:white;
+
+padding:10px;
+
+border-radius:10px;
+
+cursor:pointer;
+text-align:left;
+}
+
+.perfume-dropdown-menu button:hover{
+background:rgba(0,200,150,.15);
+}
+
     .category-btn.active,
     .category-btn:hover{
       background:linear-gradient(135deg,var(--accent),#008f6d);
@@ -2345,44 +2392,45 @@ No notifications yet
 
   <section id="categories">
     <button class="category-btn active" data-category="all"><i class="fa fa-border-all"></i> All</button>
-    <button
-class="category-btn"
-data-category="perfume">
+    <div class="perfume-dropdown">
+
+<button
+class="category-btn perfume-btn"
+id="perfumeDropdownBtn"
+type="button">
+
 <i class="fa fa-spray-can"></i>
-Perfume
-</button>
-    <button class="category-btn" data-category="bags"><i class="fa fa-bag-shopping"></i> Bags</button>
-    <button class="category-btn" data-category="beauty"><i class="fa fa-spray-can-sparkles"></i> Beauty</button>
-  </section>
-  <div id="genderFilters"
-style="
-display:flex;
-justify-content:center;
-gap:10px;
-margin-bottom:20px;
-">
+Perfume ▼
 
-<button class="gender-btn active"
-data-gender="all">
-All
 </button>
 
-<button class="gender-btn"
-data-gender="Men">
+<div
+id="perfumeDropdownMenu"
+class="perfume-dropdown-menu">
+
+<button data-gender="all">
+All Perfumes
+</button>
+
+<button data-gender="Men">
 Men
 </button>
 
-<button class="gender-btn"
-data-gender="Women">
+<button data-gender="Women">
 Women
 </button>
 
-<button class="gender-btn"
-data-gender="Unisex">
+<button data-gender="Unisex">
 Unisex
 </button>
 
 </div>
+
+</div>
+    <button class="category-btn" data-category="bags"><i class="fa fa-bag-shopping"></i> Bags</button>
+    <button class="category-btn" data-category="beauty"><i class="fa fa-spray-can-sparkles"></i> Beauty</button>
+  </section>
+  
 
   <section id="products" class="product-grid"></section>
 
@@ -3323,6 +3371,55 @@ document.activeElement.blur();
 
   const categoryBtns = document.querySelectorAll(".category-btn");
 
+  const perfumeBtn =
+document.getElementById(
+"perfumeDropdownBtn"
+);
+
+const perfumeMenu =
+document.getElementById(
+"perfumeDropdownMenu"
+);
+
+perfumeBtn.addEventListener(
+"click",
+()=>{
+
+perfumeMenu.classList.toggle(
+"show"
+);
+
+}
+);
+
+document
+.querySelectorAll(
+"#perfumeDropdownMenu button"
+)
+.forEach(btn=>{
+
+btn.addEventListener(
+"click",
+()=>{
+
+currentCategory = "perfume";
+currentGender = btn.dataset.gender;
+
+displayProducts(
+currentCategory,
+searchInput.value
+);
+
+perfumeMenu.classList.remove("show");
+
+}
+);
+
+});
+
+
+
+
   categoryBtns.forEach(btn=>{
 
 btn.addEventListener("click",()=>{
@@ -3344,30 +3441,23 @@ searchInput.value
 
 });
 
-const genderBtns =
-document.querySelectorAll(".gender-btn");
-
-genderBtns.forEach(btn=>{
+categoryBtns.forEach(btn=>{
 
 btn.addEventListener("click",()=>{
 
-genderBtns.forEach(b=>
-b.classList.remove("active")
-);
+if(
+btn.id !== "perfumeDropdownBtn"
+){
 
-btn.classList.add("active");
+perfumeMenu.classList.remove("show");
 
-currentGender =
-btn.dataset.gender;
-
-displayProducts(
-currentCategory,
-searchInput.value
-);
+}
 
 });
 
 });
+
+
   
 
   const addCartSound = document.getElementById("add-cart-sound");
