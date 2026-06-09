@@ -2345,10 +2345,44 @@ No notifications yet
 
   <section id="categories">
     <button class="category-btn active" data-category="all"><i class="fa fa-border-all"></i> All</button>
-    <button class="category-btn"><i class="fa fa-spray-can"></i>Perfume</button>
+    <button
+class="category-btn"
+data-category="perfume">
+<i class="fa fa-spray-can"></i>
+Perfume
+</button>
     <button class="category-btn" data-category="bags"><i class="fa fa-bag-shopping"></i> Bags</button>
     <button class="category-btn" data-category="beauty"><i class="fa fa-spray-can-sparkles"></i> Beauty</button>
   </section>
+  <div id="genderFilters"
+style="
+display:flex;
+justify-content:center;
+gap:10px;
+margin-bottom:20px;
+">
+
+<button class="gender-btn active"
+data-gender="all">
+All
+</button>
+
+<button class="gender-btn"
+data-gender="Men">
+Men
+</button>
+
+<button class="gender-btn"
+data-gender="Women">
+Women
+</button>
+
+<button class="gender-btn"
+data-gender="Unisex">
+Unisex
+</button>
+
+</div>
 
   <section id="products" class="product-grid"></section>
 
@@ -3125,13 +3159,17 @@ product.images?.[0] || product.image
 
 loadProducts();
 
-  let cart =
+ let cart =
 JSON.parse(localStorage.getItem("cart")) || [];
-  let selectedColor = null;
-  let currentCategory = "all";
-  let currentSearch = "";
-  let modalQuantity = 1;
-  let cameFromFlash = false;
+
+let selectedColor = null;
+let currentCategory = "all";
+let currentSearch = "";
+
+let currentGender = "all";
+
+let modalQuantity = 1;
+let cameFromFlash = false;
 let ordersWasOpen = false;
 
 
@@ -3305,6 +3343,31 @@ searchInput.value
 });
 
 });
+
+const genderBtns =
+document.querySelectorAll(".gender-btn");
+
+genderBtns.forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+genderBtns.forEach(b=>
+b.classList.remove("active")
+);
+
+btn.classList.add("active");
+
+currentGender =
+btn.dataset.gender;
+
+displayProducts(
+currentCategory,
+searchInput.value
+);
+
+});
+
+});
   
 
   const addCartSound = document.getElementById("add-cart-sound");
@@ -3418,6 +3481,10 @@ checkModalState();
     productsContainer.innerHTML = "";
 
     const filtered = PRODUCTS.filter((p) => {
+      const matchGender =
+currentGender === "all" ||
+(p.gender || "").toLowerCase() ===
+currentGender.toLowerCase();
     if(
 p.status === "CANCELLED" ||
 p.status === "HIDDEN"
@@ -3442,7 +3509,9 @@ category
  (p.description || "")
 .toLowerCase()
 .includes(currentSearch);
-      return matchCategory && matchSearch;
+      return matchCategory &&
+matchSearch &&
+matchGender;
     });
 
     if(filtered.length === 0){
@@ -3481,8 +3550,19 @@ p.images?.[0] || p.image
 `
 }
         <h3>${p.name}</h3>
-        <p class="price">AED ${p.price}</p>
-        <span class="rating">
+
+<p style="
+color:#00c896;
+font-size:12px;
+font-weight:700;
+margin:4px 0;
+">
+${p.gender || "Unisex"}
+</p>
+
+<p class="price">AED ${p.price}</p>
+
+<span class="rating">
 ⭐ ${p.averageRating || 0} (${p.reviewCount || 0} Reviews)
 </span>
         <div class="btn-row">
