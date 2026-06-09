@@ -6635,7 +6635,10 @@ width:100%;
 height:180px;
 object-fit:cover;
 border-radius:16px;
-">
+cursor:pointer;
+"
+onclick="openWishlistProduct('${product._id}')"
+>
 
 <h3>${product.name}</h3>
 
@@ -6645,6 +6648,44 @@ font-weight:800;
 ">
 AED ${product.price}
 </p>
+
+<div style="
+display:flex;
+gap:10px;
+margin-top:12px;
+">
+
+<button
+onclick="openWishlistProduct('${product._id}')"
+style="
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#00c896;
+color:white;
+font-weight:800;
+cursor:pointer;
+">
+👁 View
+</button>
+
+<button
+onclick="removeWishlist('${product._id}')"
+style="
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#ff4d4d;
+color:white;
+font-weight:800;
+cursor:pointer;
+">
+🗑 Remove
+</button>
+
+</div>
 
 </div>
 `;
@@ -6657,11 +6698,31 @@ panel.classList.add("show");
 
 }
 
-function closeWishlist(){
+function openWishlistProduct(id){
 
-document
-.getElementById("wishlistPanel")
-.classList.remove("show");
+closeWishlist();
+
+viewProduct(id);
+
+}
+
+function removeWishlist(id){
+
+let wishlist =
+JSON.parse(
+localStorage.getItem("wishlist")
+) || [];
+
+wishlist = wishlist.filter(
+item => item._id !== id
+);
+
+localStorage.setItem(
+"wishlist",
+JSON.stringify(wishlist)
+);
+
+openWishlist();
 
 }
 
