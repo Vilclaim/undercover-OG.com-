@@ -2826,6 +2826,8 @@ class="close-view-btn">
 id="profileAvatarPreview"
 src="no bg.png"
 class="profile-avatar"
+onclick="openProfileImage()"
+style="cursor:pointer;"
 >
 
 <h2 id="profileTitleName">My Profile</h2>
@@ -6887,8 +6889,62 @@ console.log(err);
 
 }
 
+function openProfileImage(){
+
+const img =
+document.getElementById(
+"profileAvatarPreview"
+);
+
+document.getElementById(
+"profileImageFull"
+).src = img.src;
+
+document.getElementById(
+"profileImageViewer"
+).classList.remove("hidden");
+
+}
+
+function closeProfileImage(){
+
+document.getElementById(
+"profileImageViewer"
+).classList.add("hidden");
+
+}
+
 
 </script>
+
+<div id="profileImageViewer" class="hidden">
+
+<div
+onclick="closeProfileImage()"
+style="
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+backdrop-filter:blur(8px);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999999;
+">
+
+<img
+id="profileImageFull"
+src=""
+style="
+max-width:90%;
+max-height:90%;
+border-radius:20px;
+box-shadow:0 0 40px rgba(0,0,0,.6);
+">
+
+</div>
+
+</div>
 
 
 </body>
