@@ -6944,6 +6944,105 @@ document.getElementById(
 
 }
 
+function renderProfileButton(){
+
+const container =
+document.getElementById("profileContainer");
+
+if(!container) return;
+
+const user =
+JSON.parse(localStorage.getItem("user"));
+
+if(user){
+
+container.innerHTML = `
+
+<div class="profile-box">
+
+<button
+class="profile-btn"
+onclick="toggleProfileDropdown()">
+
+👤 ${user.name || "Profile"}
+
+</button>
+
+<div
+id="profileDropdown"
+class="profile-dropdown">
+
+<button onclick="openProfile()">
+My Profile
+</button>
+
+<button onclick="goToOrders()">
+My Orders
+</button>
+
+<button onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}else{
+
+container.innerHTML = `
+
+<button
+class="login-btn"
+onclick="openLoginModal()">
+
+<i class="fa fa-user"></i>
+Login
+
+</button>
+
+`;
+
+}
+
+}
+
+function openLoginModal(){
+
+document
+.getElementById("login-modal")
+.classList.remove("hidden");
+
+}
+
+function toggleProfileDropdown(){
+
+document
+.getElementById("profileDropdown")
+?.classList.toggle("show");
+
+}
+
+function logout(){
+
+localStorage.removeItem("token");
+
+localStorage.removeItem("user");
+
+location.reload();
+
+}
+
+document
+.getElementById("close-login-modal")
+?.addEventListener(
+"click",
+closeLoginModal
+);
+
+renderProfileButton();
 
 </script>
 
