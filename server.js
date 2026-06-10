@@ -1,5 +1,14 @@
 require("dotenv").config();
 
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -18,6 +27,8 @@ origin:"*",
 methods:["GET","POST","PUT","DELETE"]
 }
 });
+
+
 
 // ================= MODELS =================
 
@@ -142,31 +153,23 @@ path.join(__dirname,"public")
 
 // ================= MULTER =================
 
-const storage = multer.diskStorage({
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: async (req, file) => {
 
-destination:(req,file,cb)=>{
+    if(file.mimetype.startsWith("video/")){
+      return {
+        folder: "undercover-og/videos",
+        resource_type: "video"
+      };
+    }
 
-if(file.mimetype.startsWith("video/")){
+    return {
+      folder: "undercover-og/products",
+      resource_type: "image"
+    };
 
-cb(null,"uploads/videos");
-
-}else{
-
-cb(null,"uploads");
-
-}
-
-},
-
-filename:(req,file,cb)=>{
-
-cb(
-null,
-Date.now() + "-" + file.originalname
-);
-
-}
-
+  }
 });
 
 const upload = multer({
@@ -303,7 +306,7 @@ req.files?.filter(file =>
 
 const images =
 imageFiles.map(file =>
-`/uploads/${file.filename}`
+file.path
 );
 
 const image =
@@ -338,11 +341,9 @@ body.video ||
 (req.files?.find(file =>
 file.mimetype.startsWith("video/")
 )
-? `/uploads/videos/${
-req.files.find(file =>
+? req.files.find(file =>
 file.mimetype.startsWith("video/")
-).filename
-}`
+).path
 : ""),
 
 colors:body.colors
@@ -407,7 +408,7 @@ req.files?.filter(file =>
 const images =
 imageFiles.length > 0
 ? imageFiles.map(file =>
-`/uploads/${file.filename}`
+file.path
 )
 : existingProduct.images || [];
 
@@ -443,11 +444,9 @@ body.video ||
 (req.files?.find(file =>
 file.mimetype.startsWith("video/")
 )
-? `/uploads/videos/${
-req.files.find(file =>
+? req.files.find(file =>
 file.mimetype.startsWith("video/")
-).filename
-}`
+).path
 : existingProduct.video || ""),
 
 colors:body.colors
@@ -1807,8 +1806,7 @@ console.log("AREA =", req.body.area);
 console.log("BUILDING =", req.body.building);
 console.log("APARTMENT =", req.body.apartment);
 
-user.profileImage =
-"/uploads/" + req.file.filename;
+user.profileImage = req.file.path;
 
 }
 
