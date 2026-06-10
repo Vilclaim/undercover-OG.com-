@@ -5425,6 +5425,25 @@ orderCard.style.border = "";
 }
 
 
+function getImageUrl(img){
+
+if(!img || img === "undefined" || img === "null"){
+return "logo-og.jpeg";
+}
+
+if(img.startsWith("http://") || img.startsWith("https://")){
+return img;
+}
+
+if(img.startsWith("/")){
+return img;
+}
+
+return "/" + img;
+
+}
+
+
 if(savedUser && (savedUser.id || savedUser._id)){
 
 profileContainer.innerHTML = `
@@ -5436,11 +5455,8 @@ profileContainer.innerHTML = `
 <button class="profile-btn">
 
 <img
-src="${
-savedUser.profileImage
-? window.location.origin + savedUser.profileImage
-: 'no bg.png'
-}"
+src="${getImageUrl(savedUser.profileImage)}"
+onerror="this.src='logo-og.jpeg'"
 style="
 width:32px;
 height:32px;
@@ -5750,7 +5766,7 @@ const file = e.target.files[0];
 if(file){
 
 document.getElementById(
-"profilePreview"
+"profileAvatarPreview"
 ).src =
 URL.createObjectURL(file);
 
