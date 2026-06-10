@@ -607,7 +607,28 @@ background:#ff2d55;
       overflow:auto;
     }
 
-    #super-sale-modal{z-index:300}
+    #super-sale-modal{
+z-index:300;
+}
+
+#product-view{
+z-index:500;
+}
+
+#product-view .product-detail{
+animation:productPop .25s ease;
+}
+
+@keyframes productPop{
+from{
+opacity:0;
+transform:scale(.92);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
     #img-zoom{z-index:999}
 
     .product-detail,
@@ -624,11 +645,12 @@ background:#ff2d55;
     }
 
     .product-detail{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:24px;
-      padding:22px;
-    }
+display:grid;
+grid-template-columns:1.1fr 1fr;
+gap:35px;
+padding:30px;
+max-width:1200px;
+}
 
     .close-view-btn,
     .super-sale-close,
@@ -3267,13 +3289,7 @@ Add to Cart
 
 function viewFlashProduct(productId){
 
-superSaleModal.classList.add("hidden");
-
-setTimeout(()=>{
-
 viewProduct(productId);
-
-},200);
 
 }
 
