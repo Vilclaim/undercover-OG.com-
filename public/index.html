@@ -3243,7 +3243,7 @@ AED ${product.price}
 
 <button
 class="flash-btn"
-onclick="viewProduct('${product._id}')"
+onclick="viewFlashProduct('${product._id}')"
 >
 View
 </button>
@@ -3262,6 +3262,18 @@ Add to Cart
 `;
 
 });
+
+}
+
+function viewFlashProduct(productId){
+
+superSaleModal.classList.add("hidden");
+
+setTimeout(()=>{
+
+viewProduct(productId);
+
+},200);
 
 }
 
