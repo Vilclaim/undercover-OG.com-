@@ -5808,9 +5808,13 @@ console.log("PROFILE DATA:", user);
 document.getElementById(
 "profileAvatarPreview"
 ).src =
-user.profileImage
-? window.location.origin + user.profileImage
-: "no bg.png";
+getImageUrl(user.profileImage);
+
+document.getElementById(
+"profileAvatarPreview"
+).onerror = function(){
+this.src = "logo-og.jpeg";
+};
 
 document.getElementById(
 "profileName"
@@ -5865,9 +5869,13 @@ user.name || "My Profile";
 document.getElementById(
 "profileAvatarPreview"
 ).src =
-user.profileImage
-? window.location.origin + user.profileImage
-: "no bg.png";
+getImageUrl(user.profileImage);
+
+document.getElementById(
+"profileAvatarPreview"
+).onerror = function(){
+this.src = "logo-og.jpeg";
+};
 
 document.getElementById(
 "profileApartment"
