@@ -3302,6 +3302,8 @@ body: formData
 
 const data = await response.json();
 
+console.log("PRODUCT SAVED:", data);
+
 if(data.success){
 
    
@@ -3347,6 +3349,15 @@ card.querySelector("span").style.display =
 
 });
 window.editingProductId = null;
+
+await new Promise(resolve =>
+setTimeout(resolve,1000)
+);
+
+await loadProducts();
+await loadInventory();
+await loadDashboardStats();
+await loadSalesChart();
 
 
 
@@ -3739,13 +3750,16 @@ throw new Error("Failed to load products");
 
 const products = await response.json();
 
-const searchValue =
+console.log("ALL PRODUCTS:", products);
 
+const searchValue =
 document.getElementById("searchInput")
 ?.value.toLowerCase() || "";
 
 const productsTable =
 document.getElementById("productsTable");
+
+console.log("PRODUCTS FOUND:", products.length);
 
 productsTable.innerHTML = "";
 
