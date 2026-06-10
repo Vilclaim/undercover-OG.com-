@@ -1460,58 +1460,115 @@ padding:20px;
 
 .login-modal-box{
 width:100%;
-max-width:400px;
-background:linear-gradient(
-145deg,
-rgba(16,24,24,.95),
-rgba(5,8,6,.95)
-);
-border:1px solid rgba(255,255,255,.08);
-border-radius:28px;
-padding:35px;
+max-width:650px;
+
+background:#ffffff;
+color:#111;
+
+border-radius:24px;
+
+padding:40px;
+
 position:relative;
-box-shadow:0 30px 60px rgba(0,0,0,.5);
+
+box-shadow:
+0 25px 70px rgba(0,0,0,.25);
+
+animation:loginPop .3s ease;
+}
+
+@keyframes loginPop{
+from{
+opacity:0;
+transform:scale(.95);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
 }
 
 .login-modal-box h2{
-margin:0;
-font-size:32px;
+text-align:center;
+font-size:42px;
 font-weight:800;
+margin-bottom:10px;
+color:#111;
 }
 
 .login-sub{
-color:rgba(255,255,255,.6);
-margin-top:8px;
+text-align:center;
+color:#666;
 margin-bottom:25px;
+font-size:16px;
+}
+
+.login-benefits{
+display:flex;
+justify-content:center;
+gap:80px;
+margin-bottom:25px;
+text-align:center;
+}
+
+.login-benefits div{
+font-size:30px;
+}
+
+.login-benefits p{
+margin-top:8px;
+font-size:14px;
+color:#555;
+}
+
+.login-benefits div{
+font-size:28px;
+}
+
+.login-benefits p{
+margin-top:8px;
+font-size:13px;
+color:#666;
 }
 
 .login-modal-box input{
 width:100%;
-padding:15px;
-margin-bottom:14px;
-border:none;
-outline:none;
-background:rgba(255,255,255,.06);
-border-radius:16px;
-color:white;
+height:58px;
+
+padding:0 18px;
+
+background:white;
+
+border:1px solid #ddd;
+
+border-radius:12px;
+
+color:#111;
+
 font-size:15px;
+
+margin-bottom:15px;
 }
 
 #login-submit{
 width:100%;
-padding:15px;
+height:58px;
+
 border:none;
-border-radius:16px;
-background:linear-gradient(
-135deg,
-#00c896,
-#008f6d
-);
+
+border-radius:14px;
+
+background:#ff7300;
+
 color:white;
+
+font-size:18px;
+
 font-weight:800;
+
 cursor:pointer;
-font-size:15px;
-margin-top:8px;
+
+margin-top:10px;
 }
 
 #close-login-modal{
@@ -1522,8 +1579,8 @@ width:38px;
 height:38px;
 border:none;
 border-radius:50%;
-background:rgba(255,255,255,.08);
-color:white;
+background:#f2f2f2;
+color:#111;
 font-size:22px;
 cursor:pointer;
 }
@@ -2736,13 +2793,25 @@ Confirm Order
 ×
 </button>
 
-<h2>
-Welcome Back
-</h2>
+<h2>Sign In / Register</h2>
 
 <p class="login-sub">
-Login to continue shopping
+🔒 All data is safeguarded
 </p>
+
+<div class="login-benefits">
+
+<div>
+🚚
+<p>Free Shipping</p>
+</div>
+
+<div>
+↩️
+<p>Easy Returns</p>
+</div>
+
+</div>
 
 <input
 type="email"
