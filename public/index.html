@@ -6794,7 +6794,73 @@ alert("Added to Cart 🛒");
 
 };
 
+async function markAllNotificationsRead(){
 
+try{
+
+const token =
+localStorage.getItem("token");
+
+await fetch(
+"/api/notifications/mark-all-read",
+{
+method:"PUT",
+headers:{
+Authorization:`Bearer ${token}`
+}
+}
+);
+
+loadCustomerNotifications();
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function clearCustomerNotifications(){
+
+try{
+
+const token =
+localStorage.getItem("token");
+
+await fetch(
+"/api/notifications/clear-notifications",
+{
+method:"DELETE",
+headers:{
+Authorization:`Bearer ${token}`
+}
+}
+);
+
+document.getElementById(
+"customerNotificationList"
+).innerHTML = `
+<p style="
+text-align:center;
+opacity:.6;
+padding:20px;
+">
+No notifications yet
+</p>
+`;
+
+document.getElementById(
+"customerNotificationCount"
+).textContent = "0";
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
 
 
 </script>
