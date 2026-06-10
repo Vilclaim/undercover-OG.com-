@@ -5258,6 +5258,23 @@ await goToOrders();
 
 setTimeout(()=>{
 
+const orderCard =
+document.querySelector(
+`[data-order-id="${orderId}"]`
+);
+
+if(!orderCard) return;
+
+const statusElement =
+orderCard.querySelector(".order-status");
+
+const status =
+statusElement
+? statusElement.textContent.trim().toLowerCase()
+: "";
+
+if(status === "delivered"){
+
 if(productId){
 
 openReviewModal(productId);
@@ -5265,13 +5282,6 @@ openReviewModal(productId);
 return;
 
 }
-
-const orderCard =
-document.querySelector(
-`[data-order-id="${orderId}"]`
-);
-
-if(orderCard){
 
 const reviewBtn =
 orderCard.querySelector(".review-btn");
