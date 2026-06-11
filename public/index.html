@@ -5970,8 +5970,7 @@ data.token
 if(data.user.profileImage){
 
 data.user.profileImage =
-window.location.origin +
-data.user.profileImage;
+getImageUrl(data.user.profileImage);
 
 }
 
