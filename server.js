@@ -392,7 +392,7 @@ badge:body.badge || "Best Seller",
 status:
 Number(body.stock || 0) <= 0
 ? "OUT OF STOCK"
-: (body.status === "OUT OF STOCK" ? "ACTIVE" : body.status || "ACTIVE"),
+: (body.status || "ACTIVE"),
 
 description:body.description || "",
 
@@ -502,7 +502,7 @@ badge:body.badge || "Best Seller",
 status:
 Number(body.stock || 0) <= 0
 ? "OUT OF STOCK"
-: (body.status === "OUT OF STOCK" ? "ACTIVE" : body.status || "ACTIVE"),
+: (body.status || "ACTIVE"),
 
 description:body.description || "",
 
