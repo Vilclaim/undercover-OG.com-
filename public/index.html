@@ -3761,40 +3761,6 @@ beautyMenu.classList.remove("show");
   const flyAnimation = document.getElementById("fly-animation");
 
   const searchInput = document.getElementById("search-input");
-
-  
-
-const loginPassword =
-document.getElementById(
-"login-password"
-);
-
-if(toggleLoginPassword && loginPassword){
-
-toggleLoginPassword.addEventListener(
-"click",
-()=>{
-
-if(loginPassword.type === "password"){
-
-loginPassword.type = "text";
-
-toggleLoginPassword.innerHTML =
-'<i class="fa fa-eye-slash"></i>';
-
-}else{
-
-loginPassword.type = "password";
-
-toggleLoginPassword.innerHTML =
-'<i class="fa fa-eye"></i>';
-
-}
-
-});
-
-}
-
   const searchBtn = document.getElementById("search-btn");
 
 
@@ -7122,16 +7088,8 @@ class="profile-btn"
 onclick="toggleProfileDropdown()">
 
 <img
-src="${
-user.profileImage
-? (
-user.profileImage.startsWith("http")
-? user.profileImage
-: window.location.origin + user.profileImage
-)
-: "logo-og.jpeg"
-}"
-onerror="this.src='logo-og.jpeg'"
+src="${user.profileImage || 'no bg.png'}"
+onerror="this.src='no bg.png'"
 style="
 width:38px;
 height:38px;
