@@ -3208,6 +3208,25 @@ document
 
 });
 
+document.addEventListener("click",(e)=>{
+
+const panel =
+document.getElementById("notificationPanel");
+
+const btn =
+document.getElementById("notificationBtn");
+
+if(
+panel &&
+btn &&
+!panel.contains(e.target) &&
+!btn.contains(e.target)
+){
+panel.classList.remove("show");
+}
+
+});
+
 const productForm =
 document.getElementById("productForm");
 
@@ -4071,18 +4090,17 @@ alert("❌ Delete Failed");
 
 function showSection(sectionId,event){
 
+// CLOSE NOTIFICATION PANEL
+document
+.getElementById("notificationPanel")
+.classList.remove("show");
+
 document.getElementById("dashboardSection").style.display = "none";
-
 document.getElementById("productsSection").style.display = "none";
-
 document.getElementById("ordersSection").style.display = "none";
-
 document.getElementById("analyticsSection").style.display = "none";
-
 document.getElementById("usersSection").style.display = "none";
-
 document.getElementById("inventorySection").style.display = "none";
-
 document.getElementById("settingsSection").style.display = "none";
 
 document.getElementById(sectionId).style.display = "block";
