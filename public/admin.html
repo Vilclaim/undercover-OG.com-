@@ -3938,6 +3938,10 @@ product.oldPrice;
 document.getElementById("stock").value =
 product.stock;
 
+
+
+
+
 document.getElementById("category").value =
 product.category;
 
@@ -4110,13 +4114,23 @@ outStocks++;
 }
 
 let statusClass = "active";
-
-if(product.stock <= 5){
-statusClass = "low-stock";
-}
+let displayStatus = product.status || "ACTIVE";
 
 if(product.stock <= 0){
+
 statusClass = "out-of-stock";
+displayStatus = "OUT OF STOCK";
+
+}else if(product.stock <= 5){
+
+statusClass = "low-stock";
+displayStatus = "LOW STOCK";
+
+}else{
+
+statusClass = "active";
+displayStatus = "ACTIVE";
+
 }
 
 table.innerHTML += `
@@ -4198,7 +4212,7 @@ ${product.colors?.join(", ") || "No Colors"}
 <td>
 
 <div class="status-badge ${statusClass}">
-${product.status || "ACTIVE"}
+${displayStatus}
 </div>
 
 </td>

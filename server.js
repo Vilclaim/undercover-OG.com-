@@ -389,7 +389,10 @@ stock:Number(body.stock || 0),
 
 badge:body.badge || "Best Seller",
 
-status:body.status || "ACTIVE",
+status:
+Number(body.stock || 0) <= 0
+? "OUT OF STOCK"
+: (body.status === "OUT OF STOCK" ? "ACTIVE" : body.status || "ACTIVE"),
 
 description:body.description || "",
 
@@ -496,7 +499,10 @@ stock:Number(body.stock || 0),
 
 badge:body.badge || "Best Seller",
 
-status:body.status || "ACTIVE",
+status:
+Number(body.stock || 0) <= 0
+? "OUT OF STOCK"
+: (body.status === "OUT OF STOCK" ? "ACTIVE" : body.status || "ACTIVE"),
 
 description:body.description || "",
 
