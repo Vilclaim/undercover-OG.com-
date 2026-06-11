@@ -1820,12 +1820,39 @@ Logout
 
 <div id="notificationPanel">
 
-<h2 style="
-margin-bottom:20px;
-font-size:24px;
-">
+<h2 style="margin-bottom:15px;font-size:24px;">
 Notifications
 </h2>
+
+<div style="display:flex;gap:10px;margin-bottom:15px;">
+
+<button onclick="markAllNotificationsRead()" style="
+flex:1;
+padding:10px;
+border:none;
+border-radius:12px;
+background:#00c896;
+color:white;
+font-weight:700;
+cursor:pointer;
+">
+Mark All Read
+</button>
+
+<button onclick="clearAllNotifications()" style="
+flex:1;
+padding:10px;
+border:none;
+border-radius:12px;
+background:#ff4d4d;
+color:white;
+font-weight:700;
+cursor:pointer;
+">
+Clear All
+</button>
+
+</div>
 
 <div id="notificationList"></div>
 
@@ -5366,7 +5393,67 @@ console.log(err);
 
 }
 
+async function markAllNotificationsRead(){
 
+try{
+
+const token = localStorage.getItem("adminToken");
+
+const response = await fetch(
+"/api/notifications/mark-all-read",
+{
+method:"PUT",
+headers:{
+Authorization:`Bearer ${token}`
+}
+}
+);
+
+const data = await response.json();
+
+if(data.success){
+await loadNotifications();
+}
+
+}catch(err){
+console.log(err);
+alert("Failed to mark all read");
+}
+
+}
+
+async function clearAllNotifications(){
+
+if(!confirm("Clear all notifications?")){
+return;
+}
+
+try{
+
+const token = localStorage.getItem("adminToken");
+
+const response = await fetch(
+"/api/notifications/clear-notifications",
+{
+method:"DELETE",
+headers:{
+Authorization:`Bearer ${token}`
+}
+}
+);
+
+const data = await response.json();
+
+if(data.success){
+await loadNotifications();
+}
+
+}catch(err){
+console.log(err);
+alert("Failed to clear notifications");
+}
+
+}
 
 async function loadNotifications(){
 

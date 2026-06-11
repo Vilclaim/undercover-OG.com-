@@ -1587,7 +1587,6 @@ success:false
 
 
 // MARK ALL NOTIFICATIONS READ
-
 app.put(
 "/api/notifications/mark-all-read",
 verifyToken,
@@ -1595,32 +1594,30 @@ async(req,res)=>{
 
 try{
 
+const user = await User.findById(req.user.id);
+
+if(user?.role === "admin"){
+
 await Notification.updateMany(
-
-{
-userId:req.user.id,
-read:false
-},
-
-{
-$set:{
-read:true
-}
-}
-
+{ type:"newOrder", read:false },
+{ $set:{ read:true } }
 );
 
-res.json({
-success:true
-});
+}else{
+
+await Notification.updateMany(
+{ userId:req.user.id, read:false },
+{ $set:{ read:true } }
+);
+
+}
+
+res.json({ success:true });
 
 }catch(err){
 
 console.log(err);
-
-res.status(500).json({
-success:false
-});
+res.status(500).json({ success:false });
 
 }
 
