@@ -2454,34 +2454,25 @@ margin-bottom:20px;
 
 .google-login-btn,
 .facebook-login-btn{
-
-  .social-icon{
-width:24px;
-height:24px;
-object-fit:contain;
-display:block;
-}
-
 flex:1;
-
 height:56px;
-
 border:none;
-
 border-radius:16px;
-
 font-weight:700;
-
 cursor:pointer;
-
 display:flex;
 align-items:center;
 justify-content:center;
 gap:10px;
-
 font-size:15px;
-
 transition:.3s;
+}
+
+.social-icon{
+width:24px;
+height:24px;
+object-fit:contain;
+display:block;
 }
 
 .google-login-btn{
@@ -3016,7 +3007,9 @@ Confirm Order
 
 <div class="social-login">
 
-<button class="google-login-btn">
+<button
+class="google-login-btn"
+id="googleLoginBtn">
 
 <img
 src="google icon.png"

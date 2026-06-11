@@ -21,8 +21,16 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const app = express();
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
 const http = require("http").createServer(app);
 
 app.use(session({
@@ -775,6 +783,44 @@ status:"Pending"
 });
 
 await order.save();
+
+try {
+
+await transporter.sendMail({
+
+from: process.env.EMAIL_USER,
+
+to: email,
+
+subject: "Order Confirmation - UNDERCOVER-OG",
+
+html: `
+
+<h2>Thank you for your order!</h2>
+
+<p>Hello ${customerName},</p>
+
+<p>Your order has been placed successfully.</p>
+
+<p><strong>Order ID:</strong> ${order._id}</p>
+
+<p><strong>Total:</strong> AED ${total}</p>
+
+<p><strong>Status:</strong> Pending</p>
+
+<p>Thank you for shopping with UNDERCOVER-OG.</p>
+
+`
+
+});
+
+console.log("✅ Order email sent");
+
+} catch(err){
+
+console.log("❌ Email Error:", err);
+
+}
 
 const customerNotification =
 await Notification.create({
