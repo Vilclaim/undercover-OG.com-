@@ -1529,14 +1529,49 @@ padding:20px;
 
 .login-modal-box{
 width:100%;
-max-width:650px;
+max-width:700px;
 
-background:#ffffff;
+background:
+linear-gradient(
+145deg,
+#ffffff,
+#f8f8f8
+);
+
 color:#111;
 
-border-radius:24px;
+border-radius:32px;
 
-padding:40px;
+padding:50px;
+
+position:relative;
+
+overflow:hidden;
+
+box-shadow:
+0 30px 80px rgba(0,0,0,.25);
+
+border:1px solid rgba(0,0,0,.06);
+}
+
+.login-modal-box::before{
+content:"";
+
+position:absolute;
+top:-150px;
+right:-150px;
+
+width:300px;
+height:300px;
+
+background:
+radial-gradient(
+circle,
+rgba(0,200,150,.15),
+transparent 70%
+);
+
+pointer-events:none;
 
 position:relative;
 
@@ -1627,7 +1662,24 @@ border:none;
 
 border-radius:14px;
 
-background:#ff7300;
+background:
+linear-gradient(
+135deg,
+#00c896,
+#008f6d
+);
+
+height:60px;
+
+border-radius:18px;
+
+font-size:18px;
+
+font-weight:800;
+
+box-shadow:
+0 15px 35px rgba(0,200,150,.25);
+
 
 color:white;
 
@@ -2394,6 +2446,53 @@ transform:scale(1.15);
 transform:scale(1.2);
 }
 
+.social-login{
+display:flex;
+gap:12px;
+margin-bottom:20px;
+}
+
+.google-login-btn,
+.facebook-login-btn{
+
+flex:1;
+
+height:56px;
+
+border:none;
+
+border-radius:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+
+font-size:15px;
+
+transition:.3s;
+}
+
+.google-login-btn{
+background:#fff;
+border:1px solid #ddd;
+}
+
+.facebook-login-btn{
+background:#1877f2;
+color:white;
+}
+
+.google-login-btn:hover,
+.facebook-login-btn:hover{
+transform:translateY(-3px);
+}
+
+
   </style>
 </head>
 
@@ -2907,10 +3006,25 @@ Confirm Order
 
 </div>
 
+
+<div class="social-login">
+
+<button class="google-login-btn">
+<i class="fa-brands fa-google"></i>
+Continue with Google
+</button>
+
+<button class="facebook-login-btn">
+<i class="fa-brands fa-facebook-f"></i>
+Continue with Facebook
+</button>
+
+</div>
+
 <input
 type="email"
 id="login-email"
-placeholder="Email">
+placeholder="📧 Enter your email">
 
 <div style="position:relative;">
 
