@@ -1,5 +1,9 @@
 require("dotenv").config();
 
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const session = require("express-session");
+
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
@@ -20,6 +24,15 @@ const jwt = require("jsonwebtoken");
 
 const app = express();
 const http = require("http").createServer(app);
+
+app.use(session({
+  secret: "undercover_google_secret",
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const io = require("socket.io")(http,{
 cors:{
@@ -126,6 +139,46 @@ extended:true
 }));
 
 app.use("/api/users", userRoutes);
+
+
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL
+    },
+    async (accessToken, refreshToken, profile, done) => {
+
+      let user = await User.findOne({
+        email: profile.emails[0].value
+      });
+
+      if (!user) {
+
+        user = await User.create({
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          password: "google-login",
+          role: "user"
+        });
+
+      }
+
+      return done(null, user);
+
+    }
+  )
+);
 
 // ================= UPLOAD FOLDERS =================
 
@@ -2055,6 +2108,45 @@ success:false
 
 });
 
+
+app.get(
+"/auth/google",
+passport.authenticate(
+"google",
+{
+scope:["profile","email"]
+}
+)
+);
+
+app.get(
+"/auth/google/callback",
+passport.authenticate(
+"google",
+{
+failureRedirect:"/"
+}
+),
+(req,res)=>{
+
+const token = jwt.sign(
+{
+id:req.user._id,
+email:req.user.email,
+role:req.user.role
+},
+JWT_SECRET,
+{
+expiresIn:"7d"
+}
+);
+
+res.redirect(
+`/?token=${token}`
+);
+
+}
+);
 
 
 // ================= FRONTEND =================
