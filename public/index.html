@@ -2819,32 +2819,42 @@ id="login-email"
 placeholder="Email">
 
 <div style="position:relative;">
+
 <input
 type="password"
 id="login-password"
 placeholder="Password"
-style="padding-right:50px;">
+style="
+width:100%;
+height:58px;
+padding:0 50px 0 18px;
+background:white;
+border:1px solid #ddd;
+border-radius:12px;
+color:#111;
+font-size:15px;
+margin-bottom:15px;
+">
 
 <button
 type="button"
 id="toggleLoginPassword"
 style="
 position:absolute;
-right:12px;
+right:15px;
 top:50%;
 transform:translateY(-50%);
 background:none;
 border:none;
-color:white;
+color:#666;
 cursor:pointer;
-font-size:18px;
+font-size:20px;
+z-index:10;
 ">
-👁️
+<i class="fa fa-eye"></i>
 </button>
 
-<button id="login-submit">
-Login
-</button>
+</div>
 
 <p class="register-text">
 
@@ -3751,6 +3761,40 @@ beautyMenu.classList.remove("show");
   const flyAnimation = document.getElementById("fly-animation");
 
   const searchInput = document.getElementById("search-input");
+
+  
+
+const loginPassword =
+document.getElementById(
+"login-password"
+);
+
+if(toggleLoginPassword && loginPassword){
+
+toggleLoginPassword.addEventListener(
+"click",
+()=>{
+
+if(loginPassword.type === "password"){
+
+loginPassword.type = "text";
+
+toggleLoginPassword.innerHTML =
+'<i class="fa fa-eye-slash"></i>';
+
+}else{
+
+loginPassword.type = "password";
+
+toggleLoginPassword.innerHTML =
+'<i class="fa fa-eye"></i>';
+
+}
+
+});
+
+}
+
   const searchBtn = document.getElementById("search-btn");
 
 
@@ -6032,6 +6076,8 @@ toggleLoginPassword.textContent = "👁️";
 const loginSubmit =
 document.getElementById("login-submit");
 
+
+
 if(loginSubmit){
 
 loginSubmit.addEventListener("click",login);
@@ -7076,8 +7122,16 @@ class="profile-btn"
 onclick="toggleProfileDropdown()">
 
 <img
-src="${user.profileImage || 'no bg.png'}"
-onerror="this.src='no bg.png'"
+src="${
+user.profileImage
+? (
+user.profileImage.startsWith("http")
+? user.profileImage
+: window.location.origin + user.profileImage
+)
+: "logo-og.jpeg"
+}"
+onerror="this.src='logo-og.jpeg'"
 style="
 width:38px;
 height:38px;
