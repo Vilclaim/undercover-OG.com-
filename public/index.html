@@ -2455,6 +2455,13 @@ margin-bottom:20px;
 .google-login-btn,
 .facebook-login-btn{
 
+  .social-icon{
+width:24px;
+height:24px;
+object-fit:contain;
+display:block;
+}
+
 flex:1;
 
 height:56px;
@@ -2478,8 +2485,22 @@ transition:.3s;
 }
 
 .google-login-btn{
-background:#fff;
-border:1px solid #ddd;
+background:white;
+color:#222;
+
+border:1px solid #e5e5e5;
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.08);
+
+font-weight:700;
+}
+
+.google-login-btn:hover{
+transform:translateY(-3px);
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.12);
 }
 
 .facebook-login-btn{
@@ -3010,8 +3031,15 @@ Confirm Order
 <div class="social-login">
 
 <button class="google-login-btn">
-<i class="fa-brands fa-google"></i>
+
+<img
+src="google icon.png"
+class="social-icon"
+alt="Google"
+>
+
 Continue with Google
+
 </button>
 
 <button class="facebook-login-btn">
