@@ -784,9 +784,7 @@ status:"Pending"
 
 await order.save();
 
-try {
-
-await transporter.sendMail({
+transporter.sendMail({
 
 from: process.env.EMAIL_USER,
 
@@ -808,19 +806,19 @@ html: `
 
 <p><strong>Status:</strong> Pending</p>
 
-<p>Thank you for shopping with UNDERCOVER-OG.</p>
-
 `
 
-});
+})
+.then(() => {
 
 console.log("✅ Order email sent");
 
-} catch(err){
+})
+.catch(err => {
 
 console.log("❌ Email Error:", err);
 
-}
+});
 
 const customerNotification =
 await Notification.create({
