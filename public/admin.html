@@ -3815,8 +3815,20 @@ table.innerHTML += `
 <p>AED ${product.price}</p>
 
 <p>${product.category}</p>
-<div class="status-badge ${product.status?.toLowerCase().replace(/\s+/g,'-')}">
-${product.status || "ACTIVE"}
+<div class="status-badge ${
+(product.stock || 0) <= 0
+? "out-of-stock"
+: (product.stock || 0) <= 5
+? "low-stock"
+: "active"
+}">
+${
+(product.stock || 0) <= 0
+? "OUT OF STOCK"
+: (product.stock || 0) <= 5
+? "LOW STOCK"
+: "ACTIVE"
+}
 </div>
 </div>
 
