@@ -26,13 +26,7 @@ const nodemailer = require("nodemailer");
 const app = express();
 const transporter = nodemailer.createTransport({
 
-host: "smtp.gmail.com",
-
-port: 587,
-
-secure: false,
-
-requireTLS: true,
+service: "gmail",
 
 auth: {
 
@@ -2274,6 +2268,35 @@ res.redirect(
 
 }
 );
+
+
+app.get("/test-email", async(req,res)=>{
+
+try{
+
+await transporter.sendMail({
+
+from: process.env.EMAIL_USER,
+
+to: process.env.EMAIL_USER,
+
+subject: "UNDERCOVER-OG TEST",
+
+text: "Email system working"
+
+});
+
+res.send("EMAIL SENT");
+
+}catch(err){
+
+console.log(err);
+
+res.send("EMAIL FAILED");
+
+}
+
+});
 
 
 // ================= FRONTEND =================
