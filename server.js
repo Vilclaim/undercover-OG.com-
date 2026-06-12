@@ -31,6 +31,22 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS
   }
 });
+
+transporter.verify((error, success) => {
+
+if(error){
+
+console.log("EMAIL VERIFY ERROR:");
+console.log(error);
+
+}else{
+
+console.log("EMAIL SERVER READY");
+
+}
+
+});
+
 const http = require("http").createServer(app);
 
 app.use(session({
