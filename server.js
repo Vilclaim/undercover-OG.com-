@@ -325,13 +325,27 @@ function verifyAdmin(req,res,next){
 console.log("===== ADMIN CHECK =====");
 console.log(req.user);
 
+if(!req.user){
+
+console.log("NO USER FOUND");
+
+return res.status(403).json({
+message:"No user found"
+});
+
+}
+
 if(req.user.role !== "admin"){
+
+console.log("ROLE FOUND:", req.user.role);
 
 return res.status(403).json({
 message:"Admin access only"
 });
 
 }
+
+console.log("ADMIN VERIFIED");
 
 next();
 
