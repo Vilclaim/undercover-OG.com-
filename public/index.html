@@ -2032,23 +2032,38 @@ font-weight:900;
 }
 
 #customerNotificationPanel{
-position:absolute;
-top:60px;
+position:fixed;
+top:0;
 right:0;
-width:360px;
-max-height:430px;
+width:420px;
+max-width:95%;
+height:100vh;
+
+background:
+linear-gradient(
+180deg,
+#08110d,
+#0f1f18
+);
+
+border-left:1px solid rgba(255,255,255,.08);
+
+padding:20px;
+
 overflow-y:auto;
-background:#08110d;
-border:1px solid rgba(255,255,255,.12);
-border-radius:22px;
-padding:16px;
-z-index:99999;
-display:none;
-box-shadow:0 20px 50px rgba(0,0,0,.45);
+
+z-index:999999;
+
+transform:translateX(110%);
+
+transition:.35s ease;
+
+box-shadow:
+-10px 0 40px rgba(0,0,0,.5);
 }
 
 #customerNotificationPanel.show{
-display:block;
+transform:translateX(0);
 }
 
 .customer-notification-header{
@@ -3786,6 +3801,10 @@ alert("Server error");
   cartBtn.addEventListener("click", () => {
 
   cartSidebar.classList.add("show");
+
+  document
+  .getElementById("customerNotificationPanel")
+  .classList.remove("show");
 
   checkModalState();
 
@@ -7455,6 +7474,32 @@ closeLoginModal
 );
 
 renderProfileButton();
+
+document.addEventListener("click",(e)=>{
+
+const panel =
+document.getElementById(
+"customerNotificationPanel"
+);
+
+const bell =
+document.getElementById(
+"customerNotificationBtn"
+);
+
+if(
+panel.classList.contains("show")
+&&
+!panel.contains(e.target)
+&&
+!bell.contains(e.target)
+){
+
+panel.classList.remove("show");
+
+}
+
+});
 
 </script>
 
