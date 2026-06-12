@@ -872,6 +872,42 @@ margin-bottom:20px;
       gap:8px;
     }
 
+    .color-option{
+display:flex;
+align-items:center;
+gap:10px;
+
+padding:10px 14px;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.08);
+
+border:2px solid transparent;
+
+cursor:pointer;
+
+font-weight:700;
+
+transition:.25s;
+}
+
+.color-option:hover{
+border-color:#00c896;
+}
+
+.color-option.selected{
+border-color:#00c896;
+background:rgba(0,200,150,.15);
+}
+
+.color-circle{
+width:22px;
+height:22px;
+border-radius:50%;
+border:2px solid rgba(255,255,255,.2);
+}
+
    
 
     .color-option.selected{
@@ -4014,6 +4050,18 @@ PRODUCTS.find(p=>p.name === title);
 
 if(!product) return;
 
+if(
+currentProduct.colors &&
+currentProduct.colors.length > 0 &&
+!selectedColor
+){
+
+alert("Please select a color first");
+
+return;
+
+}
+
 addToCart(
 product._id,
 selectedColor,
@@ -4428,28 +4476,38 @@ colorOptions.innerHTML = "";
 
 p.colors.forEach(color=>{
 
-const label = document.createElement("label");
+const option =
+document.createElement("div");
 
-label.className = "color-option";
+option.className =
+"color-option";
 
-label.innerHTML = `
-<input type="radio" name="productColor" value="${color}" hidden>
-<span>✓</span> ${color}
+option.innerHTML = `
+<div
+class="color-circle"
+style="background:${color.toLowerCase()}"
+></div>
+
+<span>${color}</span>
 `;
 
-label.onclick = ()=>{
+option.onclick = ()=>{
 
 document
 .querySelectorAll(".color-option")
-.forEach(b=>b.classList.remove("selected"));
+.forEach(el=>{
 
-label.classList.add("selected");
+el.classList.remove("selected");
+
+});
+
+option.classList.add("selected");
 
 selectedColor = color;
 
 };
 
-colorOptions.appendChild(label);
+colorOptions.appendChild(option);
 
 });
 
