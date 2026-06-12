@@ -28,30 +28,12 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+
 
 const app = express();
-const transporter = nodemailer.createTransport({
 
-  host: "smtp.gmail.com",
 
-  port: 587,
 
-  secure: false,
-
-  requireTLS: true,
-
-  family: 4,
-
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-
-});
-
-console.log("EMAIL USER =", process.env.EMAIL_USER);
-console.log("EMAIL PASS EXISTS =", !!process.env.EMAIL_PASS);
 
 
 
@@ -847,9 +829,9 @@ status:"Pending"
 
 await order.save();
 
-transporter.sendMail({
+resend.emails.send({
 
-from: process.env.EMAIL_USER,
+from: "onboarding@resend.dev",
 
 to: email,
 
@@ -879,7 +861,7 @@ console.log("✅ Order email sent");
 })
 .catch(err => {
 
-console.log("❌ Email Error:", err);
+console.log("❌ Resend Error:", err);
 
 });
 
@@ -1063,16 +1045,24 @@ await Notification.create(
 userNotification
 );
 
+io.to(String(updatedOrder.userId)).emit(
+"orderStatusUpdated",
+savedNotification
+);
+
+io.to("admin-room").emit(
+"orderStatusUpdated",
+savedNotification
+);
+
 const user =
 await User.findById(updatedOrder.userId);
 
 if(user?.email){
 
-try{
+resend.emails.send({
 
-await transporter.sendMail({
-
-from: process.env.EMAIL_USER,
+from: "onboarding@resend.dev",
 
 to: user.email,
 
@@ -1090,31 +1080,26 @@ html: `
 
 `
 
-});
+})
+.then(() => {
 
 console.log("✅ Status email sent");
 
-}catch(emailError){
+})
+.catch(err => {
 
-console.log("EMAIL FAILED:");
-console.log(emailError);
+console.log("❌ Resend Error:", err);
 
-}
+});
 
 }
 
 console.log("NOTIFICATION SAVED:");
 console.log(savedNotification);
 
-io.to(String(updatedOrder.userId)).emit(
-"orderStatusUpdated",
-savedNotification
-);
 
-io.to("admin-room").emit(
-"orderStatusUpdated",
-savedNotification
-);
+
+
 
 
 
