@@ -1,3 +1,10 @@
+const { Resend } = require("resend");
+
+const resend = new Resend(
+process.env.RESEND_API_KEY
+);
+
+
 require("dotenv").config();
 
 const passport = require("passport");
@@ -2275,25 +2282,27 @@ app.get("/test-email", async(req,res)=>{
 
 try{
 
-const info = await transporter.sendMail({
+const data = await resend.emails.send({
 
-from: process.env.EMAIL_USER,
+from: "onboarding@resend.dev",
+
 to: process.env.EMAIL_USER,
+
 subject: "UNDERCOVER-OG TEST",
-text: "Email system working"
+
+html: "<h2>Resend is working!</h2>"
 
 });
 
-console.log(info);
+console.log(data);
 
 res.send("EMAIL SENT");
 
 }catch(err){
 
-console.log("FULL EMAIL ERROR:");
 console.log(err);
 
-res.send(err.message);
+res.send(JSON.stringify(err));
 
 }
 
