@@ -44,6 +44,7 @@ console.log("EMAIL PASS EXISTS =", !!process.env.EMAIL_PASS);
 
 
 
+/*
 transporter.verify((error, success) => {
 
 if(error){
@@ -58,6 +59,9 @@ console.log("EMAIL SERVER READY");
 }
 
 });
+
+*/
+
 
 const http = require("http").createServer(app);
 
