@@ -1006,6 +1006,56 @@ await Notification.create(
 userNotification
 );
 
+const user =
+await User.findById(updatedOrder.userId);
+
+if(user?.email){
+
+await transporter.sendMail({
+
+from: process.env.EMAIL_USER,
+
+to: user.email,
+
+subject: `Order Update - ${status}`,
+
+html: `
+
+<h2>UNDERCOVER-OG</h2>
+
+<p>Hello ${user.name},</p>
+
+<p>Your order status has been updated.</p>
+
+<p>
+<strong>Order ID:</strong>
+${updatedOrder._id}
+</p>
+
+<p>
+<strong>Status:</strong>
+${status}
+</p>
+
+${
+trackingNumber
+?
+`<p><strong>Tracking Number:</strong> ${trackingNumber}</p>`
+:
+""
+}
+
+<p>
+Thank you for shopping with UNDERCOVER-OG.
+</p>
+
+`
+
+});
+
+console.log("✅ Status email sent");
+
+}
 
 console.log("NOTIFICATION SAVED:");
 console.log(savedNotification);
