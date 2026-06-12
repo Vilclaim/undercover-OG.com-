@@ -2282,29 +2282,33 @@ app.get("/test-email", async(req,res)=>{
 
 try{
 
-await transporter.sendMail({
+const info = await transporter.sendMail({
 
 from: process.env.EMAIL_USER,
-
 to: process.env.EMAIL_USER,
-
 subject: "UNDERCOVER-OG TEST",
-
 text: "Email system working"
 
 });
+
+console.log(info);
 
 res.send("EMAIL SENT");
 
 }catch(err){
 
+console.log("FULL EMAIL ERROR:");
 console.log(err);
 
-res.send("EMAIL FAILED");
+res.send(err.message);
 
 }
 
 });
+
+
+
+
 
 
 // ================= FRONTEND =================
