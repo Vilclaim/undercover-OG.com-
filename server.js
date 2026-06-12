@@ -32,6 +32,9 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+console.log("EMAIL USER =", process.env.EMAIL_USER);
+console.log("EMAIL PASS EXISTS =", !!process.env.EMAIL_PASS);
+
 
 
 transporter.verify((error, success) => {
