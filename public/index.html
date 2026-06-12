@@ -872,14 +872,7 @@ margin-bottom:20px;
       gap:8px;
     }
 
-    .color-option{
-      padding:8px 13px;
-      border-radius:999px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.12);
-      cursor:pointer;
-      font-size:13px;
-    }
+   
 
     .color-option.selected{
       background:var(--accent);
@@ -4435,27 +4428,32 @@ colorOptions.innerHTML = "";
 
 p.colors.forEach(color=>{
 
-const btn = document.createElement("button");
+const label = document.createElement("label");
 
-btn.className = "color-option";
+label.className = "color-option";
 
-btn.textContent = color;
+label.innerHTML = `
+<input type="radio" name="productColor" value="${color}" hidden>
+<span>✓</span> ${color}
+`;
 
-btn.onclick = ()=>{
+label.onclick = ()=>{
 
 document
 .querySelectorAll(".color-option")
 .forEach(b=>b.classList.remove("selected"));
 
-btn.classList.add("selected");
+label.classList.add("selected");
 
 selectedColor = color;
 
 };
 
-colorOptions.appendChild(btn);
+colorOptions.appendChild(label);
 
 });
+
+
 
 }else{
 
