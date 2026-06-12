@@ -1043,6 +1043,8 @@ await User.findById(updatedOrder.userId);
 
 if(user?.email){
 
+try{
+
 await transporter.sendMail({
 
 from: process.env.EMAIL_USER,
@@ -1059,33 +1061,20 @@ html: `
 
 <p>Your order status has been updated.</p>
 
-<p>
-<strong>Order ID:</strong>
-${updatedOrder._id}
-</p>
-
-<p>
-<strong>Status:</strong>
-${status}
-</p>
-
-${
-trackingNumber
-?
-`<p><strong>Tracking Number:</strong> ${trackingNumber}</p>`
-:
-""
-}
-
-<p>
-Thank you for shopping with UNDERCOVER-OG.
-</p>
+<p><strong>Status:</strong> ${status}</p>
 
 `
 
 });
 
 console.log("✅ Status email sent");
+
+}catch(emailError){
+
+console.log("EMAIL FAILED:");
+console.log(emailError);
+
+}
 
 }
 
