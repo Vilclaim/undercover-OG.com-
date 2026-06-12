@@ -7501,6 +7501,58 @@ panel.classList.remove("show");
 
 });
 
+document.addEventListener("click", (e) => {
+
+const cart =
+document.getElementById("cart");
+
+const wishlist =
+document.getElementById("wishlistPanel");
+
+const notification =
+document.getElementById("customerNotificationPanel");
+
+const cartBtn =
+document.getElementById("cart-btn");
+
+const wishlistBtn =
+document.getElementById("wishlistBtn");
+
+const notificationBtn =
+document.getElementById("customerNotificationBtn");
+
+
+// CART
+if(
+cart.classList.contains("show") &&
+!cart.contains(e.target) &&
+!cartBtn.contains(e.target)
+){
+cart.classList.remove("show");
+}
+
+
+// WISHLIST
+if(
+wishlist.classList.contains("show") &&
+!wishlist.contains(e.target) &&
+!wishlistBtn.contains(e.target)
+){
+wishlist.classList.remove("show");
+}
+
+
+// NOTIFICATION
+if(
+notification.classList.contains("show") &&
+!notification.contains(e.target) &&
+!notificationBtn.contains(e.target)
+){
+notification.classList.remove("show");
+}
+
+});
+
 </script>
 
 <div id="profileImageViewer" class="hidden">
