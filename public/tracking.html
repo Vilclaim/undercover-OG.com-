@@ -66,6 +66,38 @@ font-weight:bold;
 color:gold;
 }
 
+.customer-box{
+background:#1a1a1a;
+padding:15px;
+border-radius:15px;
+margin-bottom:15px;
+}
+
+.product-box{
+display:flex;
+align-items:center;
+gap:15px;
+background:#1a1a1a;
+padding:15px;
+border-radius:15px;
+margin-bottom:15px;
+}
+
+.product-image{
+width:80px;
+height:80px;
+object-fit:cover;
+border-radius:12px;
+border:2px solid gold;
+}
+
+.tracking-box{
+background:#1a1a1a;
+padding:15px;
+border-radius:15px;
+margin-bottom:15px;
+}
+
 </style>
 
 </head>
@@ -84,20 +116,65 @@ placeholder="Enter Tracking Number">
 Track Order
 </button>
 
-<div
-class="result"
-id="result">
+<div class="result" id="result">
 
-<p><strong>Tracking Number:</strong>
-<span id="trackNo"></span>
+<div class="customer-box">
+<h3 id="customerName"></h3>
+</div>
+
+<div class="product-box">
+
+<img
+id="productImage"
+class="product-image"
+src="">
+
+<div>
+<h3 id="productName"></h3>
+
+<p>
+Qty:
+<span id="productQty"></span>
 </p>
 
-<p><strong>Status:</strong></p>
+</div>
 
-<p
+</div>
+
+<div class="tracking-box">
+
+<p>📦 Tracking Number</p>
+
+<h3 id="trackNo"></h3>
+
+</div>
+
+<div class="tracking-box">
+
+<p>Status</p>
+
+<h2
 class="status"
 id="status">
-</p>
+</h2>
+
+</div>
+
+<div class="tracking-box">
+
+<p>💳 Payment Status</p>
+
+<h3 id="paymentStatus"></h3>
+
+</div>
+
+<div class="tracking-box">
+
+<p>💰 Total Amount</p>
+
+<h3>AED <span id="totalAmount"></span></h3>
+
+</div>
 
 </div>
 
@@ -152,6 +229,39 @@ document.getElementById(
 "status"
 ).innerText =
 data.order.status;
+
+document.getElementById(
+"paymentStatus"
+).innerText =
+data.order.paymentStatus || "Pending";
+
+document.getElementById(
+"totalAmount"
+).innerText =
+data.order.total || 0;
+
+document.getElementById(
+"customerName"
+).innerText =
+data.order.customerName || "Customer";
+
+document.getElementById(
+"productImage"
+).src =
+data.order.items?.[0]?.image ||
+"/uploads/default-product.png";
+
+document.getElementById(
+"productName"
+).innerText =
+data.order.items?.[0]?.name ||
+"Product";
+
+document.getElementById(
+"productQty"
+).innerText =
+data.order.items?.[0]?.qty ||
+1;
 
 }catch(err){
 
