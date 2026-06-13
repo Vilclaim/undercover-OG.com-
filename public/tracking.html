@@ -182,6 +182,26 @@ id="status">
 
 <script>
 
+    const params =
+new URLSearchParams(
+window.location.search
+);
+
+const track =
+params.get("track");
+
+if(track){
+
+document.getElementById(
+"trackingNumber"
+).value = track;
+
+window.onload = () => {
+trackOrder();
+};
+
+}
+
 async function trackOrder(){
 
 const trackingNumber =
