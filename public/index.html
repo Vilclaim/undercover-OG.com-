@@ -1815,6 +1815,44 @@ margin-top:10px;
 }
 
 
+.track-order-btn{
+
+width:100%;
+
+padding:14px;
+
+margin-top:10px;
+
+border:none;
+
+border-radius:16px;
+
+background:
+linear-gradient(
+135deg,
+#00c896,
+#008f6d
+);
+
+color:white;
+
+font-size:15px;
+
+font-weight:800;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.track-order-btn:hover{
+
+transform:translateY(-2px);
+
+}
+
+
 .order-products{
 display:flex;
 flex-direction:column;
@@ -6557,6 +6595,19 @@ order.status?.trim() === "Delivered"
 : ""
 }">
 🟢 Delivered
+</div>
+
+
+<div style="margin-top:15px;">
+
+<button
+class="track-order-btn"
+onclick="window.open('/tracking.html?track=${order.trackingNumber}','_blank')">
+
+📦 Track Order
+
+</button>
+
 </div>
 
 ${true ? `
