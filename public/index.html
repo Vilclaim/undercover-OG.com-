@@ -3183,18 +3183,13 @@ z-index:10;
 </div>
 
 <p class="register-text">
-
 Don't have account?
-
-<span id="open-register">
-Register
-</span>
+<span id="open-register">Register</span>
+</p>
 
 <button id="login-submit">
 Login
 </button>
-
-</p>
 
 
 
@@ -3556,6 +3551,24 @@ document
 
 
 <script src="/socket.io/socket.io.js"></script>
+
+<div id="trackingModal" class="tracking-modal">
+
+<div class="tracking-modal-content">
+
+<span
+class="close-tracking"
+onclick="closeTrackingModal()">
+✖
+</span>
+
+<div id="trackingModalContent">
+Loading...
+</div>
+
+</div>
+
+</div>
 
 <script>
 
@@ -6697,7 +6710,6 @@ order.status?.trim() === "Delivered"
 <div style="margin-top:15px;">
 
 <button
-type="button"
 class="track-order-btn"
 onclick="openTrackingModal('${order.trackingNumber}')">
 
