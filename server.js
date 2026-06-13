@@ -1082,7 +1082,7 @@ console.log("==================================");
 
 if(user?.email){
 
-await resend.emails.send({
+const result = await resend.emails.send({
 
 from:"onboarding@resend.dev",
 
@@ -1103,6 +1103,9 @@ html:`
 `
 
 });
+
+console.log("RESEND RESULT:");
+console.log(result);
 
 console.log("STATUS EMAIL SENT");
 
