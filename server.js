@@ -847,15 +847,22 @@ status:"Pending"
 
 await order.save();
 
-transporter.sendMail({
 
-from: process.env.EMAIL_USER,
+console.log("=================================");
+console.log("ORDER SAVED");
+console.log("EMAIL:", email);
+console.log("CUSTOMER:", customerName);
+console.log("=================================");
 
-to: email,
+await resend.emails.send({
 
-subject: "Order Confirmation - UNDERCOVER-OG",
+from:"onboarding@resend.dev",
 
-html: `
+to:email,
+
+subject:"Order Confirmation - UNDERCOVER-OG",
+
+html:`
 
 <h2>Thank you for your order!</h2>
 
@@ -871,19 +878,9 @@ html: `
 
 `
 
-},(err,info)=>{
-
-if(err){
-
-console.log("EMAIL ERROR:",err);
-
-}else{
-
-console.log("EMAIL SENT:",info.response);
-
-}
-
 });
+
+console.log("ORDER EMAIL SENT");
 
 const customerNotification =
 await Notification.create({
@@ -1085,15 +1082,15 @@ console.log("==================================");
 
 if(user?.email){
 
-transporter.sendMail({
+await resend.emails.send({
 
-from: process.env.EMAIL_USER,
+from:"onboarding@resend.dev",
 
-to: user.email,
+to:user.email,
 
-subject: `Order Update - ${status}`,
+subject:`Order Update - ${status}`,
 
-html: `
+html:`
 
 <h2>UNDERCOVER-OG</h2>
 
@@ -1105,19 +1102,9 @@ html: `
 
 `
 
-},(err,info)=>{
-
-if(err){
-
-console.log("EMAIL ERROR:",err);
-
-}else{
-
-console.log("EMAIL SENT:",info.response);
-
-}
-
 });
+
+console.log("STATUS EMAIL SENT");
 
 }
 
