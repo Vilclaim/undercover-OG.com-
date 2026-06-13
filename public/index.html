@@ -2573,6 +2573,35 @@ transform:translateY(-3px);
 }
 
 
+.tracking-modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.8);
+z-index:9999;
+justify-content:center;
+align-items:center;
+}
+
+.tracking-modal-content{
+width:90%;
+max-width:500px;
+background:#111;
+padding:20px;
+border-radius:20px;
+border:1px solid #00e0a4;
+}
+
+.close-tracking{
+float:right;
+cursor:pointer;
+font-size:24px;
+}
+
+
   </style>
 </head>
 
@@ -6412,7 +6441,74 @@ checkModalState();
 
 
 
+async function openTrackingModal(trackingNumber){
+
+document.getElementById(
+"trackingModal"
+).style.display = "flex";
+
+try{
+
+const response =
+await fetch(`/api/track/${trackingNumber}`);
+
+const data =
+await response.json();
+
+if(!data.success){
+
+document.getElementById(
+"trackingModalContent"
+).innerHTML =
+"<p>Tracking not found</p>";
+
+return;
+
+}
+
+document.getElementById(
+"trackingModalContent"
+).innerHTML = `
+
+<h2>📦 ${data.order.status}</h2>
+
+<p>
+Tracking Number:
+${data.order.trackingNumber}
+</p>
+
+<p>
+Payment:
+${data.order.paymentStatus || "Pending"}
+</p>
+
+<p>
+Total:
+AED ${data.order.total}
+</p>
+
+`;
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+function closeTrackingModal(){
+
+document.getElementById(
+"trackingModal"
+).style.display = "none";
+
+}
+
+
 async function goToOrders(){
+
+  
 
  
 const savedUser =
@@ -6603,7 +6699,7 @@ order.status?.trim() === "Delivered"
 <button
 type="button"
 class="track-order-btn"
-onclick="window.location.href='/tracking.html?track=${order.trackingNumber}'">
+onclick="openTrackingModal('${order.trackingNumber}')">
 
 📦 Track Order
 
@@ -6989,6 +7085,64 @@ location.reload();
 }
 
 function closeOrders(){
+
+  async function openTrackingModal(trackingNumber){
+
+document
+.getElementById("trackingModal")
+.style.display = "flex";
+
+try{
+
+const response =
+await fetch(
+`/api/track/${trackingNumber}`
+);
+
+const data =
+await response.json();
+
+document
+.getElementById(
+"trackingModalContent"
+).innerHTML = `
+
+<h2>
+📦 ${data.order.status}
+</h2>
+
+<p>
+Tracking Number:
+${data.order.trackingNumber}
+</p>
+
+<p>
+Payment:
+${data.order.paymentStatus || "Pending"}
+</p>
+
+<p>
+Total:
+AED ${data.order.total}
+</p>
+
+`;
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+function closeTrackingModal(){
+
+document
+.getElementById("trackingModal")
+.style.display = "none";
+
+}
 
 const panel =
 document.getElementById("ordersPanel");
@@ -7654,6 +7808,27 @@ box-shadow:0 0 40px rgba(0,0,0,.6);
 
 </div>
 
+
+
+<div id="trackingModal" class="tracking-modal">
+
+<div class="tracking-modal-content">
+
+<span
+class="close-tracking"
+onclick="closeTrackingModal()">
+✖
+</span>
+
+<div id="trackingModalContent">
+
+Loading...
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 </html> 
