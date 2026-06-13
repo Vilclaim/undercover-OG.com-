@@ -6601,8 +6601,9 @@ order.status?.trim() === "Delivered"
 <div style="margin-top:15px;">
 
 <button
+type="button"
 class="track-order-btn"
-location.href='/tracking.html?track=${order.trackingNumber}'">
+onclick="window.location.href='/tracking.html?track=${order.trackingNumber}'">
 
 📦 Track Order
 
@@ -7593,6 +7594,34 @@ checkModalState();
 }
 
 });
+
+function trackOrder(orderId){
+
+const orderCard =
+document.getElementById(
+`order-${orderId}`
+);
+
+if(!orderCard){
+alert("Order not found");
+return;
+}
+
+orderCard.scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+orderCard.style.border =
+"2px solid #00c896";
+
+setTimeout(()=>{
+orderCard.style.border =
+"1px solid rgba(255,255,255,.08)";
+},3000);
+
+}
+
 
 </script>
 
