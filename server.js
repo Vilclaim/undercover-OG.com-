@@ -1529,6 +1529,45 @@ res.send("Invoice Error");
 }
 );
 
+// ================= TRACK ORDER =================
+
+app.get(
+"/api/track/:trackingNumber",
+async(req,res)=>{
+
+try{
+
+const order =
+await Order.findOne({
+trackingNumber:req.params.trackingNumber
+});
+
+if(!order){
+
+return res.json({
+success:false
+});
+
+}
+
+res.json({
+success:true,
+order
+});
+
+}catch(err){
+
+console.log(err);
+
+res.status(500).json({
+success:false
+});
+
+}
+
+});
+
+
 // ================= USER ORDERS =================
 
 app.get(
