@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Track Order - UNDERCOVER-OG</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#111;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+margin:0;
+}
+
+.container{
+width:90%;
+max-width:500px;
+background:#1c1c1c;
+padding:30px;
+border-radius:20px;
+box-shadow:0 0 20px rgba(255,255,255,.1);
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+}
+
+input{
+width:100%;
+padding:15px;
+border:none;
+border-radius:10px;
+margin-bottom:15px;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:15px;
+background:gold;
+border:none;
+border-radius:10px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.result{
+margin-top:20px;
+padding:15px;
+background:#222;
+border-radius:10px;
+display:none;
+}
+
+.status{
+font-size:20px;
+font-weight:bold;
+color:gold;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>📦 Track Your Order</h1>
+
+<input
+type="text"
+id="trackingNumber"
+placeholder="Enter Tracking Number">
+
+<button onclick="trackOrder()">
+Track Order
+</button>
+
+<div
+class="result"
+id="result">
+
+<p><strong>Tracking Number:</strong>
+<span id="trackNo"></span>
+</p>
+
+<p><strong>Status:</strong></p>
+
+<p
+class="status"
+id="status">
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+async function trackOrder(){
+
+const trackingNumber =
+document.getElementById(
+"trackingNumber"
+).value;
+
+if(!trackingNumber){
+
+alert("Enter tracking number");
+
+return;
+
+}
+
+try{
+
+const response =
+await fetch(
+`/api/track/${trackingNumber}`
+);
+
+const data =
+await response.json();
+
+if(!data.success){
+
+alert("Tracking number not found");
+
+return;
+
+}
+
+document.getElementById(
+"result"
+).style.display =
+"block";
+
+document.getElementById(
+"trackNo"
+).innerText =
+data.order.trackingNumber;
+
+document.getElementById(
+"status"
+).innerText =
+data.order.status;
+
+}catch(err){
+
+console.log(err);
+
+alert("Error tracking order");
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
