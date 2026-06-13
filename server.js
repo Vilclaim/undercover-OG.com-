@@ -1,9 +1,10 @@
+/*
 const { Resend } = require("resend");
 
 const resend = new Resend(
 process.env.RESEND_API_KEY
 );
-
+*/
 
 require("dotenv").config();
 
@@ -28,6 +29,17 @@ const multer = require("multer");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+service: "gmail",
+auth: {
+user: process.env.EMAIL_USER,
+pass: process.env.EMAIL_PASS
+}
+});
+
 
 
 const app = express();
@@ -835,11 +847,9 @@ status:"Pending"
 
 await order.save();
 
-resend.emails.send({
+transporter.sendMail({
 
-  
-
-from: "onboarding@resend.dev",
+from: process.env.EMAIL_USER,
 
 to: email,
 
@@ -861,15 +871,17 @@ html: `
 
 `
 
-})
-.then(() => {
+},(err,info)=>{
 
-console.log("✅ Order email sent");
+if(err){
 
-})
-.catch(err => {
+console.log("EMAIL ERROR:",err);
 
-console.log("❌ Resend Error:", err);
+}else{
+
+console.log("EMAIL SENT:",info.response);
+
+}
 
 });
 
@@ -1073,9 +1085,9 @@ console.log("==================================");
 
 if(user?.email){
 
-resend.emails.send({
+transporter.sendMail({
 
-from: "onboarding@resend.dev",
+from: process.env.EMAIL_USER,
 
 to: user.email,
 
@@ -1093,15 +1105,17 @@ html: `
 
 `
 
-})
-.then(() => {
+},(err,info)=>{
 
-console.log("✅ Status email sent");
+if(err){
 
-})
-.catch(err => {
+console.log("EMAIL ERROR:",err);
 
-console.log("❌ Resend Error:", err);
+}else{
+
+console.log("EMAIL SENT:",info.response);
+
+}
 
 });
 
@@ -2290,33 +2304,33 @@ res.redirect(
 );
 
 
-app.get("/test-email", async(req,res)=>{
+app.get("/test-email",(req,res)=>{
 
-try{
+transporter.sendMail({
 
-const data = await resend.emails.send({
-
-from: "onboarding@resend.dev",
+from: process.env.EMAIL_USER,
 
 to: process.env.EMAIL_USER,
 
-subject: "UNDERCOVER-OG TEST",
+subject:"UNDERCOVER-OG TEST",
 
-html: "<h2>Resend is working!</h2>"
+html:"<h2>Gmail is working!</h2>"
 
-});
+},(err,info)=>{
 
-console.log(data);
+if(err){
+
+console.log("EMAIL ERROR:",err);
+
+return res.send("EMAIL FAILED");
+
+}
+
+console.log("EMAIL SENT:",info.response);
 
 res.send("EMAIL SENT");
 
-}catch(err){
-
-console.log(err);
-
-res.send(JSON.stringify(err));
-
-}
+});
 
 });
 
