@@ -742,6 +742,12 @@ const customerName = user.name;
 const phone = user.phone;
 const email = user.email;
 const address = user.address;
+
+console.log("========== ORDER EMAIL ==========");
+console.log("USER NAME:", customerName);
+console.log("USER EMAIL:", email);
+console.log("=================================");
+
 const profileImage = user.profileImage;
 
 const emirate = user.emirate;
@@ -830,6 +836,8 @@ status:"Pending"
 await order.save();
 
 resend.emails.send({
+
+  
 
 from: "onboarding@resend.dev",
 
@@ -1057,6 +1065,11 @@ savedNotification
 
 const user =
 await User.findById(updatedOrder.userId);
+
+console.log("========== STATUS EMAIL ==========");
+console.log("USER:", user);
+console.log("EMAIL:", user?.email);
+console.log("==================================");
 
 if(user?.email){
 
