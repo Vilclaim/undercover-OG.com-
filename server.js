@@ -1,10 +1,8 @@
-/*
 const { Resend } = require("resend");
 
 const resend = new Resend(
 process.env.RESEND_API_KEY
 );
-*/
 
 require("dotenv").config();
 
@@ -30,6 +28,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+/*
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
@@ -39,6 +38,7 @@ user: process.env.EMAIL_USER,
 pass: process.env.EMAIL_PASS
 }
 });
+*/
 
 
 
@@ -2304,33 +2304,33 @@ res.redirect(
 );
 
 
-app.get("/test-email",(req,res)=>{
+app.get("/test-email", async(req,res)=>{
 
-transporter.sendMail({
+try{
 
-from: process.env.EMAIL_USER,
+const data = await resend.emails.send({
 
-to: process.env.EMAIL_USER,
+from:"onboarding@resend.dev",
+
+to:"calimvilandrew631@gmail.com",
 
 subject:"UNDERCOVER-OG TEST",
 
-html:"<h2>Gmail is working!</h2>"
+html:"<h2>Resend is working!</h2>"
 
-},(err,info)=>{
+});
 
-if(err){
-
-console.log("EMAIL ERROR:",err);
-
-return res.send("EMAIL FAILED");
-
-}
-
-console.log("EMAIL SENT:",info.response);
+console.log(data);
 
 res.send("EMAIL SENT");
 
-});
+}catch(err){
+
+console.log(err);
+
+res.send("EMAIL FAILED");
+
+}
 
 });
 
