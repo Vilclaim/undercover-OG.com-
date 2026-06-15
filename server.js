@@ -1638,6 +1638,9 @@ event.data.object;
 const orderId =
 session.metadata.orderId;
 
+console.log("WEBHOOK HIT");
+console.log("ORDER ID:", orderId);
+
 await Order.findByIdAndUpdate(
 orderId,
 {
