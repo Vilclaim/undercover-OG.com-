@@ -3836,6 +3836,38 @@ return;
 
 try{
 
+if(paymentMethod === "Card Payment"){
+
+const response = await fetch(
+"/api/create-checkout-session",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+Authorization:`Bearer ${token}`
+},
+body:JSON.stringify({
+items:cart
+})
+}
+);
+
+const data = await response.json();
+
+if(data.url){
+
+window.location.href = data.url;
+return;
+
+}else{
+
+alert("Stripe session failed");
+return;
+
+}
+
+}
+
 const response = await fetch("/api/orders",{
 method:"POST",
 headers:{
