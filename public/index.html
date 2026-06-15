@@ -3876,7 +3876,8 @@ Authorization:`Bearer ${token}`
 },
 body: JSON.stringify({
 items: cart,
-paymentMethod
+paymentMethod,
+orderId:data.orderId
 })
 });
 

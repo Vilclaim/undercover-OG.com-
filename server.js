@@ -1543,6 +1543,8 @@ app.post(
 verifyToken,
 async(req,res)=>{
 
+  
+
 try{
 
 const { items } = req.body;
@@ -1567,6 +1569,10 @@ line_items,
 
 mode:"payment",
 
+metadata:{
+orderId:req.body.orderId
+},
+
 success_url:
 "https://undercover-og-com.onrender.com/?payment=success",
 
@@ -1590,6 +1596,67 @@ success:false
 }
 
 });
+
+
+app.post(
+"/api/stripe/webhook",
+express.raw({type:"application/json"}),
+async(req,res)=>{
+
+const sig =
+req.headers["stripe-signature"];
+
+let event;
+
+try{
+
+event =
+stripe.webhooks.constructEvent(
+req.body,
+sig,
+process.env.STRIPE_WEBHOOK_SECRET
+);
+
+}catch(err){
+
+console.log(err);
+
+return res.status(400).send(
+`Webhook Error: ${err.message}`
+);
+
+}
+
+if(
+event.type ===
+"checkout.session.completed"
+){
+
+const session =
+event.data.object;
+
+const orderId =
+session.metadata.orderId;
+
+await Order.findByIdAndUpdate(
+orderId,
+{
+paymentStatus:"Paid"
+}
+);
+
+console.log(
+"PAYMENT UPDATED TO PAID"
+);
+
+}
+
+res.json({
+received:true
+});
+
+});
+
 
 // ================= TRACK ORDER =================
 

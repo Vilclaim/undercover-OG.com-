@@ -99,6 +99,8 @@ type:String,
 enum:[
 "Pending",
 "Paid",
+"Failed",
+"Refunded",
 "Unpaid"
 ],
 default:"Unpaid"
