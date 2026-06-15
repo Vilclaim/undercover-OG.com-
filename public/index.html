@@ -3833,7 +3833,9 @@ return;
 
 if(paymentMethod === "Card Payment"){
 
-const stripeResponse = await fetch("/api/create-checkout-session",{
+const response = await fetch(
+"/api/create-checkout-session",
+{
 method:"POST",
 headers:{
 "Content-Type":"application/json",
@@ -3841,9 +3843,10 @@ Authorization:`Bearer ${token}`
 },
 body:JSON.stringify({
 items:cart,
-orderId:orderData.orderId
+paymentMethod:"Card Payment"
 })
-});
+}
+);
 
 const stripeData = await stripeResponse.json();
 

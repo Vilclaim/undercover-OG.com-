@@ -1549,6 +1549,89 @@ try{
 
 const { items } = req.body;
 
+const user =
+await User.findById(req.user.id);
+
+let total = 0;
+
+for(const item of items){
+
+const product =
+await Product.findById(item.id);
+
+if(product){
+total += product.price * item.qty;
+}
+
+}
+
+const order =
+new Order({
+
+userId:req.user.id,
+
+customerName:user.name,
+
+phone:user.phone,
+
+email:user.email,
+
+address:user.address,
+
+profileImage:user.profileImage,
+
+items,
+
+total,
+
+paymentMethod:"Card Payment",
+
+paymentStatus:"Pending",
+
+status:"Pending"
+
+});
+
+await order.save();
+
+const newNotification =
+await Notification.create({
+
+type:"newOrder",
+
+customer:user.name,
+
+total,
+
+orderId:order._id,
+
+userId:null,
+
+status:"Pending",
+
+itemName:
+items?.[0]?.name || "Product",
+
+itemImage:
+items?.[0]?.image ||
+"/uploads/default-product.png",
+
+qty:
+items?.[0]?.qty || 1,
+
+read:false,
+
+time:new Date(),
+
+message:`New order from ${user.name}`
+
+});
+
+io.to("admin-room").emit(
+"newOrder",
+newNotification
+);
+
 const line_items = items.map(item => ({
 price_data:{
 currency:"aed",
@@ -1570,11 +1653,11 @@ line_items,
 mode:"payment",
 
 metadata:{
-orderId:req.body.orderId
+orderId:order._id.toString()
 },
 
 success_url:
-"https://undercover-og-com.onrender.com/?payment=success",
+"https://undercover-og-com.onrender.com/?payment=success&session_id={CHECKOUT_SESSION_ID}",
 
 cancel_url:
 "https://undercover-og-com.onrender.com/?payment=cancel"
