@@ -4439,16 +4439,6 @@ filteredOrders.forEach(order => {
 
 ordersTable.innerHTML += `
 
-<td>
-<span class="
-${order.paymentStatus === "Paid"
-? "status-badge delivered"
-: "status-badge pending"}
-">
-${order.paymentStatus || "Pending"}
-</span>
-</td>
-
 <tr>
 
 <td>
