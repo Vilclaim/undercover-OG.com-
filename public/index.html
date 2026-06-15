@@ -3778,18 +3778,11 @@ checkoutBtn.addEventListener("click", async () => {
 const token = localStorage.getItem("token");
 
 const paymentMethod =
-document.querySelector(
-'input[name="paymentMethod"]:checked'
-)?.value;
+document.querySelector('input[name="paymentMethod"]:checked')?.value;
 
 if(!paymentMethod){
-
-alert(
-"Please select payment method"
-);
-
+alert("Please select payment method");
 return;
-
 }
 
 if(!token){
@@ -3800,32 +3793,15 @@ return;
 const user =
 JSON.parse(localStorage.getItem("user"));
 
-if(
-!user ||
-!user.phone ||
-user.phone.trim() === ""
-){
-alert(
-"Please complete your phone number first."
-);
-
+if(!user || !user.phone || user.phone.trim() === ""){
+alert("Please complete your phone number first.");
 openProfile();
-
 return;
 }
 
-if(
-!user.emirate ||
-!user.area ||
-!user.building ||
-!user.apartment
-){
-alert(
-"Please complete your delivery address first."
-);
-
+if(!user.emirate || !user.area || !user.building || !user.apartment){
+alert("Please complete your delivery address first.");
 openProfile();
-
 return;
 }
 
@@ -3836,72 +3812,59 @@ return;
 
 try{
 
-if(paymentMethod === "Card Payment"){
-
-const response = await fetch(
-"/api/create-checkout-session",
-{
+const orderResponse = await fetch("/api/orders",{
 method:"POST",
 headers:{
 "Content-Type":"application/json",
 Authorization:`Bearer ${token}`
 },
 body:JSON.stringify({
-items:cart
+items:cart,
+paymentMethod
 })
-}
-);
+});
 
-const data = await response.json();
+const orderData = await orderResponse.json();
 
-if(data.url){
-
-window.location.href = data.url;
+if(!orderResponse.ok){
+alert(orderData.message || orderData.error || "Order failed");
 return;
-
-}else{
-
-alert("Stripe session failed");
-return;
-
 }
 
-}
+if(paymentMethod === "Card Payment"){
 
-const response = await fetch("/api/orders",{
+const stripeResponse = await fetch("/api/create-checkout-session",{
 method:"POST",
 headers:{
 "Content-Type":"application/json",
 Authorization:`Bearer ${token}`
 },
-body: JSON.stringify({
-items: cart,
-paymentMethod
+body:JSON.stringify({
+items:cart,
+orderId:orderData.orderId
 })
 });
 
-const data = await response.json();
+const stripeData = await stripeResponse.json();
 
-console.log(data);
+if(stripeData.url){
+window.location.href = stripeData.url;
+return;
+}
 
-if(response.ok){
+alert("Stripe session failed");
+return;
+}
 
 alert("Order placed successfully!");
 
 cart = [];
-
+localStorage.setItem("cart", JSON.stringify(cart));
 updateCart();
-
-}else{
-
-alert(data.message || "Order failed");
-
-}
 
 }catch(err){
 
 console.log(err);
-
 alert("Server error");
 
 }
