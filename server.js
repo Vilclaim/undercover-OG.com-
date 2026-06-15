@@ -28,6 +28,18 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const Stripe = require("stripe");
+
+const stripe = Stripe(
+process.env.STRIPE_SECRET_KEY
+);
+
+const Stripe = require("stripe");
+
+const stripe = Stripe(
+process.env.STRIPE_SECRET_KEY
+);
+
 /*
 const nodemailer = require("nodemailer");
 
