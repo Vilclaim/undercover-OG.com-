@@ -1537,6 +1537,60 @@ res.send("Invoice Error");
 }
 );
 
+
+app.post(
+"/api/create-checkout-session",
+verifyToken,
+async(req,res)=>{
+
+try{
+
+const { items } = req.body;
+
+const line_items = items.map(item => ({
+price_data:{
+currency:"aed",
+product_data:{
+name:item.name
+},
+unit_amount:item.price * 100
+},
+quantity:item.qty
+}));
+
+const session =
+await stripe.checkout.sessions.create({
+
+payment_method_types:["card"],
+
+line_items,
+
+mode:"payment",
+
+success_url:
+"https://undercover-og-com.onrender.com/?payment=success",
+
+cancel_url:
+"https://undercover-og-com.onrender.com/?payment=cancel"
+
+});
+
+res.json({
+url:session.url
+});
+
+}catch(err){
+
+console.log(err);
+
+res.status(500).json({
+success:false
+});
+
+}
+
+});
+
 // ================= TRACK ORDER =================
 
 app.get(
