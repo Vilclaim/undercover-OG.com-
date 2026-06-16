@@ -1672,10 +1672,10 @@ orderId:order._id.toString()
 },
 
 success_url:
-"https://undercover-og-com.onrender.com/?payment=success&session_id={CHECKOUT_SESSION_ID}",
+"https://undercover-og.com.onrender.com/?payment=success&session_id={CHECKOUT_SESSION_ID}",
 
 cancel_url:
-"https://undercover-og-com.onrender.com/?payment=cancel"
+"https://undercover-og.com.onrender.com/?payment=cancel"
 
 });
 
