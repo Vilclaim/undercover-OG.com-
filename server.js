@@ -1705,18 +1705,34 @@ app.post(
 "/api/stripe/webhook",
 async(req,res)=>{
 
+console.log("WEBHOOK REQUEST RECEIVED");
+
 const sig =
 req.headers["stripe-signature"];
+
+console.log("SIGNATURE:", sig);
+
+let event;
 
 let event;
 
 try{
+
+console.log(
+"BODY TYPE:",
+typeof req.body
+);
 
 event =
 stripe.webhooks.constructEvent(
 req.body,
 sig,
 process.env.STRIPE_WEBHOOK_SECRET
+);
+
+console.log(
+"EVENT TYPE:",
+event.type
 );
 
 }catch(err){
