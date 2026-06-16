@@ -1707,6 +1707,57 @@ async(req,res)=>{
 
 console.log("WEBHOOK REQUEST RECEIVED");
 
+const sig = req.headers["stripe-signature"];
+
+let event;
+
+try{
+
+console.log("BODY TYPE:", typeof req.body);
+
+event = stripe.webhooks.constructEvent(
+req.body,
+sig,
+process.env.STRIPE_WEBHOOK_SECRET
+);
+
+console.log("EVENT TYPE:", event.type);
+
+}catch(err){
+
+console.log("WEBHOOK ERROR:", err.message);
+
+return res.status(400).send(
+`Webhook Error: ${err.message}`
+);
+
+}
+
+if(event.type === "checkout.session.completed"){
+
+const session = event.data.object;
+const orderId = session.metadata.orderId;
+
+console.log("WEBHOOK HIT");
+console.log("ORDER ID:", orderId);
+
+await Order.findByIdAndUpdate(
+orderId,
+{
+paymentStatus:"Paid"
+}
+);
+
+console.log("PAYMENT UPDATED TO PAID");
+
+}
+
+res.json({
+received:true
+});
+
+});
+
 const sig =
 req.headers["stripe-signature"];
 
@@ -1776,7 +1827,7 @@ res.json({
 received:true
 });
 
-});
+
 
 
 // ================= TRACK ORDER =================
