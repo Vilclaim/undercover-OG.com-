@@ -3848,7 +3848,7 @@ paymentMethod:"Card Payment"
 }
 );
 
-const stripeData = orderData;
+const stripeData = await response.json();
 
 if(stripeData.url){
 window.location.href = stripeData.url;
