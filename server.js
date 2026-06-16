@@ -1549,6 +1549,14 @@ try{
 
 const { items } = req.body;
 
+
+console.log("===== STRIPE SESSION START =====");
+console.log("ITEMS:", items);
+console.log(
+"STRIPE KEY EXISTS:",
+!!process.env.STRIPE_SECRET_KEY
+);
+
 const user =
 await User.findById(req.user.id);
 
@@ -1646,6 +1654,8 @@ quantity:item.qty
 const session =
 await stripe.checkout.sessions.create({
 
+
+
 payment_method_types:["card"],
 
 line_items,
@@ -1664,16 +1674,21 @@ cancel_url:
 
 });
 
+console.log("SESSION URL:");
+console.log(session.url);
+
 res.json({
 url:session.url
 });
 
 }catch(err){
 
+console.log("===== STRIPE ERROR =====");
 console.log(err);
 
 res.status(500).json({
-success:false
+success:false,
+error:err.message
 });
 
 }
